@@ -50,6 +50,7 @@ const Header = () => {
           </ul>
           <div className="navbar-text">
             <button className="vvd"><span>Register</span></button>
+            <button className="vvd"><span>Login</span></button>
           </div>
         </div>
       </div>
