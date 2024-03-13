@@ -136,7 +136,7 @@ const Homepage = () => {
                                     Visit Hospitals
                                 </h4>
                                 <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 leading-8 group-hover:text-white">
-                                    Get priority services in hospitals with Jo’sClinic. Which allows you to go to
+                                    Get priority services in hospitals with Blossom Health. Which allows you to go to
                                     the hospital more practically and save time.
                                 </p>
                             </div>
