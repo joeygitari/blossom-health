@@ -280,8 +280,6 @@ const Homepage = () => {
                     </div>
                 </div>
             </Card>
-
-
         </div>
     );
 }
