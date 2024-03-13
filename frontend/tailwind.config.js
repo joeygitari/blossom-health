@@ -9,6 +9,9 @@ module.exports = withMT( {
       fontFamily: {
         'poppins': ['"Poppins"', 'sans-serif'],
       },
+      backgroundImage: {
+        'doctorsBackground': "url('../public/Home3.png')",
+      }
     },
   },
   plugins: [
