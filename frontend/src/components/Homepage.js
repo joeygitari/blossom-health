@@ -132,7 +132,7 @@ const Homepage = () => {
                                 className="max-w-sm bg-[#FFF8F8] rounded-[30px] border-[#FFF8F8] group hover:bg-gradient-to-b hover:from-[#FFBCBC] hover:to-[#FF6969] transition duration-300 cursor-pointer">
                                 <img src={Do3} alt="Do1" className="mx-auto mt-[7rem]"/>
 
-                                <h4 className="font-poppins font-bold text-[#172048] text-[24px] mt-[4rem] mb-4 px-5 group-hover:text-white">
+                                <h4 className="font-poppins font-bold text-[#172048] text-[24px] mt-[5rem] mb-4 px-5 group-hover:text-white">
                                     Visit Hospitals
                                 </h4>
                                 <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 leading-8 group-hover:text-white">
