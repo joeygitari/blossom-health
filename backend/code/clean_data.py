@@ -13,17 +13,19 @@ if not os.path.exists(cleaned_datasets_dir):
 # Step 1: Load data from CSV files
 pcos_data1 = pd.read_csv("../datasets/pcos-datasets/PCOS_data.csv")
 pcos_data2 = pd.read_csv("../datasets/pcos-datasets/PCOS_infertility.csv")
+pcos_data3 = pd.read_csv("../datasets/pcos-datasets/PCOS_data_without_infertility/Full_new-Table 1.csv")
 pregrisk_data1 = pd.read_csv("../datasets/pregnancy-risk-datasets/Maternal Health Risk Data Set.csv")
 pregrisk_data2 = pd.read_csv("../datasets/pregnancy-risk-datasets/risk-dataset.csv")
+endo_data = pd.read_csv("../datasets/endometriosis-datasets/endo-dataset.csv")
 
 # Step 2: Load data from Excel file
-try:
-    endo_data = pd.read_excel("../datasets/endometriosis-datasets/endo-dataset.xlsx")
-    pcos_data3 = pd.read_excel("../datasets/pcos-datasets/PCOS_data_without_infertility.xlsx")
-except FileNotFoundError:
-    print("Error: The Excel file 'endo-dataset.xlsx' was not found at the specified location.")
-    # Handle the error gracefully, e.g., print a helpful message or exit the script
-    exit(1)
+# try:
+#     endo_data = pd.read_excel("../datasets/endometriosis-datasets/endo-dataset.xlsx")
+#     pcos_data3 = pd.read_excel("../datasets/pcos-datasets/PCOS_data_without_infertility.xlsx")
+# except FileNotFoundError:
+#     print("Error: The Excel file 'endo-dataset.xlsx' was not found at the specified location.")
+#     # Handle the error gracefully, e.g., print a helpful message or exit the script
+#     exit(1)
 
 # Step 3: Clean and preprocess the data
 def clean_data(data):
