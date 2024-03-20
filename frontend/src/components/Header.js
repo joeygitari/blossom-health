@@ -1,7 +1,6 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
-import Logo from "../assets/images/logo.png"
-
+import Logo from "../assets/images/logo.png";
 
 const Header = () => {
   return (
@@ -22,7 +21,7 @@ const Header = () => {
                     </button> */}
                     <div
                         className="font-poppins bg-[#FF8585] -pr-40 w-[147px] h-[50px] font-normal rounded-full text-white text-[16px] text-center px-4 py-3 cursor-pointer md:block hidden">
-                        <a href="/signup">Register</a>
+                        <a href="/register">Register</a>
                     </div>
 
                     <button data-collapse-toggle="navbar-cta" type="button"
