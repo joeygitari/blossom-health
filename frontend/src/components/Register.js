@@ -7,7 +7,7 @@ const Register = () => {
     return(
         <section>
             <div className="min-h-screen grid md:grid-cols-2">
-                <div className="p-10">
+                <div className="p-10 bg-[#F7FAFC]">
                     <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer">
                         <img className="h-16" alt="Logo" src={Logo}/>
                         <p className="font-bold font-poppins py-4 text-[20px]">BlossomHealth</p>

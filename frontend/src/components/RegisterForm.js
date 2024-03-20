@@ -9,7 +9,7 @@ const RegisterForm = () => {
                     Full Names
                 </label>
                 <input type="text" id="fullNames"
-                       className="bg-white border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
+                       className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
                        placeholder="eg Jane Doe" required/>
             </div>
 
@@ -18,7 +18,7 @@ const RegisterForm = () => {
                     E-mail
                 </label>
                 <input type="email" id="email"
-                       className="bg-white border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
+                       className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
                        placeholder="eg email@gmail.com" required/>
             </div>
 
@@ -27,7 +27,7 @@ const RegisterForm = () => {
                     Password
                 </label>
                 <input type="password" id="password"
-                       className="bg-white border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
+                       className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
                        placeholder="@#*%"
                        required/>
             </div>
@@ -38,7 +38,7 @@ const RegisterForm = () => {
                     Confirm Password
                 </label>
                 <input type="confirmPassword" id="confirmPassword"
-                       className="bg-white border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
+                       className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
                        placeholder="@#*%"
                        required/>
             </div>
