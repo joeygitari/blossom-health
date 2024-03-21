@@ -33,15 +33,14 @@ const Homepage = () => {
                         </p>
 
                         <p className="font-poppins font-normal text-[22px] text-[#C4C4C4] leading-10 md:mt-5 sm:mt-3">
-                            Your number 1 trusted clinic, we help women with cervical
-                            problems, reproduction issues, and ensure a healthy lifestyle
-                            for our women.
+                            Your number 1 trusted women's clinic, we help women 
+                            with reproductive issues, and assess pregnancy risks.
                         </p>
 
-                        <div
+                        {/* <div
                             className="mt-[3rem] font-poppins bg-[#FF8585] -pr-40 w-[232px] h-[60px] font-normal rounded-full text-white text-[16px] text-center px-4 py-4 cursor-pointer md:block hidden">
                             <a href="/tryfreeconsultation">Try Free Consultation</a>
-                        </div>
+                        </div> */}
 
                         <div className="flex gap-40 mt-[4rem]">
                             <div>
@@ -50,7 +49,7 @@ const Homepage = () => {
 
                                     <p className="font-poppins font-semibold text-[18px] text-[#C4C4C4]">
                                         Registered <br/>
-                                        board doctors
+                                        medical professionals
                                     </p>
                                 </p>
                             </div>
@@ -109,7 +108,7 @@ const Homepage = () => {
                                     <img src={Do1} alt="Do1" className="mx-auto mt-[7rem]"/>
 
                                     <h4 className="font-poppins font-bold text-[#172048] text-[24px] mt-[7rem] mb-4 px-5 group-hover:text-white">
-                                        Consultation
+                                        Engagement
                                     </h4>
                                     <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 mb-[2rem] leading-8 group-hover:text-white">
                                         Connect directly, quickly and easily with our <br/> registered board doctors,
@@ -123,7 +122,7 @@ const Homepage = () => {
                                     <img src={Do2} alt="Do1" className="mx-auto mt-[7rem]"/>
 
                                     <h4 className="font-poppins font-bold text-[#172048] text-[24px] mt-[4rem] mb-4 px-5 group-hover:text-white">
-                                        Health Store
+                                        Health Records Management
                                     </h4>
                                     <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 leading-8 group-hover:text-white">
                                         Talk about the health complaints you are experiencing and don't hesitate to
@@ -137,7 +136,7 @@ const Homepage = () => {
                                     <img src={Do3} alt="Do1" className="mx-auto mt-[7rem]"/>
 
                                     <h4 className="font-poppins font-bold text-[#172048] text-[24px] mt-[5rem] mb-4 px-5 group-hover:text-white">
-                                        Visit Hospitals
+                                        Early Intervention
                                     </h4>
                                     <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 leading-8 group-hover:text-white">
                                         Get priority services in hospitals with Blossom Health. Which allows you to go
@@ -162,7 +161,8 @@ const Homepage = () => {
 
                             <p className="font-poppins font-medium text-[14px] text-[#C4C4C4] leading-8">
                                 Here at Blossom Health we help women with their reproductive health, we <br/>
-                                foresee what you can’t and ensure a safe and health lifestyle and a <br/>
+                                foresee what you can’t, for the purpose of early intervention <br/>
+                                and ensure a safe and health lifestyle and a 
                                 healthy living for you and your family.
                             </p>
 

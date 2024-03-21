@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Line3 from "../assets/images/Line3.png";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 
 const LoginForm = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+    const [userType, setUserType] = useState("");
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const toggleRepeatPasswordVisibility = () => {
+        setShowRepeatPassword(!showRepeatPassword);
+    }
     return (
         <form className="max-w-xl mt-[2rem]">
             <div className="mb-5">
@@ -10,17 +23,30 @@ const LoginForm = () => {
                 </label>
                 <input type="email" id="email"
                        className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                       placeholder="eg email@gmail.com" required/>
+                       placeholder="Enter your email" required/>
             </div>
 
             <div className="mb-5">
                 <label htmlFor="password" className="block mb-2 text-[18px] font-poppins font-medium text-[#718096]">
                     Password
                 </label>
-                <input type="password" id="password"
-                       className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                       placeholder="@#*%"
-                       required/>
+                <div className="relative">
+                    <input type={showPassword ? "text" : "password"} id="password"
+                        className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
+                        placeholder="Enter your password"
+                        required
+                        />
+                        <FontAwesomeIcon
+                            icon={showPassword ? faEye : faEyeSlash}
+                            style={{
+                                position: 'absolute',
+                                right: '5%',
+                                top: '30%',
+                                cursor: 'pointer'
+                            }}
+                                onClick={togglePasswordVisibility}
+                        />
+                </div>
             </div>
 
             <div className="flex items-center justify-between mb-5">
