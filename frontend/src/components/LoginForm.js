@@ -5,16 +5,9 @@ import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [showRepeatPassword, setShowRepeatPassword] = useState(false);
-    const [userType, setUserType] = useState("");
-
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
-
-    const toggleRepeatPasswordVisibility = () => {
-        setShowRepeatPassword(!showRepeatPassword);
-    }
     return (
         <form className="max-w-xl mt-[2rem]">
             <div className="mb-5">
