@@ -6,6 +6,7 @@ import Register from './Register';
 import About from "./About";
 import Contact from "./Contact";
 import Services from "./Services";
+import Symptoms from './Symptoms';
 
 const App = () => {
 
@@ -41,6 +42,7 @@ const App = () => {
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/services" element={<Services />} />
+          <Route exact path="/symptoms" element={<Symptoms />} />
         </Routes>
       </Router>
   );
