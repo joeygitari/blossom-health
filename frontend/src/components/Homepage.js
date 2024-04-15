@@ -286,7 +286,7 @@ const Homepage = () => {
 
                             <div
                                 className="mt-[4rem] mx-auto font-poppins bg-[#FF8585] -pr-40 w-[173px] h-[55px] font-normal rounded-full text-white text-[16px] text-center px-4 py-4 cursor-pointer">
-                                <a href="/signup">Register</a>
+                                <a href="/register">Register</a>
                             </div>
                         </div>
                     </div>
