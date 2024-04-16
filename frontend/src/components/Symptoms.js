@@ -3,6 +3,7 @@ import Logo from "../assets/images/logo.png";
 import Select from 'react-select';
 import SymptomsImg from "../assets/images/SymptomsImg.png";
 import {Card} from "@material-tailwind/react";
+import {Link} from "react-router-dom";
 const Symptoms = () => {
     const options = [
         { value: 'headache', label: 'Headache' },
@@ -22,11 +23,12 @@ const Symptoms = () => {
         <section className="bg-[#F7FAFC]">
             <div className="container mx-auto">
                 <div className="grid md:grid-cols-1">
-                    <a href="/" className="flex py-5">
-                        <img className="flex items-center space-x-3 rtl:space-x-reverse h-16 cursor-pointer" alt="Logo"
+                    <Link to="/" className="flex py-5">
+                        <img className="flex items-center space-x-3 rtl:space-x-reverse h-16 cursor-pointer"
+                             alt="Logo"
                              src={Logo}/>
                         <p className="font-bold font-poppins py-4 px-3 text-[20px]">BlossomHealth</p>
-                    </a>
+                    </Link>
                     <p className="font-poppins font-bold text-[48px] text-[#172048] mt-[1rem]">Select your current
                         symptoms</p>
 
