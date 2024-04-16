@@ -23,17 +23,17 @@ const Homepage = () => {
     return(
         <>
             <Header/>
-            <div className="container mx-auto bg-white">
+            <div className="container mx-auto bg-white md:p-0 p-6">
                 <div className="grid md:grid-cols-2 gap-4">
-                    <div className="mt-[5rem]">
-                        <p className="font-poppins font-bold text-[#172048] text-[58px]">
+                    <div className="mt-[2.5rem] md:mt-[5rem]">
+                        <p className="font-poppins font-bold text-[#172048] text-[29px] md:text-[58px]">
                             We help our women's <br/>
                             <span className="text-[#F70000]">Reproduction</span> <br/>
                             Problems
                         </p>
 
-                        <p className="font-poppins font-normal text-[22px] text-[#C4C4C4] leading-10 md:mt-5 sm:mt-3">
-                            Your number 1 trusted women's clinic, we help women 
+                        <p className="font-poppins font-normal text-[11px] md:text-[22px] text-[#C4C4C4] leading-5 md:leading-10 md:mt-5 sm:mt-3">
+                            Your number 1 trusted women's clinic, we help women
                             with reproductive issues, and assess pregnancy risks.
                         </p>
 
@@ -42,12 +42,12 @@ const Homepage = () => {
                             <a href="/tryfreeconsultation">Try Free Consultation</a>
                         </div> */}
 
-                        <div className="flex gap-40 mt-[4rem]">
+                        <div className="flex gap-20 md:gap-40 mt-[2rem] md:mt-[4rem]">
                             <div>
-                                <p className="font-poppins font-bold text-[36px] text-[#172048]">
+                                <p className="font-poppins font-bold text-[18px] md:text-[36px] text-[#172048]">
                                     200<span className="text-[#FF8585]">+</span>
 
-                                    <p className="font-poppins font-semibold text-[18px] text-[#C4C4C4]">
+                                    <p className="font-poppins font-semibold text-[9px] md:text-[18px] text-[#C4C4C4]">
                                         Registered <br/>
                                         medical professionals
                                     </p>
@@ -55,10 +55,10 @@ const Homepage = () => {
                             </div>
 
                             <div>
-                                <p className="font-poppins font-bold text-[36px] text-[#172048]">
+                                <p className="font-poppins font-bold text-[18px] md:text-[36px] text-[#172048]">
                                     15K<span className="text-[#FF8585]">+</span>
 
-                                    <p className="font-poppins font-semibold text-[18px] text-[#C4C4C4]">
+                                    <p className="font-poppins font-semibold text-[9px] md:text-[18px] text-[#C4C4C4]">
                                         Registered <br/>
                                         patients
                                     </p>
@@ -67,13 +67,13 @@ const Homepage = () => {
                         </div>
                     </div>
 
-                    <div className="mt-[5rem]">
+                    <div className="mt-[2.5rem] md:mt-[5rem]">
                         <img className="md:h-[780px] w-[826px] sm:h-full" alt="Home1" src={Home1}/>
                     </div>
                 </div>
 
 
-                <div className="mt-[7rem]">
+                <div className="mt-[3.5rem] md:mt-[7rem]">
                     <h3 className="font-poppins font-medium text-[20px] text-[#BFBFBF] text-center tracking-[6.30px]">PARTNERS</h3>
                     <div className="grid md:grid-cols-5 gap-12 justify-center">
                         <div className="mt-5 flex justify-center">
@@ -95,19 +95,19 @@ const Homepage = () => {
                 </div>
 
 
-                <div className="mt-[3rem] flex justify-center items-center">
+                <div className="mt-[1.5rem] md:mt-[3rem] flex justify-center items-center">
                     <div>
-                        <h4 className="font-poppins font-bold text-[#172048] text-[48px] text-center">
+                        <h4 className="font-poppins font-bold text-[#172048] text-[24px] md:text-[48px] text-center">
                             What We Do
                         </h4>
-                        <img className="mx-auto mt-4" alt="Line1" src={Line1}/>
-                        <div className="mt-[5rem]">
+                        <img className="mx-auto mt-2 md:mt-4" alt="Line1" src={Line1}/>
+                        <div className="mt-[2.5rem] md:mt-[5rem]">
                             <div className="grid md:grid-cols-3 gap-10">
                                 <div
                                     className="max-w-sm bg-[#FFF8F8] rounded-[30px] border-[#FFF8F8] group hover:bg-gradient-to-b hover:from-[#FFBCBC] hover:to-[#FF6969] transition duration-300 cursor-pointer">
-                                    <img src={Do1} alt="Do1" className="mx-auto mt-[7rem]"/>
+                                    <img src={Do1} alt="Do1" className="mx-auto mt-[3.5rem] md:mt-[7rem]"/>
 
-                                    <h4 className="font-poppins font-bold text-[#172048] text-[24px] mt-[7rem] mb-4 px-5 group-hover:text-white">
+                                    <h4 className="font-poppins font-bold text-[#172048] md:text-[24px] mt-[3.5rem] md:mt-[7rem] mb-4 px-5 group-hover:text-white">
                                         Engagement
                                     </h4>
                                     <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 mb-[2rem] leading-8 group-hover:text-white">
@@ -119,12 +119,12 @@ const Homepage = () => {
 
                                 <div
                                     className="max-w-sm bg-[#FFF8F8] rounded-[30px] border-[#FFF8F8] group hover:bg-gradient-to-b hover:from-[#FFBCBC] hover:to-[#FF6969] transition duration-300 cursor-pointer">
-                                    <img src={Do2} alt="Do1" className="mx-auto mt-[7rem]"/>
+                                    <img src={Do2} alt="Do1" className="mx-auto mt-[3.5rem] md:mt-[7rem]"/>
 
-                                    <h4 className="font-poppins font-bold text-[#172048] text-[24px] mt-[4rem] mb-4 px-5 group-hover:text-white">
+                                    <h4 className="font-poppins font-bold text-[#172048] md:text-[24px] mt-[2rem] md:mt-[4rem] mb-4 px-5 group-hover:text-white">
                                         Health Records Management
                                     </h4>
-                                    <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 leading-8 group-hover:text-white">
+                                    <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 mb-[2rem] leading-8 group-hover:text-white">
                                         Talk about the health complaints you are experiencing and don't hesitate to
                                         ask about the proper treatment.
                                     </p>
@@ -133,12 +133,12 @@ const Homepage = () => {
 
                                 <div
                                     className="max-w-sm bg-[#FFF8F8] rounded-[30px] border-[#FFF8F8] group hover:bg-gradient-to-b hover:from-[#FFBCBC] hover:to-[#FF6969] transition duration-300 cursor-pointer">
-                                    <img src={Do3} alt="Do1" className="mx-auto mt-[7rem]"/>
+                                    <img src={Do3} alt="Do1" className="mx-auto mt-[3.5rem] md:mt-[7rem]"/>
 
-                                    <h4 className="font-poppins font-bold text-[#172048] text-[24px] mt-[5rem] mb-4 px-5 group-hover:text-white">
+                                    <h4 className="font-poppins font-bold text-[#172048] md:text-[24px] mt-[2.5rem] md:mt-[5rem] mb-4 px-5 group-hover:text-white">
                                         Early Intervention
                                     </h4>
-                                    <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 leading-8 group-hover:text-white">
+                                    <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 mb-[2rem] leading-8 group-hover:text-white">
                                         Get priority services in hospitals with Blossom Health. Which allows you to go
                                         to
                                         the hospital more practically and save time.
@@ -149,20 +149,20 @@ const Homepage = () => {
                     </div>
                 </div>
 
-                <div className="mt-[5rem]">
+                <div className="mt-[2rem] md:mt-[5rem]">
                     <div className="grid md:grid-cols-2">
                         <div>
                             <img className="md:h-[876px] w-[542px] sm:h-full" src={Home2} alt="Home2"/>
                         </div>
 
                         <div className="mt-[6rem]">
-                            <h3 className="font-poppins font-bold text-[48px] text-[#172048]">Our main services</h3>
-                            <img className=" mt-4" alt="Line1" src={Line1}/>
+                            <h3 className="font-poppins font-bold text-[24px] md:text-[48px] text-[#172048]">Our main services</h3>
+                            <img className="mt-2 md:mt-4" alt="Line1" src={Line1}/>
 
-                            <p className="font-poppins font-medium text-[14px] text-[#C4C4C4] leading-8">
+                            <p className="font-poppins font-medium md:text-[14px] text-[#C4C4C4] leading-8">
                                 Here at Blossom Health we help women with their reproductive health, we <br/>
                                 foresee what you can’t, for the purpose of early intervention <br/>
-                                and ensure a safe and health lifestyle and a 
+                                and ensure a safe and health lifestyle and a
                                 healthy living for you and your family.
                             </p>
 
@@ -242,11 +242,11 @@ const Homepage = () => {
                         <div>
                             <p className="px-3 font-poppins font-semibold text-[18px] text-[#172048]">Our Doctors</p>
                             <img className="mt-4" alt="Line1" src={Line1}/>
-                            <h4 className="px-3 font-poppins font-bold text-[#FF3737] text-[48px]">
+                            <h4 className="px-3 font-poppins font-bold text-[#FF3737] text-[24px] md:text-[48px]">
                                 Qualified Doctors
                             </h4>
 
-                            <p className="px-3 font-poppins font-medium text-[18px] text-[#C4C4C4] leading-10 mt-3">
+                            <p className="px-3 font-poppins font-medium md:text-[18px] text-[#C4C4C4] leading-10 mt-3">
                                 Handled directly by general doctors and professional <br/>
                                 and experienced specialists doctors.
                             </p>
@@ -265,27 +265,23 @@ const Homepage = () => {
                     </div>
                 </div>
 
-                <Card className="mt-[5rem] p-[7rem]">
+                <Card className="mt-[2.5rem] md:mt-[5rem] p-[7rem]">
                     <div>
-                        <div className="mx-auto text-center grid md:grid-cols-1">
-                            <h4 className="font-poppins font-bold text-[48px] text-[#172048]">Get started with Blossom
-                                Health</h4>
+                        <div className="text-center">
+                            <h4 className="font-poppins font-bold text-[28px] md:text-[48px] text-[#172048]">Get started with Blossom Health</h4>
 
                             <img className="mx-auto mt-4" alt="Line5" src={Line5}/>
                             <p className="mt-[2rem] font-poppins font-medium text-[18px] text-[#C4C4C4] leading-8">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sodales morbi tristique libero
-                                urna
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sodales morbi tristique libero urna
                                 sem <br/>vitae. Viverra facilisis rhoncus et, nibh nullam vitae laoreet. <br/>
                             </p>
 
                             <p className="mt-4 font-poppins font-medium text-[18px] text-[#C4C4C4] leading-8">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sodales morbi tristique libero
-                                urna
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sodales morbi tristique libero urna
                                 sem <br/>vitae. Viverra facilisis rhoncus et, nibh nullam vitae laoreet.
                             </p>
 
-                            <div
-                                className="mt-[4rem] mx-auto font-poppins bg-[#FF8585] -pr-40 w-[173px] h-[55px] font-normal rounded-full text-white text-[16px] text-center px-4 py-4 cursor-pointer">
+                            <div className="mt-[4rem] mx-auto font-poppins bg-[#FF8585] -pr-40 w-[173px] h-[55px] font-normal rounded-full text-white text-[16px] text-center px-4 py-4 cursor-pointer">
                                 <a href="/register">Register</a>
                             </div>
                         </div>
