@@ -7,6 +7,8 @@ import About from "./About";
 import Contact from "./Contact";
 import Services from "./Services";
 import Symptoms from './Symptoms';
+import PatientProfile from "./PatientProfile";
+import PatientVitals from "./PatientVitals";
 
 const App = () => {
 
@@ -43,6 +45,8 @@ const App = () => {
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/services" element={<Services />} />
           <Route exact path="/symptoms" element={<Symptoms />} />
+          <Route exact path="/patient-profile" element={<PatientProfile />} />
+          <Route exact path="/patient-vitals" element={<PatientVitals />} />
         </Routes>
       </Router>
   );
