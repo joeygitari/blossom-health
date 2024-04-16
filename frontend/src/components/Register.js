@@ -17,7 +17,7 @@ const Register = () => {
                     <p className="font-poppins font-bold text-[48px] text-[#172048] mt-[1rem]">Sign up</p>
 
                     <p className="font-poppins font-normal text-[18px] text-[#718096] mt-[2rem]">
-                        Don't have an account? <Link to="/register" className="text-[#FF0000] font-medium underline hover:no-underline">Create now</Link>
+                        Already have an account? <Link to="/login" className="text-[#FF0000] font-medium underline hover:no-underline">Sign in</Link>
                     </p>
 
                     <RegisterForm/>
