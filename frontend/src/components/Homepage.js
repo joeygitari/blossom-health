@@ -107,7 +107,7 @@ const Homepage = () => {
                                     className="max-w-sm bg-[#FFF8F8] rounded-[30px] border-[#FFF8F8] group hover:bg-gradient-to-b hover:from-[#FFBCBC] hover:to-[#FF6969] transition duration-300 cursor-pointer">
                                     <img src={Do1} alt="Do1" className="mx-auto mt-[3.5rem] md:mt-[7rem]"/>
 
-                                    <h4 className="font-poppins font-bold text-[#172048] md:text-[24px] mt-[3.5rem] md:mt-[7rem] mb-4 px-5 group-hover:text-white">
+                                    <h4 className="font-poppins font-bold text-[#172048] md:text-[22px] mt-[3.5rem] md:mt-[7rem] mb-4 px-5 group-hover:text-white">
                                         Engagement
                                     </h4>
                                     <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 mb-[2rem] leading-8 group-hover:text-white">
@@ -121,7 +121,7 @@ const Homepage = () => {
                                     className="max-w-sm bg-[#FFF8F8] rounded-[30px] border-[#FFF8F8] group hover:bg-gradient-to-b hover:from-[#FFBCBC] hover:to-[#FF6969] transition duration-300 cursor-pointer">
                                     <img src={Do2} alt="Do1" className="mx-auto mt-[3.5rem] md:mt-[7rem]"/>
 
-                                    <h4 className="font-poppins font-bold text-[#172048] md:text-[24px] mt-[2rem] md:mt-[4rem] mb-4 px-5 group-hover:text-white">
+                                    <h4 className="font-poppins font-bold text-[#172048] md:text-[22px] mt-[2rem] md:mt-[4rem] mb-4 px-5 group-hover:text-white">
                                         Health Records Management
                                     </h4>
                                     <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 mb-[2rem] leading-8 group-hover:text-white">
@@ -135,7 +135,7 @@ const Homepage = () => {
                                     className="max-w-sm bg-[#FFF8F8] rounded-[30px] border-[#FFF8F8] group hover:bg-gradient-to-b hover:from-[#FFBCBC] hover:to-[#FF6969] transition duration-300 cursor-pointer">
                                     <img src={Do3} alt="Do1" className="mx-auto mt-[3.5rem] md:mt-[7rem]"/>
 
-                                    <h4 className="font-poppins font-bold text-[#172048] md:text-[24px] mt-[2.5rem] md:mt-[5rem] mb-4 px-5 group-hover:text-white">
+                                    <h4 className="font-poppins font-bold text-[#172048] md:text-[22px] mt-[2.5rem] md:mt-[5rem] mb-4 px-5 group-hover:text-white">
                                         Early Intervention
                                     </h4>
                                     <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 mb-[2rem] leading-8 group-hover:text-white">
