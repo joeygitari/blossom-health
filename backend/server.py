@@ -1,11 +1,12 @@
 from flask import Flask
+from auth.register import register_user
+from auth.login import login_user
 
 app = Flask(__name__)
 
-# members api route
-@app.route("/members")
-def members():
-    return {"members": ["Test 1", "Test 2", "Test 3"]}
+# Register the blueprints
+app.register_blueprint(register_user)
+app.register_blueprint(login_user)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run()
