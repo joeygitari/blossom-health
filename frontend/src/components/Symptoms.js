@@ -1,15 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Logo from "../assets/images/logo.png";
 import Select from 'react-select';
 import SymptomsImg from "../assets/images/SymptomsImg.png";
 import {Card} from "@material-tailwind/react";
+
 import {Link} from "react-router-dom";
 const Symptoms = () => {
-    const options = [
-        { value: 'headache', label: 'Headache' },
-        { value: 'weight_gain', label: 'Weight Gain' },
-        { value: ' abdominal_cramps', label: 'Abdominal Cramps' }
-    ]
+    // const options = [
+    //     { value: 'headache', label: 'Headache' },
+    //     { value: 'weight_gain', label: 'Weight Gain' },
+    //     { value: ' abdominal_cramps', label: 'Abdominal Cramps' }
+    // ]
+
+    const [symptoms, setSymptoms] = useState([]);
+    const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        fetchSymptoms();
+    }, []);
+
+    const fetchSymptoms = async () => {
+        try {
+            const response = await fetch('/symptoms');
+            if (!response.ok) {
+                throw new Error('Failed to fetch symptoms');
+            }
+            const data = await response.json();
+            // console.log(data); 
+            const symptomOptions = data.map(symptom => ({
+                value: symptom[0],
+                label: symptom[1]
+            }));
+            // console.log(symptomOptions);
+            setSymptoms(symptomOptions);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching symptoms:', error);
+            setError('Failed to fetch symptoms');
+            setLoading(false);
+        }
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    const handleSymptomChange = (selectedOptions) => {
+        setSelectedSymptoms(selectedOptions);
+    };
+    // const symptomOptions = symptoms.map(symptom => ({
+    //     value: symptom.symptomid,
+    //     label: symptom.symptomname
+    // }));
 
     const customStyles = {
         control: base => ({
@@ -35,8 +83,9 @@ const Symptoms = () => {
                     <div className="mt-[2rem] font-poppins">
                         <Select
                             isMulti
-                            options={options}
+                            options={symptoms}
                             styles={customStyles}
+                            onChange={handleSymptomChange}
                         />
                     </div>
 
@@ -73,7 +122,7 @@ const Symptoms = () => {
                                                         </th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    {/* <tbody>
                                                     <tr className="font-poppins font-medium border-b border-neutral-200 ">
                                                         <td
                                                             className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium">
@@ -105,6 +154,14 @@ const Symptoms = () => {
                                                             Abdominal Pains
                                                         </td>
                                                     </tr>
+                                                    </tbody> */}
+                                                     <tbody>
+                                                        {selectedSymptoms.map((symptom, index) => (
+                                                            <tr key={index} className="font-poppins font-medium border-b border-neutral-200">
+                                                                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4 font-medium">{index + 1}</td>
+                                                                <td className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">{symptom.label}</td>
+                                                            </tr>
+                                                        ))}
                                                     </tbody>
                                                 </table>
                                             </div>
