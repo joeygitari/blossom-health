@@ -25,7 +25,7 @@ const Homepage = () => {
             <Header/>
             <div className="container mx-auto bg-white md:p-0 p-6">
                 <div className="grid md:grid-cols-2 gap-4">
-                    <div className="mt-[2.5rem] md:mt-[5rem]">
+                    <div className="md:mt-[5rem]">
                         <p className="font-poppins font-bold text-[#172048] text-[29px] md:text-[58px]">
                             We help our women's <br/>
                             <span className="text-[#F70000]">Reproduction</span> <br/>
@@ -155,16 +155,23 @@ const Homepage = () => {
                             <img className="md:h-[876px] w-[542px] sm:h-full" src={Home2} alt="Home2"/>
                         </div>
 
-                        <div className="mt-[6rem]">
-                            <h3 className="font-poppins font-bold text-[24px] md:text-[48px] text-[#172048]">Our main services</h3>
+                        <div className="mt-[3rem] md:mt-[6rem]">
+                            <h3 className="font-poppins font-bold text-[24px] md:text-[48px] text-[#172048]">Our main
+                                services</h3>
                             <img className="mt-2 md:mt-4" alt="Line1" src={Line1}/>
 
                             <p className="font-poppins font-medium md:text-[14px] text-[#C4C4C4] leading-8">
-                                Here at Blossom Health we help women with their reproductive health, we <br/>
-                                foresee what you can’t, for the purpose of early intervention <br/>
-                                and ensure a safe and health lifestyle and a
-                                healthy living for you and your family.
+                                Here at Blossom Health we help women with their reproductive health, we&nbsp;
+                                <span className="hidden md:inline-block">
+                                    <br/>
+                                </span>
+                                foresee what you can’t, for the purpose of early intervention&nbsp;
+                                <span className="hidden md:inline-block">
+                                    <br/>
+                                </span>
+                                and ensure a safe and health lifestyle and a healthy living for you and your family.
                             </p>
+
 
                             <div className="grid md:grid-cols-2">
                                 <div className="mt-[3rem] text-center md:text-left">
@@ -176,9 +183,18 @@ const Homepage = () => {
                                             Lorem Ipsum
                                         </p>
                                         <p className="font-poppins font-medium text-[12px] text-[#C4C4C4] leading-6">
-                                            Lorem ipsum dolor sit amet, <br/>
-                                            consectetur adipiscing elit. Ornare <br/>
-                                            tellus malesuada odio blandit. Sit duis <br/>
+                                            Lorem ipsum dolor sit amet,&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
+                                            consectetur adipiscing elit. Ornare&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
+                                            tellus malesuada odio blandit. Sit duis&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
                                             eu nisi habitant lorem egestas.
                                         </p>
                                     </div>
@@ -191,9 +207,18 @@ const Homepage = () => {
                                             Lorem Ipsum
                                         </p>
                                         <p className="font-poppins font-medium text-[12px] text-[#C4C4C4] leading-6">
-                                            Lorem ipsum dolor sit amet, <br/>
-                                            consectetur adipiscing elit. Ornare <br/>
-                                            tellus malesuada odio blandit. Sit duis <br/>
+                                            Lorem ipsum dolor sit amet,&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
+                                            consectetur adipiscing elit. Ornare&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
+                                            tellus malesuada odio blandit. Sit duis&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
                                             eu nisi habitant lorem egestas.
                                         </p>
                                     </div>
@@ -208,9 +233,18 @@ const Homepage = () => {
                                             Lorem Ipsum
                                         </p>
                                         <p className="font-poppins font-medium text-[12px] text-[#C4C4C4] leading-6">
-                                            Lorem ipsum dolor sit amet, <br/>
-                                            consectetur adipiscing elit. Ornare <br/>
-                                            tellus malesuada odio blandit. Sit duis <br/>
+                                            Lorem ipsum dolor sit amet,&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
+                                            consectetur adipiscing elit. Ornare&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
+                                            tellus malesuada odio blandit. Sit duis&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
                                             eu nisi habitant lorem egestas.
                                         </p>
                                     </div>
@@ -223,9 +257,18 @@ const Homepage = () => {
                                             Lorem Ipsum
                                         </p>
                                         <p className="font-poppins font-medium text-[12px] text-[#C4C4C4] leading-6">
-                                            Lorem ipsum dolor sit amet, <br/>
-                                            consectetur adipiscing elit. Ornare <br/>
-                                            tellus malesuada odio blandit. Sit duis <br/>
+                                            Lorem ipsum dolor sit amet,&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
+                                            consectetur adipiscing elit. Ornare&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
+                                            tellus malesuada odio blandit. Sit duis&nbsp;
+                                            <span className="hidden md:inline-block">
+                                                <br/>
+                                            </span>
                                             eu nisi habitant lorem egestas.
                                         </p>
                                     </div>
@@ -237,7 +280,7 @@ const Homepage = () => {
                 </div>
 
 
-                <div className="mt-[10rem]">
+                <div className="mt-[5rem] md:mt-[10rem]">
                     <div className="grid md:grid-cols-2">
                         <div>
                             <p className="px-3 font-poppins font-semibold text-[18px] text-[#172048]">Our Doctors</p>
@@ -268,20 +311,34 @@ const Homepage = () => {
                 <Card className="mt-[2.5rem] md:mt-[5rem] p-[7rem]">
                     <div>
                         <div className="text-center">
-                            <h4 className="font-poppins font-bold text-[28px] md:text-[48px] text-[#172048]">Get started with Blossom Health</h4>
+                            <h4 className="font-poppins font-bold text-[24px] md:text-[48px] text-[#172048]">Get started
+                                with Blossom Health</h4>
 
                             <img className="mx-auto mt-4" alt="Line5" src={Line5}/>
                             <p className="mt-[2rem] font-poppins font-medium text-[18px] text-[#C4C4C4] leading-8">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sodales morbi tristique libero urna
-                                sem <br/>vitae. Viverra facilisis rhoncus et, nibh nullam vitae laoreet. <br/>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sodales morbi tristique libero
+                                urna sem
+                                <span className="hidden md:inline-block">
+                                    <br/>
+                                </span>
+                                vitae. Viverra facilisis rhoncus et, nibh nullam vitae laoreet.
+                                <span className="hidden md:inline-block">
+                                    <br/>
+                                </span>
                             </p>
 
                             <p className="mt-4 font-poppins font-medium text-[18px] text-[#C4C4C4] leading-8">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sodales morbi tristique libero urna
-                                sem <br/>vitae. Viverra facilisis rhoncus et, nibh nullam vitae laoreet.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sodales morbi tristique libero
+                                urna sem
+                                <span className="hidden md:inline-block">
+                                    <br/>
+                                </span>
+                                vitae. Viverra facilisis rhoncus et, nibh nullam vitae laoreet.
                             </p>
 
-                            <div className="mt-[4rem] mx-auto font-poppins bg-[#FF8585] -pr-40 w-[173px] h-[55px] font-normal rounded-full text-white text-[16px] text-center px-4 py-4 cursor-pointer">
+
+                            <div
+                                className="mt-[4rem] mx-auto font-poppins bg-[#FF8585] -pr-40 w-[173px] h-[55px] font-normal rounded-full text-white text-[16px] text-center px-4 py-4 cursor-pointer">
                                 <a href="/register">Register</a>
                             </div>
                         </div>
