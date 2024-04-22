@@ -14,7 +14,7 @@ const Header = () => {
         <div className=" flex flex-wrap items-center justify-between py-4">
             <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer">
                 <img className="h-16" alt="Logo" src={Logo}/>
-                <p className="font-bold font-baloo py-4 text-[20px]">BlossomHealth</p>
+                <p className="font-bold font-poppins py-4 text-[20px]">BlossomHealth</p>
             </a>
 
             <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
