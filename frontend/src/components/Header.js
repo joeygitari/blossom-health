@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import Logo from "../assets/images/logo.png";
 
 const Header = () => {
@@ -91,8 +91,8 @@ const Header = () => {
                     </li>
                     <li className="md:hidden block">
                         <button type="button"
-                                className="text-white bg-[##FF8585]  w-[111px] h-[49px] rounded-[10px] font-poppins font-semibold px-4 py-2 text-center cursor-pointer text-[18px]">
-                            <a href="/register">Register</a>
+                                className="font-poppins bg-[#FF8585] -pr-40 w-[147px] h-[50px] font-normal rounded-full text-white text-[16px] text-center px-4 py-3 cursor-pointer">
+                            <Link to="/register" className="block w-full h-full">Register</Link>
                         </button>
                     </li>
                 </ul>
