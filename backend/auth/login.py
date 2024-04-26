@@ -1,5 +1,6 @@
 from flask import request, jsonify, Blueprint
 import psycopg2
+import hashlib
 
 login_user = Blueprint('login', __name__)
 
@@ -22,7 +23,8 @@ def login_user_handler():
                 row = cursor.fetchone()
                 if row:
                     stored_password = row[0]
-                    if stored_password == password:
+                    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+                    if stored_password == hashed_password:
                         return jsonify({'message': 'Login successful'})
                     else:
                         return jsonify({'error': 'Incorrect password'})
@@ -32,7 +34,8 @@ def login_user_handler():
                 row = cursor.fetchone()
                 if row:
                     stored_password = row[0]
-                    if stored_password == password:
+                    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+                    if stored_password == hashed_password:
                         return jsonify({'message': 'Login successful'})
                     else:
                         return jsonify({'error': 'Incorrect password'})

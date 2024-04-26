@@ -6,12 +6,7 @@ import {Card} from "@material-tailwind/react";
 
 import {Link} from "react-router-dom";
 const Symptoms = () => {
-    // const options = [
-    //     { value: 'headache', label: 'Headache' },
-    //     { value: 'weight_gain', label: 'Weight Gain' },
-    //     { value: ' abdominal_cramps', label: 'Abdominal Cramps' }
-    // ]
-
+    
     const [symptoms, setSymptoms] = useState([]);
     const [selectedSymptoms, setSelectedSymptoms] = useState([]);
     const [loading, setLoading] = useState(true);
