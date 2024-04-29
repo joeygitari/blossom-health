@@ -23,7 +23,7 @@ const Header = () => {
                         <a href="/signup">Sign up</a>
                     </button> */}
                 <div
-                    className="font-poppins bg-[#FF8585] -pr-40 w-[147px] h-[50px] font-normal rounded-full text-white text-[16px] text-center px-4 py-3 cursor-pointer md:block hidden">
+                    className="font-poppins bg-[#FF8585] -pr-40 w-[147px] h-[50px] font-normal rounded-full text-white text-[16px] text-center px-4 py-3 mr-2 cursor-pointer md:block hidden">
                     <a href="/register">Register</a>
                 </div>
                 <div
@@ -94,10 +94,17 @@ const Header = () => {
                         </NavLink>
                     </li>
                     <li className="md:hidden block">
-                        <button type="button"
-                                className="font-poppins bg-[#FF8585] -pr-40 w-[147px] h-[50px] font-normal rounded-full text-white text-[16px] text-center px-4 py-3 cursor-pointer">
-                            <Link to="/register" className="block w-full h-full">Register</Link>
-                        </button>
+                        <div className="flex flex-col">
+                            <button type="button"
+                                    className="font-poppins bg-[#FF8585] -pr-40 w-[147px] h-[50px] font-normal rounded-full text-white text-[16px] text-center px-4 py-3 cursor-pointer mb-3">
+                                <Link to="/register" className="block w-full h-full">Register</Link>
+                            </button>
+
+                            <button type="button"
+                                    className="font-poppins bg-[#FF8585] -pr-40 w-[147px] h-[50px] font-normal rounded-full text-white text-[16px] text-center px-4 py-3 cursor-pointer">
+                                <Link to="/login" className="block w-full h-full">Log in</Link>
+                            </button>
+                        </div>
                     </li>
                 </ul>
             </div>
