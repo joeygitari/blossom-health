@@ -26,6 +26,10 @@ const Header = () => {
                     className="font-poppins bg-[#FF8585] -pr-40 w-[147px] h-[50px] font-normal rounded-full text-white text-[16px] text-center px-4 py-3 cursor-pointer md:block hidden">
                     <a href="/register">Register</a>
                 </div>
+                <div
+                    className="font-poppins bg-[#FF8585] -pr-40 w-[147px] h-[50px] font-normal rounded-full text-white text-[16px] text-center px-4 py-3 cursor-pointer md:block hidden">
+                    <a href="/login">Log in</a>
+                </div>
             </div>
 
             <button
