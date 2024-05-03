@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './Homepage';
 import Login from './Login';
@@ -9,6 +9,8 @@ import Services from "./Services";
 import Symptoms from './Symptoms';
 import PatientProfile from "./PatientProfile";
 import PatientVitals from "./PatientVitals";
+import PatientDashboard from './dashboards/PatientDashboard';
+import MedicDashboard from './dashboards/MedicDashboard';
 
 const App = () => {
   return (
@@ -23,6 +25,8 @@ const App = () => {
           <Route exact path="/symptoms" element={<Symptoms />} />
           <Route exact path="/patient-profile" element={<PatientProfile />} />
           <Route exact path="/patient-vitals" element={<PatientVitals />} />
+          <Route exact path="/patient-dashboard" element={<PatientDashboard />} />
+          <Route exact path="/medic-dashboard" element={<MedicDashboard />} />
         </Routes>
       </Router>
   );

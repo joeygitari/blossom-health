@@ -25,13 +25,16 @@ const LoginForm = () => {
                 body: formData,
             });
             const data = await response.json();
-
             if (data.error) {
                 toast.error(data.error);
             } else {
                 toast.success("Login successful. Redirecting to dashboard...", {
                     onClose: () => {
-                        navigate("/dashboard");
+                        if (data.role === "patient") {
+                            navigate("/patient-dashboard");
+                        } else if (data.role === "practitioner") {
+                            navigate("/medic-dashboard");
+                        }
                     }
                 });
             }

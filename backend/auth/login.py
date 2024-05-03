@@ -20,24 +20,24 @@ def login_user_handler():
         with psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=db_password) as conn:
             with conn.cursor() as cursor:
                 # Check the patients table
-                cursor.execute("SELECT password FROM patients WHERE patientEmail = %s", (email,))
+                cursor.execute("SELECT patientid, password FROM patients WHERE patientEmail = %s", (email,))
                 row = cursor.fetchone()
                 if row:
-                    stored_password = row[0]
+                    patientid, stored_password = row
                     hashed_password = hashlib.sha256(password.encode()).hexdigest()
                     if stored_password == hashed_password:
-                        return jsonify({'message': 'Login successful'})
+                        return jsonify({'message': 'Login successful', 'user_id': patientid, 'role': 'patient'})
                     else:
                         return jsonify({'error': 'Incorrect password'})
                 
                 # Check the medicalpractitioner table
-                cursor.execute("SELECT password FROM medicalpractitioner WHERE practitionerEmail = %s", (email,))
+                cursor.execute("SELECT practitionerid, password FROM medicalpractitioner WHERE practitionerEmail = %s", (email,))
                 row = cursor.fetchone()
                 if row:
-                    stored_password = row[0]
+                    practitionerid, stored_password = row
                     hashed_password = hashlib.sha256(password.encode()).hexdigest()
                     if stored_password == hashed_password:
-                        return jsonify({'message': 'Login successful'})
+                        return jsonify({'message': 'Login successful' , 'user_id': practitionerid, 'role': 'practitioner'})
                     else:
                         return jsonify({'error': 'Incorrect password'})
 
