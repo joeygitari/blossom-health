@@ -35,6 +35,7 @@ const LoginForm = () => {
                         } else if (data.role === "practitioner") {
                             navigate("/medic-dashboard");
                         }
+                        console.log("Session started:", data);
                     }
                 });
             }
