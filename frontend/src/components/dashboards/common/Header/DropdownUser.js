@@ -34,6 +34,16 @@ const DropdownUser = () => {
         return () => document.removeEventListener('keydown', keyHandler);
     });
 
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            setCurrentUser(JSON.parse(userData));
+        }
+    }, []);
+    
+
     return (
         <div className="relative font-poppins">
             <Link
@@ -42,16 +52,18 @@ const DropdownUser = () => {
                 className="flex items-center gap-4"
                 to="#"
             >
-        <span className="hidden text-right lg:block">
-          <span className="block text-sm font-poppins font-medium text-black dark:text-white">
-            Joey Gitari
-          </span>
-          <span className="block text-xs font-poppins">Software Developer</span>
-        </span>
+            {currentUser && (
+            <>
+                <span className="hidden text-right lg:block">
+                    <span className="block text-sm font-poppins font-medium text-black dark:text-white">
+                        {currentUser.name}
+                    </span>
+                    <span className="block text-xs font-poppins">{currentUser.specialization}</span>
+                </span>
 
                 <span className="h-12 w-12 rounded-full">
-          <img src={UserSeven} alt="User" />
-        </span>
+                    <img src={UserSeven} alt="User" />
+                </span>
 
                 <svg
                     className="hidden fill-current sm:block"
@@ -68,6 +80,8 @@ const DropdownUser = () => {
                         fill=""
                     />
                 </svg>
+            </>
+            )}
             </Link>
 
             {/* <!-- Dropdown Start --> */}

@@ -40,28 +40,30 @@ def login_user_handler():
         with psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=db_password) as conn:
             with conn.cursor() as cursor:
                 # Check the patients table
-                cursor.execute("SELECT patientid, password FROM patients WHERE patientEmail = %s", (email,))
+                cursor.execute("SELECT patientid, password, patientname, patientemail, patientgender, patientage, patientlocation FROM patients WHERE patientemail = %s", (email,))
                 row = cursor.fetchone()
                 if row:
-                    patientid, stored_password = row
+                    patientid, stored_password, patientname, patientemail, patientgender, patientage, patientlocation = row
                     hashed_password = hashlib.sha256(password.encode()).hexdigest()
                     if stored_password == hashed_password:
                         session['user_id'] = patientid
                         session['role'] = 'patient'
-                        return jsonify({'message': 'Login successful', 'user_id': patientid, 'role': 'patient'})
+                        user = {'user_id': patientid, 'role': 'patient', 'name': patientname, 'email': patientemail, 'gender': patientgender, 'age': patientage, 'location': patientlocation}
+                        return jsonify({'message': 'Login successful', 'user': user})
                     else:
                         return jsonify({'error': 'Incorrect password'})
                 
                 # Check the medicalpractitioner table
-                cursor.execute("SELECT practitionerid, password FROM medicalpractitioner WHERE practitionerEmail = %s", (email,))
+                cursor.execute("SELECT practitionerid, password, practitionername, practitioneremail, practitionerspecialization, practitionerlocation FROM medicalpractitioner WHERE practitioneremail = %s", (email,))
                 row = cursor.fetchone()
                 if row:
-                    practitionerid, stored_password = row
+                    practitionerid, stored_password, practitionername, practitioneremail, practitionerspecialization, practitionerlocation = row
                     hashed_password = hashlib.sha256(password.encode()).hexdigest()
                     if stored_password == hashed_password:
                         session['user_id'] = practitionerid
                         session['role'] = 'practitioner'
-                        return jsonify({'message': 'Login successful' , 'user_id': practitionerid, 'role': 'practitioner'})
+                        user = {'user_id': practitionerid, 'role': 'practitioner', 'name': practitionername, 'email': practitioneremail, 'specialization': practitionerspecialization, 'location': practitionerlocation}
+                        return jsonify({'message': 'Login successful' , 'user': user})
                     else:
                         return jsonify({'error': 'Incorrect password'})
 

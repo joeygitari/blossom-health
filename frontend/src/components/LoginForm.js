@@ -29,12 +29,13 @@ const LoginForm = () => {
             } else {
                 toast.success("Login successful. Redirecting to dashboard...", {
                     onClose: () => {
-                        if (data.role === "patient") {
+                        if (data.user.role === "patient") {
                             navigate("/patient-dashboard");
-                        } else if (data.role === "practitioner") {
+                        } else if (data.user.role === "practitioner") {
                             navigate("/medic-dashboard");
                         }
                         console.log("Session started:", data);
+                        localStorage.setItem('userData', JSON.stringify(data.user));
                     }
                 });
             }

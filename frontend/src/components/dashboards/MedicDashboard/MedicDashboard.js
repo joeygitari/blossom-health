@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Doctors from "../../../assets/images/Doctors-pana.svg";
 import DefaultLayout from "../layout/DefaultLayout";
 import {Link} from "react-router-dom";
@@ -26,17 +26,28 @@ const MedicDashboard = () => {
         },
     ];
 
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            setCurrentUser(JSON.parse(userData));
+        }
+    }, []);
+    
+
     return (
         <DefaultLayout>
             <div className="grid lg:grid-cols-5 gap-4">
                 <div className="col-span-2 lg:col-span-3 rounded-sm border border-stroke bg-black cursor-pointer dark:bg-white">
                     <div className="grid lg:grid-cols-2 gap-4">
+                    {currentUser && (
                         <div>
                             <h3 className="font-poppins font-bold text-white text-[30px] p-4 dark:text-black md:whitespace-nowrap lg:whitespace-normal">
-                                Welcome back, Joey Gitari
+                                Welcome back, Dr. {currentUser.name}!
                             </h3>
 
-                            <p className="font-poppins font-normal text-white text-[16px] p-4 dark:text-black md:whitespace-nowrap lg:whitespace-normal">
+                            {/* <p className="font-poppins font-normal text-white text-[16px] p-4 dark:text-black md:whitespace-nowrap lg:whitespace-normal">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
                             </p>
 
@@ -46,8 +57,9 @@ const MedicDashboard = () => {
                                     className="font-poppins bg-[#FF8585] w-[120px] h-[45px] font-normal rounded-md text-white text-[16px] text-center px-4 py-2 cursor-pointer">
                                     <a href="/register">Read More</a>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
+                    )}
                         <div className="hidden lg:block">
                             <img src={Doctors} alt="Doctors" className="w-full h-full ml-auto md:mt-[3.5rem]"/>
                         </div>
