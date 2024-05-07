@@ -29,7 +29,7 @@ const MedicDashboard = () => {
     return (
         <DefaultLayout>
             <div className="grid md:grid-cols-5 gap-4">
-                <div className="col-span-3 rounded-sm border border-stroke bg-black cursor-pointer dark:bg-white">
+                <div className="col-span-2 md:col-span-3 rounded-sm border border-stroke bg-black cursor-pointer dark:bg-white">
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
                             <h3 className="font-poppins font-bold text-white text-[30px] p-4 dark:text-black">
@@ -50,16 +50,15 @@ const MedicDashboard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <img src={Doctors} alt="Doctors" className="w-full h-full ml-auto mt-[3.5rem]"/>
+                        <div className="hidden md:block">
+                            <img src={Doctors} alt="Doctors" className="w-full h-full ml-auto md:mt-[3.5rem]"/>
                         </div>
                     </div>
                 </div>
 
 
-                <div className="col-span-2">
-                    <div
-                        className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-black">
+                <div className="col-span-2 md:col-span-2">
+                    <div className="mt-3 md:mt-0 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-black w-full md:w-auto">
                         <div className="py-6 px-4 md:px-6 xl:px-7.5">
                             <h4 className="text-xl font-poppins font-semibold text-black dark:text-white">
                                 Recent Patients
@@ -111,22 +110,22 @@ const MedicDashboard = () => {
                 </div>
             </div>
 
-            <div className="grid md:grid-cols-3 mt-[3rem] gap-4 md:gap-6 2xl:gap-7.5">
+            <div className="grid md:grid-cols-3 mt-[2rem] md:mt-[3rem] gap-4 md:gap-6 2xl:gap-7.5">
                 <div className="col-span-2">
                     <PatientLineChart/>
                 </div>
 
-                <div>
+                <div className="col-span-2 md:col-span-1 mt-[1rem] md:mt-0">
                     <DiseasesBarChart/>
                 </div>
             </div>
 
-            <div className="grid md:grid-cols-3 mt-[3rem] gap-4">
-                <div className="col-span-1">
+            <div className="grid md:grid-cols-3 mt-[2rem] md:mt-[3rem] gap-4">
+                <div className="col-span-2 md:col-span-1">
                     <DoctorSkillsPieChart/>
                 </div>
 
-                <div className="col-span-2">
+                <div className="col-span-2 mt-[1rem] md:mt-0">
                     <AppointmentsTable/>
                 </div>
             </div>
