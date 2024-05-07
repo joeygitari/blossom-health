@@ -28,20 +28,18 @@ const MedicDashboard = () => {
 
     return (
         <DefaultLayout>
-            <div className="grid md:grid-cols-5 gap-4">
-                <div className="col-span-2 md:col-span-3 rounded-sm border border-stroke bg-black cursor-pointer dark:bg-white">
-                    <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid lg:grid-cols-5 gap-4">
+                <div className="col-span-2 lg:col-span-3 rounded-sm border border-stroke bg-black cursor-pointer dark:bg-white">
+                    <div className="grid lg:grid-cols-2 gap-4">
                         <div>
-                            <h3 className="font-poppins font-bold text-white text-[30px] p-4 dark:text-black">
-                                Welcome back, <br/>
-                                Joey Gitari
+                            <h3 className="font-poppins font-bold text-white text-[30px] p-4 dark:text-black md:whitespace-nowrap lg:whitespace-normal">
+                                Welcome back, Joey Gitari
                             </h3>
 
-                            <p className="font-poppins font-normal text-white text-[16px] p-4 dark:text-black">
-                                Lorem ipsum dolor sit amet, <br/>
-                                consectetur adipisicing elit, <br/>
-                                sed do eiusmod tempor.
+                            <p className="font-poppins font-normal text-white text-[16px] p-4 dark:text-black md:whitespace-nowrap lg:whitespace-normal">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.
                             </p>
+
 
                             <div className="p-4">
                                 <div
@@ -50,7 +48,7 @@ const MedicDashboard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="hidden md:block">
+                        <div className="hidden lg:block">
                             <img src={Doctors} alt="Doctors" className="w-full h-full ml-auto md:mt-[3.5rem]"/>
                         </div>
                     </div>
@@ -58,7 +56,7 @@ const MedicDashboard = () => {
 
 
                 <div className="col-span-2 md:col-span-2">
-                    <div className="mt-3 md:mt-0 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-black w-full md:w-auto">
+                    <div className="mt-3 lg:mt-0 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-black w-full md:w-auto">
                         <div className="py-6 px-4 md:px-6 xl:px-7.5">
                             <h4 className="text-xl font-poppins font-semibold text-black dark:text-white">
                                 Recent Patients
@@ -110,22 +108,22 @@ const MedicDashboard = () => {
                 </div>
             </div>
 
-            <div className="grid md:grid-cols-3 mt-[2rem] md:mt-[3rem] gap-4 md:gap-6 2xl:gap-7.5">
+            <div className="grid lg:grid-cols-3 mt-[2rem] lg:mt-[3rem] gap-4 lg:gap-6 2xl:gap-7.5">
                 <div className="col-span-2">
                     <PatientLineChart/>
                 </div>
 
-                <div className="col-span-2 md:col-span-1 mt-[1rem] md:mt-0">
+                <div className="col-span-2 lg:col-span-1 mt-[1rem] lg:mt-0">
                     <DiseasesBarChart/>
                 </div>
             </div>
 
-            <div className="grid md:grid-cols-3 mt-[2rem] md:mt-[3rem] gap-4">
-                <div className="col-span-2 md:col-span-1">
+            <div className="grid lg:grid-cols-3 mt-[2rem] lg:mt-[3rem] gap-4">
+                <div className="col-span-2 lg:col-span-1">
                     <DoctorSkillsPieChart/>
                 </div>
 
-                <div className="col-span-2 mt-[1rem] md:mt-0">
+                <div className="col-span-2 mt-[1rem] lg:mt-0">
                     <AppointmentsTable/>
                 </div>
             </div>
