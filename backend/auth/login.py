@@ -1,9 +1,29 @@
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, session
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin
+from flask_session import Session
 import psycopg2
 import hashlib
 
 login_user = Blueprint('login', __name__)
+
+# Initialize Flask-Login
+login_manager = LoginManager()
+login_manager.login_view = 'login.login_user_handler'
+
+# Example User class (you can create your own)
+class User(UserMixin):
+    def __init__(self, user_id, role):
+        self.id = user_id
+        self.role = role
+
+@login_manager.user_loader
+def load_user(user_id):
+    # Example implementation, you may need to modify based on your actual User class
+    role = session.get('role')
+    if user_id and role:
+        return User(user_id, role)
+    return None
+
 
 # Database connection details
 db_host = 'localhost'
@@ -26,6 +46,8 @@ def login_user_handler():
                     patientid, stored_password = row
                     hashed_password = hashlib.sha256(password.encode()).hexdigest()
                     if stored_password == hashed_password:
+                        session['user_id'] = patientid
+                        session['role'] = 'patient'
                         return jsonify({'message': 'Login successful', 'user_id': patientid, 'role': 'patient'})
                     else:
                         return jsonify({'error': 'Incorrect password'})
@@ -37,6 +59,8 @@ def login_user_handler():
                     practitionerid, stored_password = row
                     hashed_password = hashlib.sha256(password.encode()).hexdigest()
                     if stored_password == hashed_password:
+                        session['user_id'] = practitionerid
+                        session['role'] = 'practitioner'
                         return jsonify({'message': 'Login successful' , 'user_id': practitionerid, 'role': 'practitioner'})
                     else:
                         return jsonify({'error': 'Incorrect password'})
@@ -48,26 +72,3 @@ def login_user_handler():
         return jsonify({'error': 'Database error: ' + str(e)})
     except Exception as e:
         return jsonify({'error': str(e)})
-
-def load_user(patientid=None, practitionerid=None):
-    try:
-        with psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=db_password) as conn:
-            with conn.cursor() as cursor:
-                if patientid is not None:
-                    # Load user from the patients table using patient_id
-                    cursor.execute("SELECT patientid, patientemail FROM patients WHERE patientid = %s", (patientid,))
-                    row = cursor.fetchone()
-                    if row:
-                        patientid, email = row
-                        return User(patientid)
-                elif practitionerid is not None:
-                    # Load user from the medicalpractitioner table using practitioner_id
-                    cursor.execute("SELECT practitionerid, practitioneremail FROM medicalpractitioner WHERE practitionerid = %s", (practitionerid,))
-                    row = cursor.fetchone()
-                    if row:
-                        practitionerid, email = row
-                        return User(practitionerid)
-
-                return None  # User not found
-    except psycopg2.Error as e:
-        return None

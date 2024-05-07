@@ -1,21 +1,4 @@
 import React from 'react';
-import Home1 from "../assets/images/Home1.png";
-import Home2 from "../assets/images/Home2.png";
-import Home4 from "../assets/images/Home4.png";
-import Home5 from "../assets/images/Home5.png";
-import Partner1 from "../assets/images/Partner1.png";
-import Partner2 from "../assets/images/Partner2.png";
-import Partner3 from "../assets/images/Partner3.png";
-import Partner4 from "../assets/images/Partner4.png";
-import Partner5 from "../assets/images/Partner5.png";
-import Line1 from "../assets/images/Line1.png";
-import Line2 from "../assets/images/Line2.png";
-import Line5 from "../assets/images/Line5.png";
-import Do1 from "../assets/images/Do1.png";
-import Do2 from "../assets/images/Do2.png";
-import Do3 from "../assets/images/Do3.png";
-import Icon from "../assets/images/Icon.png";
-import {Card} from "@material-tailwind/react";
 import Footer from "./Footer";
 import Header from "./Header";
 import AboutImg1 from "../assets/images/AboutImg1.png";
@@ -52,6 +35,7 @@ const About = () => {
                     </div>
                 </div>
             </div> */}
+            <Footer/>
         </>
     )
 }

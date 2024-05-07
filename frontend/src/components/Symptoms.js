@@ -62,6 +62,28 @@ const Symptoms = () => {
         })
     };
 
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch('/submit-symptoms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ selected_symptoms: selectedSymptoms.map(symptom => symptom.value) })
+            });
+            if (!response.ok) {
+                throw new Error('Failed to submit symptoms');
+            }
+            // Handle success
+            console.log('Symptoms submitted successfully');
+        } catch (error) {
+            console.error('Error submitting symptoms:', error);
+            // Handle error
+        }
+    };
+
+
+
     return (
         <section className="bg-[#F7FAFC]">
             <div className="container mx-auto">
@@ -165,6 +187,7 @@ const Symptoms = () => {
                                 </div>
 
                                 <div
+                                    onClick={handleSubmit}
                                     className="font-poppins bg-[#FF8585] mx-auto mt-4 mb-6 w-[347px] h-[50px] font-semibold rounded-full text-white text-[16px] text-center px-4 py-3 cursor-pointer">
                                     Submit symptoms
                                 </div>
