@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import Line3 from "../assets/images/Line3.png";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast, Slide } from "react-toastify";
@@ -13,7 +12,7 @@ const LoginForm = () => {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
-    
+
      const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);

@@ -9,8 +9,11 @@ import Services from "./Services";
 import Symptoms from './Symptoms';
 import PatientProfile from "./PatientProfile";
 import PatientVitals from "./PatientVitals";
-import PatientDashboard from './dashboards/PatientDashboard';
-import MedicDashboard from './dashboards/MedicDashboard';
+import PatientDashboard from './dashboards/PatientDashboard/PatientDashboard';
+import MedicDashboard from './dashboards/MedicDashboard/MedicDashboard';
+import Appointments from "./dashboards/MedicDashboard/Appointments";
+import Patients from "./dashboards/MedicDashboard/Patients";
+import Settings from "./dashboards/MedicDashboard/Settings";
 
 const App = () => {
   return (
@@ -26,7 +29,10 @@ const App = () => {
           <Route exact path="/patient-profile" element={<PatientProfile />} />
           <Route exact path="/patient-vitals" element={<PatientVitals />} />
           <Route exact path="/patient-dashboard" element={<PatientDashboard />} />
-          <Route exact path="/medic-dashboard" element={<MedicDashboard />} />
+          <Route exact path="/medic-dashboard/home" element={<MedicDashboard />} />
+          <Route exact path="/medic-dashboard/appointments" element={<Appointments />} />
+          <Route exact path="/medic-dashboard/patients" element={<Patients />} />
+          <Route exact path="/medic-dashboard/settings" element={<Settings />} />
         </Routes>
       </Router>
   );
