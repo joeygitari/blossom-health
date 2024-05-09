@@ -6,14 +6,22 @@ import Register from './Register';
 import About from "./About";
 import Contact from "./Contact";
 import Services from "./Services";
-import Symptoms from './Symptoms';
+// import Symptoms from './Symptoms';
 import PatientProfile from "./PatientProfile";
 import PatientVitals from "./PatientVitals";
 import PatientDashboard from './dashboards/PatientDashboard/PatientDashboard';
 import MedicDashboard from './dashboards/MedicDashboard/MedicDashboard';
 import Appointments from "./dashboards/MedicDashboard/Appointments";
 import Patients from "./dashboards/MedicDashboard/Patients";
+import Reports from './dashboards/MedicDashboard/Reports';
 import Settings from "./dashboards/MedicDashboard/Settings";
+import Symptoms from './dashboards/PatientDashboard/Symptoms';
+import Appointments2 from "./dashboards/PatientDashboard/Appointments";
+import Medications from "./dashboards/PatientDashboard/Medications";
+import Labs from './dashboards/PatientDashboard/Labs';
+import Images from './dashboards/PatientDashboard/Images';
+import Reports2 from './dashboards/PatientDashboard/Reports';
+import Settings2 from "./dashboards/PatientDashboard/Settings";
 
 const App = () => {
   return (
@@ -25,15 +33,23 @@ const App = () => {
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/services" element={<Services />} />
-          <Route exact path="/symptoms" element={<Symptoms />} />
+          {/* <Route exact path="/symptoms" element={<Symptoms />} /> */}
           <Route exact path="/patient-profile" element={<PatientProfile />} />
           <Route exact path="/patient-vitals" element={<PatientVitals />} />
           <Route exact path="/patient-dashboard/home" element={<PatientDashboard />} />
           <Route path="/patient-dashboard" element={<Navigate replace to="/patient-dashboard/home" />} />
+          <Route exact path="/patient-dashboard/symptoms" element={<Symptoms />} />
+          <Route exact path="/patient-dashboard/appointments" element={<Appointments2 />} />
+          <Route exact path="/patient-dashboard/medications" element={<Medications />} />
+          <Route exact path="/patient-dashboard/labs" element={<Labs />} />
+          <Route exact path="/patient-dashboard/images" element={<Images />} />
+          <Route exact path="/patient-dashboard/reports" element={<Reports2 />} />
+          <Route exact path="/patient-dashboard/settings" element={<Settings2 />} />
           <Route exact path="/medic-dashboard/home" element={<MedicDashboard />} />
           <Route path="/medic-dashboard" element={<Navigate replace to="/medic-dashboard/home" />} />
           <Route exact path="/medic-dashboard/appointments" element={<Appointments />} />
           <Route exact path="/medic-dashboard/patients" element={<Patients />} />
+          <Route exact path="/medic-dashboard/reports" element={<Patients />} />
           <Route exact path="/medic-dashboard/settings" element={<Settings />} />
         </Routes>
       </Router>
