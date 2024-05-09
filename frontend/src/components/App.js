@@ -29,6 +29,7 @@ const App = () => {
           <Route exact path="/patient-profile" element={<PatientProfile />} />
           <Route exact path="/patient-vitals" element={<PatientVitals />} />
           <Route exact path="/patient-dashboard" element={<PatientDashboard />} />
+          <Route path="/patient-dashboard" element={<Navigate replace to="/patient-dashboard/home" />} />
           <Route exact path="/medic-dashboard/home" element={<MedicDashboard />} />
           <Route path="/medic-dashboard" element={<Navigate replace to="/medic-dashboard/home" />} />
           <Route exact path="/medic-dashboard/appointments" element={<Appointments />} />
