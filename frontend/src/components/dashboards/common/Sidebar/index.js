@@ -115,7 +115,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                     return (
                                         <React.Fragment>
                                             <NavLink
-                                                to="/medic-dashboard/home"
+                                                to={currentUser?.role === 'practitioner' ? "/medic-dashboard/home" : (currentUser?.role === 'patient' ? "/patient-dashboard/home" : "/login")}
                                                 className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-poppins font-medium text-black duration-300 ease-in-out hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-primary ${
                                                     pathname.includes('home') &&
                                                     'bg-primary text-white dark:bg-primary dark:text-white'
@@ -153,23 +153,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                                     />
                                                 </svg>
                                                 Dashboard
-                                                {/*<svg*/}
-                                                {/*    className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${*/}
-                                                {/*        open && 'rotate-180'*/}
-                                                {/*    }`}*/}
-                                                {/*    width="20"*/}
-                                                {/*    height="20"*/}
-                                                {/*    viewBox="0 0 20 20"*/}
-                                                {/*    fill="none"*/}
-                                                {/*    xmlns="http://www.w3.org/2000/svg"*/}
-                                                {/*>*/}
-                                                {/*    <path*/}
-                                                {/*        fillRule="evenodd"*/}
-                                                {/*        clipRule="evenodd"*/}
-                                                {/*        d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"*/}
-                                                {/*        fill=""*/}
-                                                {/*    />*/}
-                                                {/*</svg>*/}
                                             </NavLink>
 
                                         </React.Fragment>
@@ -182,7 +165,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             {/* <!-- Menu Item Appointments --> */}
                             <li>
                                 <NavLink
-                                    to="/medic-dashboard/appointments"
+                                    // to="/medic-dashboard/appointments"
+                                    to={currentUser?.role === 'practitioner' ? "/medic-dashboard/appointments" : (currentUser?.role === 'patient' ? "/patient-dashboard/appointments" : "/login")}
                                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-poppins font-medium text-black duration-300 ease-in-out hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-primary ${
                                         pathname.includes('appointments') &&
                                         'bg-primary text-white dark:bg-primary dark:text-white'
@@ -335,7 +319,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             {/* <!-- Menu Item Reporst --> */}
                             <li>
                                 <NavLink
-                                    to="/dashboard/reports"
+                                    // to="/dashboard/reports"
+                                    to={currentUser?.role === 'practitioner' ? "/medic-dashboard/reports" : (currentUser?.role === 'patient' ? "/patient-dashboard/reports" : "/login")}
                                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-poppins font-medium text-black duration-300 ease-in-out hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-primary ${
                                         pathname.includes('reports') &&
                                         'bg-primary text-white dark:bg-primary dark:text-white'
@@ -350,7 +335,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             {/* <!-- Menu Item Settings --> */}
                             <li>
                                 <NavLink
-                                    to="/medic-dashboard/settings"
+                                    // to="/medic-dashboard/settings"
+                                    to={currentUser?.role === 'practitioner' ? "/medic-dashboard/settings" : (currentUser?.role === 'patient' ? "/patient-dashboard/settings" : "/login")}
                                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-poppins font-medium text-black duration-300 ease-in-out hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-primary ${
                                         pathname.includes('settings') &&
                                         'bg-primary text-white dark:bg-primary dark:text-white'
