@@ -48,6 +48,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         }
     }, [sidebarExpanded]);
 
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        const userData = localStorage.getItem('userData');
+        if (userData) {
+            setCurrentUser(JSON.parse(userData));
+        }
+    }, []);
 
     return (
         <aside
@@ -200,6 +208,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
 
                             {/* <!-- Menu Item Patients --> */}
+                            {currentUser?.role === 'practitioner' && (
                             <li>
                                 <NavLink
                                     to="/medic-dashboard/patients"
@@ -228,7 +237,115 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                     Patients
                                 </NavLink>
                             </li>
+                            )}
+                           
                             {/* <!-- Menu Item Patients --> */}
+
+                            {/* <!-- Menu Item Medication --> */}
+                            {currentUser?.role === 'patient' && (
+                            <li>
+                                <NavLink
+                                    to="/patient-dashboard/medications"
+                                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-poppins font-medium text-black duration-300 ease-in-out hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-primary ${
+                                        pathname.includes('medications') &&
+                                        'bg-primary text-white dark:bg-primary dark:text-white'
+                                    }`}
+                                >
+                                    <svg 
+                                        xmlns="http://www.w3.org/2000/svg" 
+                                        width="24" 
+                                        height="24" 
+                                        viewBox="0 0 24 24" 
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        stroke-width="2" 
+                                        stroke-linecap="round" 
+                                        stroke-linejoin="round" 
+                                        class="lucide lucide-pill"
+                                    >
+                                        <path 
+                                            d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"
+                                        />
+                                        <path 
+                                            d="m8.5 8.5 7 7"
+                                            />
+                                    </svg>
+                                    Medications
+                                </NavLink>
+                            </li>
+                            )}
+                            {/* <!-- Menu Item Medication --> */}
+
+                            {/* <!-- Menu Item Labs --> */}
+                            {currentUser?.role === 'patient' && (
+                            <li>
+                                <NavLink
+                                    to="/patient-dashboard/labs"
+                                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-poppins font-medium text-black duration-300 ease-in-out hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-primary ${
+                                        pathname.includes('labs') &&
+                                        'bg-primary text-white dark:bg-primary dark:text-white'
+                                    }`}
+                                >
+                                    <svg 
+                                        xmlns="http://www.w3.org/2000/svg" 
+                                        width="24" 
+                                        height="24" 
+                                        viewBox="0 0 24 24" 
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        stroke-width="2" 
+                                        stroke-linecap="round" 
+                                        stroke-linejoin="round" 
+                                        class="lucide lucide-flask-conical"
+                                    >
+                                        <path 
+                                            d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"
+                                        />
+                                        <path 
+                                            d="M8.5 2h7"
+                                        />
+                                        <path 
+                                            d="M7 16h10"
+                                        />
+                                    </svg>
+                                    Labs
+                                </NavLink>
+                            </li>
+                            )}
+                            {/* <!-- Menu Item Labs --> */}
+
+                            {/* <!-- Menu Item Imaging --> */}
+                            {currentUser?.role === 'patient' && (
+                            <li>
+                                <NavLink
+                                    to="/patient-dashboard/images"
+                                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-poppins font-medium text-black duration-300 ease-in-out hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-primary ${
+                                        pathname.includes('images') &&
+                                        'bg-primary text-white dark:bg-primary dark:text-white'
+                                    }`}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-microscope"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></svg>
+                                    Images
+                                </NavLink>
+                            </li>
+                            )}
+                            
+                            {/* <!-- Menu Item Imaging --> */}
+    
+                            {/* <!-- Menu Item Reporst --> */}
+                            <li>
+                                <NavLink
+                                    to="/dashboard/reports"
+                                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-poppins font-medium text-black duration-300 ease-in-out hover:bg-black hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-primary ${
+                                        pathname.includes('reports') &&
+                                        'bg-primary text-white dark:bg-primary dark:text-white'
+                                    }`}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-line-chart"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                                    Reports
+                                </NavLink>
+                            </li>
+                            {/* <!-- Menu Item Reports --> */}
 
                             {/* <!-- Menu Item Settings --> */}
                             <li>

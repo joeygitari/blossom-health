@@ -16,7 +16,6 @@ const PatientDashboard = () => {
             setCurrentUser(JSON.parse(userData));
         }
     }, []);
-    
 
     return (
         <DefaultLayout>
