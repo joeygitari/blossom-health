@@ -121,36 +121,17 @@ const DropdownUser = () => {
                     </li>
                     <li>
                         <Link
-                            to="/contacts"
+                            to="/profile"
                             className="flex items-center gap-3.5 text-black text-sm font-medium duration-300 ease-in-out dark:text-bodydark1 dark:hover:text-white"
                         >
-                            <svg
-                                className="fill-current"
-                                width="22"
-                                height="22"
-                                viewBox="0 0 22 22"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M11 10.9999C12.65 10.9999 13.9999 9.64996 13.9999 7.99996C13.9999 6.34996 12.65 4.99996 11 4.99996C9.35004 4.99996 7.99994 6.34996 7.99994 7.99996C7.99994 9.64996 9.35004 10.9999 11 10.9999ZM11 3.49996C13.8641 3.49996 16.2249 5.85512 16.2249 8.79996C16.2249 11.7448 13.8641 14.1 11 14.1C8.13585 14.1 5.77502 11.7448 5.77502 8.79996C5.77502 5.85512 8.13585 3.49996 11 3.49996Z"
-                                    fill=""
-                                />
-                                <path
-                                    d="M18.3799 20.1249H3.61994C2.65541 20.1249 1.87494 19.3445 1.87494 18.3799V15.9874C1.87494 12.8187 5.36883 9.69237 9.55161 9.69237H12.4484C16.6312 9.69237 20.1251 12.8187 20.1251 15.9874V18.3799C20.1251 19.3445 19.3447 20.1249 18.3799 20.1249ZM3.93161 19.5487H18.0674V16.3499C18.0674 13.7362 15.5633 11.2324 12.9484 11.2324H9.55161C6.93683 11.2324 4.43277 13.7362 4.43277 16.3499V19.5487H3.93161Z"
-                                    fill=""
-                                />
-                            </svg>
-                            <span>My Contacts</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                            <span>Log out</span>
                         </Link>
                     </li>
                 </ul>
-                <button className="block w-full px-6 py-3.5 text-sm font-medium text-left text-primary bg-transparent duration-300 ease-in-out dark:hover:text-white lg:text-base">
-                    Account Settings
-                </button>
-                <button className="block w-full px-6 py-3.5 text-sm font-medium text-left text-primary bg-transparent duration-300 ease-in-out dark:hover:text-white lg:text-base">
+                {/* <button className="block w-full px-6 py-3.5 text-sm font-medium text-left text-primary bg-transparent duration-300 ease-in-out dark:hover:text-white lg:text-base">
                     Log Out
-                </button>
+                </button> */}
             </div>
             {/* <!-- Dropdown End --> */}
         </div>
