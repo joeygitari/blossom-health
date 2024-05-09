@@ -67,10 +67,10 @@ const Symptoms = () => {
     return (
         <DefaultLayout>
             <div className="grid md:grid-cols-1">
-                <p className="font-poppins font-bold text-[48px] text-[#172048] mt-[1rem]">Select your current
+                <p className="font-poppins font-bold text-[48px] text-[#172048] dark:text-white mt-[1rem]">Select your current
                         symptoms</p>
 
-                <div className="mt-[2rem] font-poppins">
+                <div className="mt-[2rem] font-poppins dark:text-[#172048]">
                     <Select
                         isMulti
                         options={symptoms}
@@ -87,7 +87,7 @@ const Symptoms = () => {
                                     <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                                         <div className="overflow-hidden">
                                             <table
-                                                className="min-w-full border border-neutral-200 text-center text-sm font-light text-surface">
+                                                className="min-w-full border border-neutral-200 text-center text-sm font-light text-surface dark:text-[#172048]">
                                                     <thead
                                                     className="border-b border-neutral-200 font-medium">
                                                 <tr className="font-poppins font-medium">
