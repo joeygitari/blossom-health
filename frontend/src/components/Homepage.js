@@ -27,14 +27,13 @@ const Homepage = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                     <div className="md:mt-[5rem]">
                         <p className="font-poppins font-bold text-[#172048] text-[29px] md:text-[58px]">
-                            We help our women's <br/>
-                            <span className="text-[#F70000]">Reproduction</span> <br/>
-                            Problems
+                            Making women's <br/>
+                            <span className="text-[#F70000]">healthcare and wellness</span> <br/>
+                            more accessible
                         </p>
 
                         <p className="font-poppins font-normal text-[11px] md:text-[22px] text-[#C4C4C4] leading-5 md:leading-10 md:mt-5 sm:mt-3">
-                            Your number 1 trusted women's clinic, we help women
-                            with reproductive issues, and assess pregnancy risks.
+                            We help women check their reproductive health, schedule appointments, and consult medical experts on reproductive health issues
                         </p>
 
                         {/* <div
@@ -42,7 +41,7 @@ const Homepage = () => {
                             <a href="/tryfreeconsultation">Try Free Consultation</a>
                         </div> */}
 
-                        <div className="flex gap-20 md:gap-40 mt-[2rem] md:mt-[4rem]">
+                        {/* <div className="flex gap-20 md:gap-40 mt-[2rem] md:mt-[4rem]">
                             <div>
                                 <p className="font-poppins font-bold text-[18px] md:text-[36px] text-[#172048]">
                                     200<span className="text-[#FF8585]">+</span>
@@ -64,7 +63,7 @@ const Homepage = () => {
                                     </p>
                                 </p>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="mt-[2.5rem] md:mt-[5rem]">
@@ -73,7 +72,7 @@ const Homepage = () => {
                 </div>
 
 
-                <div className="mt-[3.5rem] md:mt-[7rem]">
+                {/* <div className="mt-[3.5rem] md:mt-[7rem]">
                     <h3 className="font-poppins font-medium text-[20px] text-[#BFBFBF] text-center tracking-[6.30px]">PARTNERS</h3>
                     <div className="grid md:grid-cols-5 gap-12 justify-center">
                         <div className="mt-5 flex justify-center">
@@ -92,7 +91,7 @@ const Homepage = () => {
                             <img className="md:h-[97px] w-[115px] sm:h-full" alt="Partner5" src={Partner5}/>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
 
                 <div className="mt-[1.5rem] md:mt-[3rem] flex justify-center items-center">
@@ -161,15 +160,14 @@ const Homepage = () => {
                             <img className="mt-2 md:mt-4" alt="Line1" src={Line1}/>
 
                             <p className="font-poppins font-medium md:text-[14px] text-[#C4C4C4] leading-8">
-                                Here at Blossom Health we help women with their reproductive health, we&nbsp;
+                                At Blossom Health, we aim to promote healthy lifestyes.&nbsp;
                                 <span className="hidden md:inline-block">
                                     <br/>
                                 </span>
-                                foresee what you can’t, for the purpose of early intervention&nbsp;
+                                We prioritize women's healthcare by providing convenient, hassle free access to quality healthcare services and wellness information&nbsp;
                                 <span className="hidden md:inline-block">
                                     <br/>
                                 </span>
-                                and ensure a safe and health lifestyle and a healthy living for you and your family.
                             </p>
 
 
@@ -180,22 +178,21 @@ const Homepage = () => {
                                              alt="Icon"/>
 
                                         <p className="font-poppins font-bold text-[20px] text-[#172048]">
-                                            Lorem Ipsum
+                                            Convenient virtual visits
                                         </p>
                                         <p className="font-poppins font-medium text-[12px] text-[#C4C4C4] leading-6">
-                                            Lorem ipsum dolor sit amet,&nbsp;
+                                            Schedule a virtual visit&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            consectetur adipiscing elit. Ornare&nbsp;
+                                            with a qualified specialists&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            tellus malesuada odio blandit. Sit duis&nbsp;
+                                            from the comfort of your home.&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            eu nisi habitant lorem egestas.
                                         </p>
                                     </div>
 
@@ -204,22 +201,22 @@ const Homepage = () => {
                                              alt="Icon"/>
 
                                         <p className="font-poppins font-bold text-[20px] text-[#172048]">
-                                            Lorem Ipsum
+                                            Predictive screening 
                                         </p>
                                         <p className="font-poppins font-medium text-[12px] text-[#C4C4C4] leading-6">
-                                            Lorem ipsum dolor sit amet,&nbsp;
+                                            Unlock the power of Machine Learning!&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            consectetur adipiscing elit. Ornare&nbsp;
+                                            Our platform uses advanced ML algorithms to analyze health data&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            tellus malesuada odio blandit. Sit duis&nbsp;
+                                            and identify potential risks early on, improving health outcomes.&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            eu nisi habitant lorem egestas.
+                                            
                                         </p>
                                     </div>
                                 </div>
@@ -230,22 +227,18 @@ const Homepage = () => {
                                              alt="Icon"/>
 
                                         <p className="font-poppins font-bold text-[20px] text-[#172048]">
-                                            Lorem Ipsum
+                                            Health and wellness education 
+
                                         </p>
                                         <p className="font-poppins font-medium text-[12px] text-[#C4C4C4] leading-6">
-                                            Lorem ipsum dolor sit amet,&nbsp;
+                                            Empower yourself with knowledge about women’s health issues,&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            consectetur adipiscing elit. Ornare&nbsp;
+                                            wellness practices and products that help.&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            tellus malesuada odio blandit. Sit duis&nbsp;
-                                            <span className="hidden md:inline-block">
-                                                <br/>
-                                            </span>
-                                            eu nisi habitant lorem egestas.
                                         </p>
                                     </div>
 
@@ -254,22 +247,17 @@ const Homepage = () => {
                                              alt="Icon"/>
 
                                         <p className="font-poppins font-bold text-[20px] text-[#172048]">
-                                            Lorem Ipsum
+                                            Supportive community 
                                         </p>
                                         <p className="font-poppins font-medium text-[12px] text-[#C4C4C4] leading-6">
-                                            Lorem ipsum dolor sit amet,&nbsp;
+                                            Join a community of women navigating similar health journeys,&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            consectetur adipiscing elit. Ornare&nbsp;
+                                            share experiences and offer a safe and supportive environment.&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            tellus malesuada odio blandit. Sit duis&nbsp;
-                                            <span className="hidden md:inline-block">
-                                                <br/>
-                                            </span>
-                                            eu nisi habitant lorem egestas.
                                         </p>
                                     </div>
                                 </div>
@@ -280,7 +268,7 @@ const Homepage = () => {
                 </div>
 
 
-                <div className="mt-[5rem] md:mt-[10rem]">
+                {/* <div className="mt-[5rem] md:mt-[10rem]">
                     <div className="grid md:grid-cols-2">
                         <div>
                             <p className="px-3 font-poppins font-semibold text-[18px] text-[#172048]">Our Doctors</p>
@@ -295,18 +283,13 @@ const Homepage = () => {
                             </p>
 
                             <img className="mt-4 md:h-[335px] w-[500px]" alt="Home5" src={Home5}/>
-
-                            {/*<div*/}
-                            {/*    className="mt-[2rem] font-poppins bg-[#FF8585] w-[211px] h-[55px] font-normal rounded-full text-white text-[16px] text-center  py-4 cursor-pointer">*/}
-                            {/*    <a href="/viewdoctors">View All Doctors</a>*/}
-                            {/*</div>*/}
                         </div>
 
                         <div>
                             <img className="mt-4 md:h-[593px] w-[605px] " alt="Home4" src={Home4}/>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <Card className="mt-[2.5rem] md:mt-[5rem] p-[7rem]">
                     <div>
@@ -315,7 +298,7 @@ const Homepage = () => {
                                 with Blossom Health</h4>
 
                             <img className="mx-auto mt-4" alt="Line5" src={Line5}/>
-                            <p className="mt-[2rem] font-poppins font-medium text-[18px] text-[#C4C4C4] leading-8">
+                            {/* <p className="mt-[2rem] font-poppins font-medium text-[18px] text-[#C4C4C4] leading-8">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sodales morbi tristique libero
                                 urna sem
                                 <span className="hidden md:inline-block">
@@ -334,7 +317,7 @@ const Homepage = () => {
                                     <br/>
                                 </span>
                                 vitae. Viverra facilisis rhoncus et, nibh nullam vitae laoreet.
-                            </p>
+                            </p> */}
 
 
                             <div className="mt-[4rem] flex justify-center">

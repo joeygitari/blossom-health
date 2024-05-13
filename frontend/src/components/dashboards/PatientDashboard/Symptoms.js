@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Select from 'react-select';
 import SymptomsImg from "../../../assets/images/SymptomsImg.png";
 import {Card} from "@material-tailwind/react";
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom";
 import DefaultLayout from "../layout/DefaultLayout";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
