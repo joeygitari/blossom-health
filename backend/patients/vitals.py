@@ -17,39 +17,45 @@ def submit_profile():
         user_id = session.get('user_id')
         if not user_id:
             return jsonify({'error': 'User not logged in'})
+        
+        data = request.json
+        print('Received data:', data) 
 
         # Get data from form
-        patientNames = request.form.get('patientNames')
-        medicalhistory = request.form.get('medicalHistory')
-        familyhistory = request.form.get('familyHistory')
-        menstrualhistory = request.form.get('menstrualHistory')
-        medications = request.form.get('medications')
-        allergies = request.form.get('allergies')
-        weight = request.form.get('weight')
-        height = request.form.get('height')
-        bmi = request.form.get('bmi')
-        bloodgroup = request.form.get('bloodGroup')
-        bloodsugar = request.form.get('bloodSugar')
-        bloodpressure = request.form.get('bloodPressure')
-        heartrate = request.form.get('heartRate')
-        bodytemperature = request.form.get('bodyTemperature')
-        respiratoryrate = request.form.get('respiratoryRate')
-        gravidity = request.form.get('gravidity')
-        parity = request.form.get('parity')
+        patientNames = data.get('patientNames')
+        medicalhistory = data.get('medicalHistory')
+        familyhistory = data.get('familyHistory')
+        menstrualhistory = data.get('menstrualHistory')
+        medications = data.get('medications')
+        allergies = data.get('allergies')
+        weight = data.get('weight')
+        height = data.get('height')
+        bmi = data.get('bmi')
+        bloodgroup = data.get('bloodGroup')
+        bloodsugar = data.get('bloodSugar')
+        bloodpressure = data.get('bloodPressure')
+        heartrate = data.get('heartRate')
+        bodytemperature = data.get('bodyTemperature')
+        respiratoryrate = data.get('respiratoryRate')
+        gravidity = data.get('gravidity')
+        parity = data.get('parity')
         
         # Database connection
         with psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=db_password) as conn:
             with conn.cursor() as cursor:
                 # Fetch or insert patient
-                cursor.execute("SELECT patientid FROM patients WHERE patientname = %s", (patientNames,))
-                existing_patient = cursor.fetchone()
-                if existing_patient:
-                    patientid = existing_patient[0]  # Extracting patient ID from the result
+                # cursor.execute("SELECT patientid FROM patients WHERE patientname = %s", (patientNames,))
+                if patientNames is not None:
+                    cursor.execute("SELECT patientid FROM patients WHERE LOWER(patientname) = LOWER(%s)", (patientNames.lower(),))
+                    existing_patient = cursor.fetchone()
+                    if existing_patient:
+                        patientid = existing_patient[0]  # Extracting patient ID from the result
+                    else:
+                        # Insert new patient and get the ID
+                        cursor.execute("INSERT INTO patients (patientname) VALUES (%s) RETURNING patientid", (patientNames,))
+                        patientid = cursor.fetchone()[0]
                 else:
-                    # Insert new patient and get the ID
-                    cursor.execute("INSERT INTO patients (patientname) VALUES (%s) RETURNING patientid", (patientNames,))
-                    patientid = cursor.fetchone()[0]
-
+                    return jsonify({'error': 'Patient name is missing or invalid'})
                 # Insert/update data in profile table
                 cursor.execute("""
                     INSERT INTO patientprofile (profileid, patientid, practitionerid, medicalhistory, familyhistory, menstrualhistory, medication, allergies, weight, height, bmi, bloodgroup, bloodsugar, bloodpressure, heartrate, bodytemperature, respiratoryrate, gravidity, parity)

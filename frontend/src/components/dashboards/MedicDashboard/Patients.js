@@ -14,8 +14,6 @@ import {
     Chip,
     CardFooter,
   } from "@material-tailwind/react";
-import PatientsForm from "./PatientsForm";
-import { Link } from "react-router-dom";
 
 const Patients = () => {
     const [patients, setPatients] = useState([]);

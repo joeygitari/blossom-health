@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import DefaultLayout from '../layout/DefaultLayout';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
@@ -59,7 +59,11 @@ const PatientsForm = () => {
             if (data.error) {
                 toast.error(data.error);
             } else {
-                toast.success("Patient profile started successfully");
+                toast.success("Patient profile started successfully",{
+                    onClose: () => {
+                        navigate('/medic-dashboard/patients');
+                    }
+                });
             }
         } catch (error) {
             console.error("Error:", error);
