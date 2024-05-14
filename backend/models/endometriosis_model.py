@@ -131,7 +131,7 @@ low_corr
 
 
 # Convert correlation matrix to 1-D Series and sort
-sorted_mat = corrMatrix.unstack().sort_values()
+sorted_mat = corr_matrix.unstack().sort_values()
   
 print(sorted_mat)
 
@@ -158,8 +158,8 @@ plt.show()
 
 
 #Correlation of variables with Endometriosis
-corrMatrix = df.corr()
-print(corrMatrix['Endometriosis_YN'].sort_values(ascending = False),'\n')
+corr_matrix = df.corr()
+print(corr_matrix['Endometriosis_YN'].sort_values(ascending = False),'\n')
 
 
 # In[84]:
@@ -170,7 +170,7 @@ f , ax = plt.subplots(figsize = (14,12))
 
 plt.title('Correlation of Features with Endometriosis',y=1,size=16)
 
-sns.heatmap(corrMatrix,square = True,  vmax=0.8)
+sns.heatmap(corr_matrix,square = True,  vmax=0.8)
 
 
 # In[85]:
@@ -194,8 +194,8 @@ print(df1)
 
 
 # Correlation plot for the selected features
-corrMatrix1 = df1.corr()
-print(corrMatrix1['Endometriosis_YN'].sort_values(ascending = False),'\n')
+corr_matrix1 = df1.corr()
+print(corr_matrix1['Endometriosis_YN'].sort_values(ascending = False),'\n')
 
 
 # In[88]:
@@ -206,7 +206,7 @@ f , ax = plt.subplots(figsize = (14,12))
 
 plt.title('Correlation of Features with Endometriosis',y=1,size=16)
 
-sns.heatmap(corrMatrix1,square = True,  vmax=0.8)
+sns.heatmap(corr_matrix1,square = True,  vmax=0.8)
 
 
 # In[26]:
@@ -292,7 +292,7 @@ cnf_matrix
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-get_ipython().run_line_magic('matplotlib', 'inline')
+# get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 # In[99]:
@@ -403,7 +403,7 @@ feature_imp = pd.Series(clf.feature_importances_, index=feature_cols).sort_value
 # Feature importance plot for random forest
 import matplotlib.pyplot as plt
 import seaborn as sns
-get_ipython().run_line_magic('matplotlib', 'inline')
+# get_ipython().run_line_magic('matplotlib', 'inline')
 # Creating a bar plot
 sns.barplot(x=feature_imp, y=feature_imp.index)
 # Add labels to your graph
@@ -553,3 +553,8 @@ print("Recall: {:.2f}%".format(recall_percentage))
 
 
 # <h2> Final Performance - 97.30% precision</h2>
+
+from joblib import dump
+
+model_file = 'endometriosis_model.joblib'
+dump(clf, model_file)

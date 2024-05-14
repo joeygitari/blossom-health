@@ -804,3 +804,8 @@ print(classification_report(y_test, catboost_pred))
 # **Best Model for Deployment:**
 # 
 # Considering overall accuracy, balanced performance, and class-wise metrics, the Catboost model emerges as the most suitable for deployment. It achieves the highest overall accuracy, maintains strong precision and recall across classes, and exhibits slightly better performance than LGBM. Deploying the Catboost model would likely result in a robust and accurate classification system for the given task.
+
+from joblib import dump
+
+model_file = 'Maternal_Health_Risk.joblib'
+dump(catboost_model, model_file)

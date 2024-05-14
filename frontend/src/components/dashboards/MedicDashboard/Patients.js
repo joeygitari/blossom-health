@@ -18,6 +18,7 @@ import {
 const Patients = () => {
     const [patients, setPatients] = useState([]);
     const TABLE_HEAD = ["Patient", "Location", "Status"];
+    const [patientStatus, setPatientStatus] = useState({});
     
     useEffect(() => {
         fetchPatients();
@@ -29,7 +30,6 @@ const Patients = () => {
           if (response.ok) {
             const data = await response.json();
             setPatients(data);
-            console.log("Patients:", patients)
           } else {
             console.error("Failed to fetch patients");
           }
@@ -37,18 +37,27 @@ const Patients = () => {
           console.error("Error fetching patients:", error);
         }
     };
+
+    const handleStatusChange = (patientId, status) => {
+        setPatientStatus(prevStatus => ({
+            ...prevStatus,
+            [patientId]: status,
+        }));
+    };
+
        
     return (
         <DefaultLayout>
             <Card className="h-full w-full">
                 <CardHeader floated={false} shadow={false} className="rounded-none">
                 <div className="mb-8 flex items-center justify-between gap-8">
+                    <div></div>
                     <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                    <a href="/medic-dashboard/patient-form">
-                        <Button className="flex items-center gap-3 bg-[#172048] text-white" size="sm" variant="outlined">
-                            <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add patient biodata
-                        </Button>
-                    </a>
+                        <a href="/medic-dashboard/patient-form">
+                            <Button className="flex items-center gap-3 bg-[#172048] text-white" variant="outlined">
+                                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add patient biodata
+                            </Button>
+                        </a>
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -66,7 +75,7 @@ const Patients = () => {
                     <tr>
                         {TABLE_HEAD.map((head, index) => (
                         <th
-                            key={head}
+                            key={index}
                             className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
                         >
                             <Typography
@@ -122,12 +131,40 @@ const Patients = () => {
                                 </div>
                             </td>
                             <td className={classes}>
-                                <div className="w-max">
+                                {/* <div className="w-max">
                                 <Chip
                                     variant="ghost"
                                     size="sm"
                                     // value={healthy ? "healthy" : "sick"}
                                     // color={healthy ? "green" : "blue-gray"}
+                                />
+                                </div> */}
+                                <div className="w-max">
+                                <Chip
+                                    variant="ghost"
+                                    color={
+                                        patientStatus[patient.id] === 'recovered'
+                                            ? 'green'
+                                            : patientStatus[patient.id] === 'sick'
+                                            ? 'red'
+                                            : 'amber'
+                                    }
+                                    size="sm"
+                                    onClick={() =>
+                                        handleStatusChange(
+                                            patient.id,
+                                            patientStatus[patient.id] === 'recovered'
+                                                ? 'sick'
+                                                : patientStatus[patient.id] === 'sick'
+                                                ? 'recuperating'
+                                                : 'recovered'
+                                            )
+                                    }
+                                    value= {patientStatus[patient.id] === 'recovered'
+                                    ? 'Recovered'
+                                    : patientStatus[patient.id] === 'sick'
+                                    ? 'Sick'
+                                    : 'Recuperating'}
                                 />
                                 </div>
                             </td>

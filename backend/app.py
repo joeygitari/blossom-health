@@ -5,6 +5,7 @@ from auth.login import login_user
 from symptoms.symptoms import symptoms
 from patients.patients import patients
 from patients.vitals import vitals
+from prediction.prediction import prediction
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -17,6 +18,7 @@ app.register_blueprint(login_user)
 app.register_blueprint(symptoms)
 app.register_blueprint(patients)
 app.register_blueprint(vitals)
+app.register_blueprint(prediction)
 
 if __name__ == '__main__':
     app.run()

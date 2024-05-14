@@ -175,7 +175,7 @@ y=data["PCOS (Y/N)"]
 # In[38]:
 
 
-get_ipython().system('pip3 install imbalanced-learn')
+# get_ipython().system('pip3 install imbalanced-learn')
 from imblearn.over_sampling import RandomOverSampler 
 oversample = RandomOverSampler(sampling_strategy=0.7)
 X, y = oversample.fit_resample(X, y)
@@ -202,7 +202,7 @@ from sklearn.tree import DecisionTreeRegressor
 import math
 from sklearn.svm import SVC
 from sklearn.metrics import confusion_matrix
-from sklearn.metrics import plot_confusion_matrix
+# from sklearn.metrics import plot_confusion_matrix
 from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import roc_auc_score
@@ -309,3 +309,8 @@ print(score)
 
 # <h2> Final Performance - 93.5% precision</h2>
 # And there you have it! We've got an impressive cross validation precision, and we didn't have to do much! It just goes to show that getting into data science and machine learning is super easy!
+
+from joblib import dump
+
+model_file = 'pcos_model.joblib'
+dump(stack_model, model_file)
