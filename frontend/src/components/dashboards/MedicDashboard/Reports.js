@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import DefaultLayout from "../layout/DefaultLayout";
 import {
     MagnifyingGlassIcon,
-  } from "@heroicons/react/24/outline";
-  import {
+} from "@heroicons/react/24/outline";
+import {
     Card,
     CardHeader,
     Input,
@@ -11,11 +11,11 @@ import {
     Button,
     CardBody,
     CardFooter,
-  } from "@material-tailwind/react";
+} from "@material-tailwind/react";
 
 const Reports = () => {
     const [patients, setPatients] = useState([]);
-    const TABLE_HEAD = ["Patient", "Location", "Prediction"];
+    const TABLE_HEAD = ["Patient", "Location", "Prediction", "Recommendation"];
     
     useEffect(() => {
         fetchPatients();
@@ -27,6 +27,7 @@ const Reports = () => {
           if (response.ok) {
             const data = await response.json();
             setPatients(data);
+            // console.log(patients);
           } else {
             console.error("Failed to fetch patients");
           }
@@ -35,6 +36,19 @@ const Reports = () => {
         }
     };
 
+    const handleViewReport = async (patientId) => {
+        try {
+            const response = await fetch(`/predict/${patientId}`);
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data); // Handle the prediction data as needed
+            } else {
+                console.error("Failed to fetch predictions");
+            }
+        } catch (error) {
+            console.error("Error fetching predictions:", error);
+        }
+    };
     return (
         <DefaultLayout>
             <Card className="h-full w-full">
@@ -111,8 +125,15 @@ const Reports = () => {
                             </td>
                             <td className={classes}>
                                 <div className="w-max">
-                                    <Button className="font-poppins bg-[#FF8585] text-white" variant="outlined">
-                                        View report
+                                    <Button className="font-poppins bg-[#FF8585] text-white" variant="outlined" onClick={() => handleViewReport(patient[0])} style={{ textTransform: 'none', fontWeight: 'normal', fontSize: '13px' }}>
+                                        View prediction report
+                                    </Button>
+                                </div>
+                            </td>
+                            <td className={classes}>
+                                <div className="w-max">
+                                    <Button className="font-poppins bg-[#FF8585] text-white" variant="outlined" style={{ textTransform: 'none', fontWeight: 'normal', fontSize: '13px'}}>
+                                    Add recommendation
                                     </Button>
                                 </div>
                             </td>
