@@ -212,6 +212,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.ensemble import StackingClassifier
+import pickle
 
 
 # In[ ]:
@@ -293,24 +295,48 @@ accuracy_score(y_test, preds)
 
 
 #performing stack ensembling on xgboost and random forest
-rfc = RandomForestClassifier(n_jobs=-1,n_estimators=150,max_features='sqrt',min_samples_leaf=10)
-xgb = xgb.XGBClassifier(learning_rate = 0.001, gamma = 0.03, max_depth = 20, subsample = 0.5)
-l = [('rf',rfc), ('xgb', xgb)]
-from sklearn.ensemble import StackingClassifier
-stack_model = StackingClassifier( estimators = l)
-score = cross_val_score(stack_model,X_scaled,y,cv = 5,scoring = 'accuracy')
+# rfc = RandomForestClassifier(n_jobs=-1,n_estimators=150,max_features='sqrt',min_samples_leaf=10)
+# xgb = xgb.XGBClassifier(learning_rate = 0.001, gamma = 0.03, max_depth = 20, subsample = 0.5)
+# l = [('rf',rfc), ('xgb', xgb)]
+# from sklearn.ensemble import StackingClassifier
+# stack_model = StackingClassifier( estimators = l)
+# score = cross_val_score(stack_model,X_scaled,y,cv = 5,scoring = 'accuracy')
 
+# Train RandomForestClassifier
+rfc = RandomForestClassifier(n_jobs=-1, n_estimators=150, max_features='sqrt', min_samples_leaf=10)
+rfc.fit(X_train, y_train)
+pred_rfc = rfc.predict(X_test)
+print("RandomForestClassifier Accuracy:", accuracy_score(y_test, pred_rfc))
+print(classification_report(y_test, pred_rfc))
+
+# Train XGBClassifier
+xgb_cl = xgb.XGBClassifier(learning_rate=0.001, gamma=0.03, max_depth=20, subsample=0.5)
+xgb_cl.fit(X_train, y_train)
+preds = xgb_cl.predict(X_test)
+print("XGBClassifier Accuracy:", accuracy_score(y_test, preds))
+
+# Stack the models
+l = [('rf', rfc), ('xgb', xgb_cl)]
+stack_model = StackingClassifier(estimators=l)
+stack_model.fit(X_train, y_train)
+pred_stack = stack_model.predict(X_test)
+print("StackingClassifier Accuracy:", accuracy_score(y_test, pred_stack))
+
+# Save the model as a .pkl file
+model_file = 'pcos_model.pkl'
+with open(model_file, 'wb') as file:
+    pickle.dump(stack_model, file)
 
 # In[ ]:
 
 
-print(score)
+# print(score)
 
 
 # <h2> Final Performance - 93.5% precision</h2>
 # And there you have it! We've got an impressive cross validation precision, and we didn't have to do much! It just goes to show that getting into data science and machine learning is super easy!
 
-from joblib import dump
+# from joblib import dump
 
-model_file = 'pcos_model.joblib'
-dump(stack_model, model_file)
+# model_file = 'pcos_model.joblib'
+# dump(stack_model, model_file)

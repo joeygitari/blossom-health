@@ -747,6 +747,9 @@ print("Accuracy: {:.2f}".format(accuracy_catboost))
 print("Classification Report for CatBoost Model:")
 print(classification_report(y_test, catboost_pred))
 
+# Check feature names or indices
+print("Model Feature Names:", X.columns)
+print("Model Feature Indices:", range(len(X.columns)))
 
 # Overall accuracy: 86%, meaning it correctly classifies 86% of the instances.
 # Class-wise performance:
