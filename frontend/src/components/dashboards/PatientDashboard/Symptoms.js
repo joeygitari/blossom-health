@@ -140,9 +140,6 @@ const Symptoms = () => {
                 pauseOnHover
                 // theme="colored"
                 transition={Slide}
-                style={{
-                    color: '#FF8585'
-                }}
             />
         </DefaultLayout>
     )

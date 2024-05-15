@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserSeven from '../../../../assets/images/user-07.png';
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DropdownUser = () => {
+    const navigate = useNavigate();
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const trigger = useRef(null);
@@ -42,7 +45,19 @@ const DropdownUser = () => {
             setCurrentUser(JSON.parse(userData));
         }
     }, []);
-    
+
+    // Logout function
+    const handleLogout = () => {
+        // Clear user data from local storage
+        localStorage.removeItem('userData');
+        // Redirect the user to the login page
+        // navigate('/login');
+        toast.success("Logout successful.", {
+            onClose: () => {
+                navigate('/');
+            }
+        });
+    };
 
     return (
         <div className="relative font-poppins">
@@ -121,7 +136,8 @@ const DropdownUser = () => {
                     </li>
                     <li>
                         <Link
-                            to="/profile"
+                            to="#"
+                            onClick={handleLogout}
                             className="flex items-center gap-3.5 text-black text-sm font-medium duration-300 ease-in-out dark:text-bodydark1 dark:hover:text-white"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
@@ -134,6 +150,19 @@ const DropdownUser = () => {
                 </button> */}
             </div>
             {/* <!-- Dropdown End --> */}
+            <ToastContainer
+                position="top-right"
+                autoClose={10000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                // theme="colored"
+                transition={Slide}
+            />
         </div>
     );
 };

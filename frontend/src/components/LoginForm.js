@@ -16,7 +16,6 @@ const LoginForm = () => {
      const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
-        const email = formData.get("email");
 
         try {
             const response = await fetch("/login", {
