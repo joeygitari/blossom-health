@@ -111,6 +111,10 @@ def predict(patient_id):
         # Predict PCOS
         pcos_prediction = pcos_model.predict(pcos_features_array)[0]
 
+        # return jsonify({
+        #     'endometriosis_prediction': int(endometriosis_prediction),
+        #     'pcos_prediction': int(pcos_prediction)
+        # })
         # Retrieve patient data for maternal health risk prediction
         maternal_health_query = """
             SELECT
@@ -119,15 +123,7 @@ def predict(patient_id):
                 pp.diastolicbp AS "DiastolicBP",
                 pp.bloodsugar AS "BS",
                 pp.bodytemperature AS "BodyTemp",
-                pp.heartrate AS "HeartRate",
-                p.patientage * p.patientage AS "AgeSquared",
-                pp.heartrate::numeric / pp.bodytemperature::numeric AS "HeartRateOverBodyTemp",
-                pp.systolicbp::numeric / pp.diastolicbp::numeric AS "BloodPressureRatio",
-                p.patientage * pp.bmi AS "AgeBMIProduct",
-                pp.systolicbp::numeric - pp.diastolicbp::numeric AS "BloodPressureDeviation",
-                pp.bloodsugar * pp.bloodsugar AS "BloodSugarSquared",
-                pp.bodytemperature::numeric / pp.heartrate::numeric AS "BodyTempOverHeartRate",
-                pp.systolicbp::numeric - pp.diastolicbp::numeric AS "BloodPressureDiff"
+                pp.heartrate AS "HeartRate"
             FROM patients p
             JOIN patientprofile pp ON p.patientid = pp.patientid
             WHERE p.patientid = %s
@@ -136,42 +132,50 @@ def predict(patient_id):
         with conn.cursor() as cur:
             cur.execute(maternal_health_query, (patient_id,))
             maternal_health_data = cur.fetchone()
-        
+
         if not maternal_health_data:
             return jsonify({'error': 'Patient not found'})
 
-        # Convert fetched data to a format suitable for the maternal health model
-        # Convert fetched data to a format suitable for the maternal health model
-        age, systolic_bp, diastolic_bp, blood_sugar, body_temp, heart_rate, age_squared, heart_rate_over_body_temp, blood_pressure_ratio, age_bmi_product, blood_pressure_deviation, blood_sugar_squared, body_temp_over_heart_rate, blood_pressure_diff = maternal_health_data
-        
-        # Prepare the input for the maternal health model
-        maternal_health_features = {
-            'Age': maternal_health_data[0],
-            'SystolicBP': maternal_health_data[1],
-            'DiastolicBP': maternal_health_data[2],
-            'BS': maternal_health_data[3],
-            'BodyTemp': maternal_health_data[4],
-            'HeartRate': maternal_health_data[5],
-            'AgeSquared': maternal_health_data[6],
-            'HeartRateOverBodyTemp': maternal_health_data[7],
-            'BloodPressureRatio': maternal_health_data[8],
-            'AgeBMIProduct': maternal_health_data[9],
-            'BloodPressureDeviation': maternal_health_data[10],
-            'BloodSugarSquared': maternal_health_data[11],
-            'BodyTempOverHeartRate': maternal_health_data[12],
-            'BloodPressureDiff': maternal_health_data[13]
-        }
+        # Extract data for maternal health risk prediction
+        age, systolicbp, diastolicbp, bloodsugar, bodytemp, heartrate = maternal_health_data
 
-       # Prepare the input array for the model
-        maternal_health_features_array = np.array([list(maternal_health_features.values())], dtype=np.float32)
-        
+        # Convert retrieved values to float
+        age = float(age)
+        systolicbp = float(systolicbp)
+        diastolicbp = float(diastolicbp)
+        bloodsugar = float(bloodsugar)
+        bodytemp = float(bodytemp)
+        heartrate = float(heartrate)
+
+        # Calculate derived features for maternal health risk prediction
+        age_squared = age ** 2
+        heart_rate_over_body_temp = heartrate / bodytemp
+        blood_pressure_ratio = systolicbp / diastolicbp
+        age_bmi_product = age * bmi
+        blood_pressure_deviation = systolicbp - diastolicbp
+        blood_sugar_squared = bloodsugar ** 2
+        body_temp_over_heart_rate = bodytemp / heartrate
+        blood_pressure_diff = abs(systolicbp - diastolicbp)
+
+
+        # Prepare input array for maternal health risk prediction
+        maternal_health_features = [
+            age, systolicbp, diastolicbp, bloodsugar, bodytemp, heartrate,
+            age_squared, heart_rate_over_body_temp, blood_pressure_ratio,
+            age_bmi_product, blood_pressure_deviation, blood_sugar_squared,
+            0,  # Placeholder for RiskScore
+            body_temp_over_heart_rate, blood_pressure_diff
+        ]
+
+        maternal_health_features_array = np.array([maternal_health_features], dtype=np.float32)
+
         # Predict maternal health risk
         maternal_health_prediction = maternal_health_model.predict(maternal_health_features_array)[0]
 
         return jsonify({
             'endometriosis_prediction': int(endometriosis_prediction),
             'pcos_prediction': int(pcos_prediction),
-            'maternal_health_risk': maternal_health_prediction
+            'maternal_health_prediction': int(maternal_health_prediction)
         })
 
 
