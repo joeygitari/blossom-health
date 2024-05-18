@@ -24,6 +24,10 @@ with open('pcos_model.pkl', 'rb') as file:
     pcos_model = pickle.load(file)
 maternal_health_model = joblib.load('Maternal_Health_Risk.joblib')
 
+endometriosis_accuracy = 97.30
+pcos_accuracy = 93.5 
+maternal_health_accuracy = 92.0 
+
 def connect_db():
     try:
         conn = psycopg2.connect(
@@ -174,8 +178,12 @@ def predict(patient_id):
 
         return jsonify({
             'endometriosis_prediction': int(endometriosis_prediction),
+            'endometriosis_accuracy': endometriosis_accuracy,
             'pcos_prediction': int(pcos_prediction),
-            'maternal_health_prediction': int(maternal_health_prediction)
+            'pcos_accuracy': pcos_accuracy,
+            'maternal_health_prediction': int(maternal_health_prediction),
+            'maternal_health_accuracy': maternal_health_accuracy,
+            'symptoms': symptoms
         })
 
 

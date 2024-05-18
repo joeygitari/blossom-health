@@ -20,6 +20,7 @@ import Images from './dashboards/PatientDashboard/Images';
 import Reports2 from './dashboards/PatientDashboard/Reports';
 import Settings2 from "./dashboards/PatientDashboard/Settings";
 import PatientsForm from './dashboards/MedicDashboard/PatientsForm';
+import Prediction from './dashboards/MedicDashboard/Prediction';
 
 const App = () => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
           <Route exact path="/medic-dashboard/reports" element={<Reports />} />
           <Route exact path="/medic-dashboard/settings" element={<Settings />} />
           <Route exact path="/medic-dashboard/patient-form" element={<PatientsForm />} />
+          <Route exact path="/medic-dashboard/prediction/:patientId" element={<Prediction />} />
 
         </Routes>
       </Router>

@@ -12,8 +12,12 @@ import {
     CardBody,
     CardFooter,
 } from "@material-tailwind/react";
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const Reports = () => {
+    const navigate = useNavigate();
     const [patients, setPatients] = useState([]);
     const TABLE_HEAD = ["Patient", "Location", "Prediction", "Recommendation"];
     
@@ -41,12 +45,13 @@ const Reports = () => {
             const response = await fetch(`/predict/${patientId}`);
             if (response.ok) {
                 const data = await response.json();
-                console.log(data); // Handle the prediction data as needed
+                console.log(data);
+                navigate(`/medic-dashboard/prediction/${patientId}`);
             } else {
                 console.error("Failed to fetch predictions");
             }
         } catch (error) {
-            console.error("Error fetching predictions:", error);
+            toast.error("Error fetching predictions:", error);
         }
     };
     return (
@@ -158,7 +163,21 @@ const Reports = () => {
                 </div>
                 </CardFooter>
             </Card>
+            <ToastContainer
+                position="top-right"
+                autoClose={10000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                transition={Slide}
+            />
         </DefaultLayout>
+
     )
 }
 

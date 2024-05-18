@@ -120,23 +120,23 @@ const MedicDashboard = () => {
                 </div>
             </div>
 
-            <div className="grid lg:grid-cols-3 mt-[2rem] lg:mt-[3rem] gap-4 lg:gap-6 2xl:gap-7.5">
-                <div className="col-span-2">
+            <div className="grid lg:grid-cols-2 mt-[2rem] lg:mt-[3rem] gap-4 lg:gap-6 2xl:gap-7.5">
+                <div className="col-span-1">
                     <PatientLineChart/>
                 </div>
 
-                <div className="col-span-2 lg:col-span-1 mt-[1rem] lg:mt-0">
-                    <DiseasesBarChart/>
+                <div className="col-span-1 lg:col-span-1 mt-[1rem] lg:mt-0">
+                    <AppointmentsTable/>
                 </div>
             </div>
 
             <div className="grid lg:grid-cols-3 mt-[2rem] lg:mt-[3rem] gap-4">
                 <div className="col-span-2 lg:col-span-1">
-                    <DoctorSkillsPieChart/>
+                    {/* <DoctorSkillsPieChart/> */}
                 </div>
 
                 <div className="col-span-2 mt-[1rem] lg:mt-0">
-                    <AppointmentsTable/>
+                    {/* <DiseasesBarChart/> */}
                 </div>
             </div>
         </DefaultLayout>

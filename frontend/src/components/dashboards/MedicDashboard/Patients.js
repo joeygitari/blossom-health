@@ -45,7 +45,6 @@ const Patients = () => {
         }));
     };
 
-       
     return (
         <DefaultLayout>
             <Card className="h-full w-full">
