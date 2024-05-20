@@ -155,6 +155,29 @@ const Prediction = () => {
                             {report.pcos_prediction === 1 && (
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>PCOS Prediction:</strong> Positive
+                                    <span> ({report.pcos_accuracy}%)</span>
+                                    <br />
+                                    <br />
+
+                                    <strong>Symptoms</strong>
+                                    <p>Absent or irregular periods, infertility, increased facial and body hair, acne, weight gain (especially around the abdomen), trouble losing weight, depression, male pattern hair loss, gestational diabetes, high blood pressure (especially during pregnancy or delivery), skin tags, pelvic pain, sleep apnea</p>
+                                    <br />
+
+                                    <strong>How common?</strong>
+                                    <p>1 in every 10 - 20 women of childbearing age has PCOS.</p>
+                                    <br />
+
+                                    <strong>Overview</strong>
+                                    <p>Polycystic ovary syndrome (PCOS) is a common cause of female infertility. In most, but not all, women with the condition, the ovaries have many small cysts. Women with PCOS may not ovulate regularly or at all, and have trouble getting pregnant. Other symptoms may include irregular periods, increased body and facial hair, acne, and obesity. Doctors don't know exactly what causes PCOS, but it happens when hormones get out of balance. With PCOS, a woman's body makes more androgens, the male sex hormones. Other hormones, including estrogen, progesterone, and insulin, are also out of balance. Over time, especially if not managed, PCOS increases the risk of such problems as repeated miscarriages, diabetes, heart disease, and cancer.</p>
+                                    <br />
+
+                                    <strong>Risk Factors</strong>
+                                    <p>Family history of PCOS, irregular periods, or diabetes</p>
+                                    <br />
+
+                                    <strong>Diagnosis</strong>
+                                    <p>To diagnose PCOS, take a health history and give you physical, including a pelvic exam to check the ovaries. Order blood tests to check hormone balance and look for other signs of PCOS. A vaginal ultrasound can show enlarged ovaries or excess tiny cysts in your ovaries.</p>
+
                                 </Typography>
                             )}
                             {report.endometriosis_prediction === 0 && report.maternal_health_prediction === 0 && report.pcos_prediction === 0 && (

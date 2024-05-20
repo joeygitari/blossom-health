@@ -3,8 +3,6 @@ import Doctors from "../../../assets/images/Doctors-pana.svg";
 import DefaultLayout from "../layout/DefaultLayout";
 import {Link} from "react-router-dom";
 import PatientLineChart from "../common/Charts/PatientLineChart";
-import DiseasesBarChart from "../common/Charts/DiseasesBarChart";
-import DoctorSkillsPieChart from "../common/Charts/DoctorSkillsPieChart";
 import AppointmentsTable from "../common/Tables/AppointmentsTable";
 
 const MedicDashboard = () => {

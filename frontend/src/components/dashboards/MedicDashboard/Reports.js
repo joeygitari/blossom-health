@@ -11,6 +11,10 @@ import {
     Button,
     CardBody,
     CardFooter,
+    Dialog, 
+    DialogHeader, 
+    DialogBody, 
+    DialogFooter 
 } from "@material-tailwind/react";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +24,9 @@ const Reports = () => {
     const navigate = useNavigate();
     const [patients, setPatients] = useState([]);
     const TABLE_HEAD = ["Patient", "Location", "Prediction", "Recommendation"];
+    const [openModal, setOpenModal] = useState(false);
+    const [selectedPatientId, setSelectedPatientId] = useState(null);
+    const [recommendation, setRecommendation] = useState("");
     
     useEffect(() => {
         fetchPatients();
@@ -54,6 +61,19 @@ const Reports = () => {
             toast.error("Error fetching predictions:", error);
         }
     };
+
+    const handleOpenModal = (patientId) => {
+        setSelectedPatientId(patientId);
+        setOpenModal(true);
+    };
+
+    const handleAddRecommendation = () => {
+        console.log(`Recommendation for patient ${selectedPatientId}: ${recommendation}`);
+        // Add your code to handle the recommendation submission
+        setOpenModal(false);
+        setRecommendation("");
+    };
+
     return (
         <DefaultLayout>
             <Card className="h-full w-full">
@@ -137,7 +157,7 @@ const Reports = () => {
                             </td>
                             <td className={classes}>
                                 <div className="w-max">
-                                    <Button className="font-poppins bg-[#FF8585] text-white" variant="outlined" style={{ textTransform: 'none', fontWeight: 'normal', fontSize: '13px'}}>
+                                    <Button className="font-poppins bg-[#FF8585] text-white" variant="outlined" style={{ textTransform: 'none', fontWeight: 'normal', fontSize: '13px'}} onClick={() => handleOpenModal(patient[0])}>
                                     Add recommendation
                                     </Button>
                                 </div>
@@ -163,6 +183,24 @@ const Reports = () => {
                 </div>
                 </CardFooter>
             </Card>
+            <Dialog open={openModal} handler={setOpenModal}>
+                <DialogHeader className="font-poppins">Add Recommendation</DialogHeader>
+                <DialogBody className="font-poppins">
+                    <Input
+                        label="Recommendation"
+                        value={recommendation}
+                        onChange={(e) => setRecommendation(e.target.value)}
+                    />
+                </DialogBody>
+                <DialogFooter className="font-poppins">
+                    <Button variant="text" color="red" onClick={() => setOpenModal(false)}>
+                        Cancel
+                    </Button>
+                    <Button variant="gradient" className="bg-[#FF8585]" onClick={handleAddRecommendation}>
+                        Add
+                    </Button>
+                </DialogFooter>
+            </Dialog>
             <ToastContainer
                 position="top-right"
                 autoClose={10000}

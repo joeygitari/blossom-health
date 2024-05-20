@@ -6,6 +6,7 @@ from symptoms.symptoms import symptoms
 from patients.patients import patients
 from patients.vitals import vitals
 from prediction.prediction import prediction
+from recommendations.recommendations import recommendations
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -19,6 +20,7 @@ app.register_blueprint(symptoms)
 app.register_blueprint(patients)
 app.register_blueprint(vitals)
 app.register_blueprint(prediction)
+app.register_blueprint(recommendations)
 
 if __name__ == '__main__':
     app.run()
