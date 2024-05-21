@@ -67,12 +67,43 @@ const Reports = () => {
         setOpenModal(true);
     };
 
-    const handleAddRecommendation = () => {
-        console.log(`Recommendation for patient ${selectedPatientId}: ${recommendation}`);
-        // Add your code to handle the recommendation submission
-        setOpenModal(false);
-        setRecommendation("");
+    // const handleAddRecommendation = () => {
+    //     console.log(`Recommendation for patient ${selectedPatientId}: ${recommendation}`);
+    //     // Add your code to handle the recommendation submission
+    //     setOpenModal(false);
+    //     setRecommendation("");
+    // };
+    const handleAddRecommendation = async () => {
+        try {
+            const response = await fetch('/submit-recommendation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    patientid: selectedPatientId,
+                    recommendation: recommendation
+                })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                // console.log('Recommendation added successfully:', data);
+                toast.success(data.message);
+                if (typeof setOpenModal === 'function') {
+                    setOpenModal(false); // Close modal only if setOpenModal is defined
+                }
+                setRecommendation('');
+            } else {
+                console.error('Failed to add recommendation');
+                toast.error('Failed to add recommendation');
+            }
+        } catch (error) {
+            console.error('Error adding recommendation:', error);
+            toast.error('Error adding recommendation');
+        }
     };
+    
 
     return (
         <DefaultLayout>
