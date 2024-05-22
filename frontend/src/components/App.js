@@ -21,6 +21,7 @@ import Reports2 from './dashboards/PatientDashboard/Reports';
 import Settings2 from "./dashboards/PatientDashboard/Settings";
 import PatientsForm from './dashboards/MedicDashboard/PatientsForm';
 import Prediction from './dashboards/MedicDashboard/Prediction';
+import Prediction2 from './dashboards/PatientDashboard/Prediction';
 
 const App = () => {
   return (
@@ -49,7 +50,7 @@ const App = () => {
           <Route exact path="/medic-dashboard/settings" element={<Settings />} />
           <Route exact path="/medic-dashboard/patient-form" element={<PatientsForm />} />
           <Route exact path="/medic-dashboard/prediction/:patientId" element={<Prediction />} />
-
+          <Route exact path="/patient-dashboard/prediction/:patientId" element={<Prediction2 />} />
         </Routes>
       </Router>
   );
