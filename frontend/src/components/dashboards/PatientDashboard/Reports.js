@@ -65,8 +65,8 @@ const Reports = () => {
                                     className="flex items-center gap-2 font-poppins font-bold text-[#172048] leading-none opacity-70"
                                     >
                                         <UserIcon className="h-10 w-10"/>
-                                        {report.patients[1]} <br />  <br /> 
-                                        Gender: {report.patients[3]} <br />  <br />
+                                        {report.patients[1]} <br /> <br />
+                                        Gender: {report.patients[3]}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
                                         Age: {report.patients[4]}
                                 </Typography>
                             ):(
@@ -77,8 +77,7 @@ const Reports = () => {
                                 >
                                     Nothing to see here
                                 </Typography>
-                            )
-                            }
+                            )}
                             </div>
                         </div>
                 </CardHeader>
