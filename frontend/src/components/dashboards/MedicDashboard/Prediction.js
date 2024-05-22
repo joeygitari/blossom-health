@@ -150,6 +150,32 @@ const Prediction = () => {
                             {report.maternal_health_prediction === 1 && (
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>Maternal Health Prediction:</strong> Positive
+                                    <span>({report.maternal_health_accuracy}%)</span>
+                                    <br />
+                                    <br />
+
+                                    <strong>Overview</strong>
+                                    <p>Maternal health risks and childbirth complications refer to health issues that arise during pregnancy, labor, delivery, and the postpartum period. These complications can affect both the mother and the baby, and their severity can range from mild to life-threatening. Common complications include preeclampsia, gestational diabetes, preterm labor, and infections.</p>
+                                    <br />
+
+                                    <strong>Common complications</strong>
+                                    <ul>
+                                        <li><strong>Preeclampsia:</strong> High blood pressure, swelling of hands and feet, protein in urine, severe headaches, vision changes. Affects about 5-8% of pregnant women.</li>
+                                        <li><strong>Gestational Diabetes:</strong> Often asymptomatic; sometimes increased thirst, frequent urination, fatigue. Affects 6-9% of pregnant women.</li>
+                                        <li><strong>Preterm Labor:</strong> Regular contractions, lower back pain, changes in vaginal discharge, pelvic pressure. Approximately 10% of births are preterm.</li>
+                                        <li><strong>Infections:</strong> Fever, chills, painful urination, abnormal discharge. Varies depending on the type of infection (e.g., urinary tract infections are common, affecting about 8% of pregnant women).</li>
+                                        <li><strong>Placental Abruption:</strong> Vaginal bleeding, abdominal pain, back pain, uterine tenderness. Affects about 1 in 100 pregnancies.</li>
+                                        <li><strong>Postpartum Hemorrhage:</strong> Heavy bleeding after delivery, drop in blood pressure, rapid heart rate. Occurs in about 1-5% of deliveries.</li>
+                                    </ul>
+                                    <br />
+
+                                    <strong>Diagnosis</strong>
+                                    <ul>
+                                        <li><strong>Regular Prenatal Checkups:</strong> Monitoring blood pressure, blood tests, urine tests, and ultrasounds to identify potential complications early.</li>
+                                        <li><strong>Specific Tests:</strong> Blood pressure readings and urine tests for preeclampsia. Glucose tolerance test for gestational diabetes. Cervical exams and ultrasound for signs of preterm labor. Blood tests, cultures, and physical examinations for infections.</li>
+                                    </ul>
+                                    <br />
+                                    
                                 </Typography>
                             )}
                             {report.pcos_prediction === 1 && (
