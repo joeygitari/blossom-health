@@ -3,7 +3,7 @@ import Doctors from "../../../assets/images/Doctors-pana.svg";
 import DefaultLayout from "../layout/DefaultLayout";
 import {Link} from "react-router-dom";
 import PatientLineChart from "../common/Charts/PatientLineChart";
-import AppointmentsTable from "../common/Tables/AppointmentsTable";
+// import AppointmentsTable from "../common/Tables/AppointmentsTable";
 
 const MedicDashboard = () => {
     const patientData = [
@@ -119,12 +119,12 @@ const MedicDashboard = () => {
             </div>
 
             <div className="grid lg:grid-cols-2 mt-[2rem] lg:mt-[3rem] gap-4 lg:gap-6 2xl:gap-7.5">
-                <div className="col-span-1">
+                <div className="col-span-2">
                     <PatientLineChart/>
                 </div>
 
                 <div className="col-span-1 lg:col-span-1 mt-[1rem] lg:mt-0">
-                    <AppointmentsTable/>
+                    {/* <AppointmentsTable/> */}
                 </div>
             </div>
 
