@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify, Blueprint
+from flask import Flask, request, jsonify, Blueprint, session
+from flask_session import Session
 import psycopg2
 import hashlib
 
@@ -62,6 +63,48 @@ def register_user_handler():
                 conn.commit()
         
         return jsonify({'message': 'User registered successfully'})
+    except psycopg2.Error as e:
+        return jsonify({'error': 'Database error: ' + str(e)})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+@register_user.route('/change-password', methods=['POST'])
+def change_password():
+    try:
+        userid = session.get('user_id')
+        if not userid:
+            return jsonify({'error': 'Unauthorized'}), 401
+
+        data = request.json
+        old_password = data.get('oldPassword')
+        new_password = data.get('newPassword')
+
+        if not old_password or not new_password:
+            return jsonify({'error': 'Incomplete data provided'})
+
+        hashed_old_password = hashlib.sha256(old_password.encode()).hexdigest()
+        hashed_new_password = hashlib.sha256(new_password.encode()).hexdigest()
+
+        with psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=db_password) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM patients WHERE patientid = %s AND password = %s", (userid, hashed_old_password))
+                user = cursor.fetchone()
+
+                if user:
+                    cursor.execute("UPDATE patients SET password = %s WHERE patientid = %s", (hashed_new_password, userid))
+                    conn.commit()
+                    return jsonify({'message': 'Password updated successfully'})
+
+                cursor.execute("SELECT * FROM medicalpractitioner WHERE practitionerid = %s AND password = %s", (userid, hashed_old_password))
+                user = cursor.fetchone()
+
+                if user:
+                    cursor.execute("UPDATE medicalpractitioner SET password = %s WHERE practitionerid = %s", (hashed_new_password, userid))
+                    conn.commit()
+                    return jsonify({'message': 'Password updated successfully'})
+
+                return jsonify({'error': 'Invalid password'})
+
     except psycopg2.Error as e:
         return jsonify({'error': 'Database error: ' + str(e)})
     except Exception as e:
