@@ -20,13 +20,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const Appointments = () => {
     const [openModal, setOpenModal] = useState(false);
-
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [selectedVisit, setSelectedVisit] = useState('');
     const [selectedType, setSelectedType] = useState('');
     const [selectedPatient, setSelectedPatient] = useState('');
-
+    const [appointments, setAppointments] = useState([]);
     const [patients, setPatients] = useState([]);
 
     const handleOpenModal = () => {
@@ -74,10 +73,72 @@ const Appointments = () => {
         }
     };
 
+    const handleAddAppointment = async () => {
+        const combinedDateTime = new Date(
+            selectedDate.getFullYear(),
+            selectedDate.getMonth(),
+            selectedDate.getDate(),
+            selectedTime.getHours(),
+            selectedTime.getMinutes()
+        );
+
+        const newAppointment = {
+            patientid: selectedPatient, 
+            datescheduled: combinedDateTime.toISOString().split('T')[0],
+            timescheduled: combinedDateTime.toTimeString().split(' ')[0],
+            location: document.querySelector('#location-input').value,
+            visittype: selectedVisit,
+            selectedtype: selectedType
+        };
+
+        try {
+            const response = await fetch("/appointments", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(newAppointment)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setAppointments([...appointments, { ...newAppointment, appointmentid: data.appointmentid }]);
+                setOpenModal(false);
+            } else {
+                console.error("Failed to add appointment");
+            }
+        } catch (error) {
+            console.error("Error adding appointment:", error);
+        }
+    };
+
+
+    const fetchAppointments = async () => {
+        try {
+            const response = await fetch("/appointments");
+            if (response.ok) {
+                const data = await response.json();
+                setAppointments(data);
+            } else {
+                console.error("Failed to fetch appointments");
+            }
+        } catch (error) {
+            console.error("Error fetching appointments:", error);
+        }
+    };
+    
     useEffect(() => {
         fetchPatients();
+        fetchAppointments();
     }, []);
-    
+
+    const eventData = appointments.map(appointment => ({
+        start: appointment.datescheduled,
+        display: 'background',
+        backgroundColor: '#FF8585',
+        borderColor: '#FF8585',
+    }));
+
     return (
         <DefaultLayout> 
         <div className="grid lg:grid-cols-5 gap-4">
@@ -96,6 +157,7 @@ const Appointments = () => {
                         selectMirror={true}
                         dayMaxEvents={true}
                         weekends={true}
+                        events={eventData}
                         // height="100%"
                         // className="text-xs font-poppins"
                         dayHeaderClassNames="bg-gray-200 text-[#FF8585] font-poppins"
@@ -171,14 +233,29 @@ const Appointments = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                            {appointments.map((appointment) => (
+                                <tr key={appointment.appointmentid}>
                                     <td className="p-4 border-b border-blue-gray-50">
                                         <Typography
                                             variant="small"
                                             color="blue-gray"
                                             className="font-poppins font-normal"
                                         >
-                                            ** patient
+                                            {patients.find(patient => patient[0] === appointment.patientid)?.[1] || "Unknown"}
+                                        </Typography>
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-poppins font-normal opacity-70 text-[12px]"
+                                            >
+                                            {appointment.visittype}
+                                        </Typography>
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="font-poppins font-normal opacity-70 text-[12px]"
+                                            >
+                                            {appointment.selectedtype}
                                         </Typography>
                                     </td>
                                     <td className="p-4 border-b border-blue-gray-50">
@@ -187,7 +264,8 @@ const Appointments = () => {
                                             color="blue-gray"
                                             className="font-poppins font-normal"
                                         >
-                                            ** date
+                                            {appointment.datescheduled}
+                                             {/* {new Date(appointment.datescheduled).toLocaleDateString()} */}
                                         </Typography>
                                     </td>
                                     <td className="p-4 border-b border-blue-gray-50">
@@ -196,7 +274,9 @@ const Appointments = () => {
                                             color="blue-gray"
                                             className="font-poppins font-normal"
                                         >
-                                            ** time
+                                            {appointment.timescheduled}
+                                            {/* {new Date(`1970-01-01T${appointment.timescheduled}Z`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} */}
+                                            {/* {new Date(appointment.timescheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} */}
                                         </Typography>
                                     </td>
                                     <td className="p-4 border-b border-blue-gray-50">
@@ -205,10 +285,12 @@ const Appointments = () => {
                                             color="blue-gray"
                                             className="font-poppins font-normal"
                                         >
-                                            ** location
+                                           {appointment.location}
                                         </Typography>
                                     </td>
+                                    
                                 </tr>
+                            ))}
                             </tbody>
                         </table>
                     </CardBody>
@@ -224,6 +306,7 @@ const Appointments = () => {
                     value={selectedPatient}
                     onChange={(e) => setSelectedPatient(e.target.value)}
                     className="w-full mt-2 p-2 border border-gray-700 rounded focus:outline-none focus:ring-1 focus:ring-[#FF8585] text-[13px] font-semibold"
+                    autoComplete="off"
                 >
                     <option value="">Select a patient</option>
                     {patients.map(patient => (
@@ -242,6 +325,7 @@ const Appointments = () => {
                             className="w-64 mt-2 p-2 border border-gray-700 rounded focus:outline-none focus:ring-1 focus:ring-[#FF8585] text-[13px] font-semibold"
                             dateFormat="MMMM d, yyyy"
                             placeholderText="Select a date"
+                            autoComplete="off"
                         />
                     </div>
                     <div className="w-1/2">
@@ -256,6 +340,7 @@ const Appointments = () => {
                             dateFormat="h:mm aa"
                             className="w-64 mt-2 p-2 border border-gray-700 rounded focus:outline-none focus:ring-1 focus:ring-[#FF8585] text-[13px] font-semibold"
                             placeholderText="Select a time"
+                            autoComplete="off"
                         />
                     </div>
                 </div>
@@ -263,9 +348,11 @@ const Appointments = () => {
                 <div className="font-poppins font-semibold">
                     <label className="block text-sm font-medium text-gray-700">Location</label>
                     <input
+                        id="location-input"
                         className="w-full mt-2 p-2 border border-gray-700 rounded focus:outline-none focus:ring-1 focus:ring-[#FF8585] text-[13px]"
                         label=""
                         placeholder="Enter location"
+                        autoComplete="off"
                     />
                 </div>
 
@@ -276,6 +363,7 @@ const Appointments = () => {
                         value={selectedVisit}
                         onChange={(e) => setSelectedVisit(e.target.value)}
                         className="w-full mt-2 p-2 border border-gray-700 rounded focus:outline-none focus:ring-1 focus:ring-[#FF8585] text-[13px] font-semibold"
+                        autoComplete="off"
                     >
                         <option value="">Select visit type</option>
                         <option value="Checkup">Checkup</option>
@@ -292,6 +380,7 @@ const Appointments = () => {
                         value={selectedType}
                         onChange={(e) => setSelectedType(e.target.value)}
                         className="w-full mt-2 p-2 border border-gray-700 rounded focus:outline-none focus:ring-1 focus:ring-[#FF8585] text-[13px] font-semibold"
+                        autoComplete="off"
                     >
                         <option value="">Select</option>
                         <option value="Online">Online</option>
@@ -303,7 +392,7 @@ const Appointments = () => {
                 <Button variant="text" color="red" onClick={() => setOpenModal(false)}>
                     Cancel
                 </Button>
-                <Button variant="gradient" className="bg-[#FF8585]">
+                <Button variant="gradient" className="bg-[#FF8585]" onClick={handleAddAppointment}>
                     Add
                 </Button>
             </DialogFooter>
