@@ -12,7 +12,7 @@ import {
     Button,
     CardBody,
     Chip,
-    CardFooter,
+    CardFooter,z
   } from "@material-tailwind/react";
 
 const Patients = () => {
