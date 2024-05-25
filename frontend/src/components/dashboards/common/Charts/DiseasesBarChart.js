@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 const options = {
-    colors: [ '#FF8585', '#80CAEE'],
+    colors: [ '#FF8585', '#80CAEE', '#FFC75F'],
     chart: {
         fontFamily: 'Poppins, sans-serif',
         type: 'bar',
@@ -43,8 +43,9 @@ const options = {
     },
 
     xaxis: {
-        categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        categories: ['Endometriosis', 'PCOS', 'Maternal Health Risk'],  // Updated to show diseases
     },
+    
     legend: {
         position: 'top',
         horizontalAlign: 'left',
@@ -55,6 +56,10 @@ const options = {
         markers: {
             radius: 99,
         },
+        itemMargin: {
+            horizontal: 10,  // Add horizontal spacing between legend items
+            vertical: 5      // Add vertical spacing between legend items (optional)
+        }
     },
     fill: {
         opacity: 1,
@@ -62,18 +67,80 @@ const options = {
 };
 
 const DiseasesBarChart = () => {
-    const [state] = useState({
+    const [patients, setPatients] = useState([]);
+    const [chartData, setChartData] = useState({
         series: [
-            {
-                name: 'Fever',
-                data: [44, 55, 41, 67, 22, 43, 65],
-            },
-            {
-                name: 'Injury',
-                data: [13, 23, 20, 8, 13, 27, 15],
-            },
+            { name: 'Endometriosis', data: [0] },
+            { name: 'PCOS', data: [0] },
+            { name: 'Maternal Health Risk', data: [0] }
         ],
+        categories: ['Diseases']
     });
+
+    
+    const fetchPatients = async () => {
+        try {
+            const response = await fetch("/patients");
+            if (response.ok) {
+                const data = await response.json();
+                setPatients(data);
+                handlePredict(data);
+            } else {
+                console.error("Failed to fetch patients");
+            }
+        } catch (error) {
+            console.error("Error fetching patients:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPatients();
+    }, []);
+
+
+    const handlePredict = async (patients) => {
+        try {
+            const predictions = {
+                endometriosis: 0,
+                pcos: 0,
+                maternal_health: 0
+            };
+
+            for (const patient of patients) {
+                const response = await fetch(`/predict/${patient[0]}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.endometriosis_prediction) predictions.endometriosis++;
+                    if (data.pcos_prediction) predictions.pcos++;
+                    if (data.maternal_health_prediction) predictions.maternal_health++;
+                } else {
+                    console.error(`Failed to fetch predictions for patient ${patient.id}`);
+                }
+            }
+
+            setChartData({
+                series: [
+                    {
+                        name: 'Endometriosis',
+                        data: [predictions.endometriosis]
+                    },
+                    {
+                        name: 'PCOS',
+                        data: [predictions.pcos]
+                    },
+                    {
+                        name: 'Maternal Health Risk',
+                        data: [predictions.maternal_health]
+                    }
+                ],
+                categories: ['Diseases']
+            });
+
+        } catch (error) {
+            console.error("Error fetching predictions: " + error.message);
+        }
+    };
+
 
     return (
         <div className="rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-black xl:col-span-4">
@@ -85,14 +152,6 @@ const DiseasesBarChart = () => {
                 </div>
                 <div>
                     <div className="relative z-20 inline-block">
-                        <select
-                            name="#"
-                            id="#"
-                            className="relative z-20 inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-poppins font-medium border-none"
-                        >
-                            <option value="" className='dark:bg-boxdark'>This Week</option>
-                            <option value="" className='dark:bg-boxdark'>Last Week</option>
-                        </select>
                         <span className="absolute top-1/2 right-3 z-10 -translate-y-1/2">
               <svg
                   width="10"
@@ -121,7 +180,7 @@ const DiseasesBarChart = () => {
                 <div id="chartTwo" className="-ml-5 -mb-9">
                     <ReactApexChart
                         options={options}
-                        series={state.series}
+                        series={chartData.series}
                         type="bar"
                         height={350}
                     />

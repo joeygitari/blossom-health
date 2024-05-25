@@ -3,7 +3,7 @@ import Doctors from "../../../assets/images/Doctors-pana.svg";
 import DefaultLayout from "../layout/DefaultLayout";
 import {Link} from "react-router-dom";
 import PatientLineChart from "../common/Charts/PatientLineChart";
-
+import DiseasesBarChart from '../common/Charts/DiseasesBarChart';
 const MedicDashboard = () => {
     const [patients, setPatients] = useState([]);
 
@@ -97,25 +97,21 @@ const MedicDashboard = () => {
                 </div>
             </div>
 
-            <div className="grid lg:grid-cols-2 mt-[2rem] lg:mt-[3rem] gap-4 lg:gap-6 2xl:gap-7.5">
+            <div className="grid lg:grid-cols-4 mt-[2rem] lg:mt-[3rem] gap-4 lg:gap-6 2xl:gap-7.5">
                 <div className="col-span-2">
                     <PatientLineChart/>
                 </div>
 
-                <div className="col-span-1 lg:col-span-1 mt-[1rem] lg:mt-0">
-                    {/* <AppointmentsTable/> */}
+                <div className="col-span-2">
+                    <DiseasesBarChart/>
+
                 </div>
             </div>
 
-            <div className="grid lg:grid-cols-3 mt-[2rem] lg:mt-[3rem] gap-4">
-                <div className="col-span-2 lg:col-span-1">
-                    {/* <DoctorSkillsPieChart/> */}
+            {/* <div className="grid lg:grid-cols-1 mt-[2rem] lg:mt-[3rem] gap-4">
+                <div className="col-span-1 mt-[1rem] lg:mt-0">
                 </div>
-
-                <div className="col-span-2 mt-[1rem] lg:mt-0">
-                    {/* <DiseasesBarChart/> */}
-                </div>
-            </div>
+            </div> */}
         </DefaultLayout>
     )
 }
