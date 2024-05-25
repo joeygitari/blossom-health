@@ -57,7 +57,16 @@ const Symptoms = () => {
                 throw new Error('Failed to submit symptoms');
             }
             // Handle success
-            toast.success('Symptoms submitted successfully');
+            // toast.success('Symptoms submitted successfully');
+            // // Delayed reset of selected symptoms after 500ms
+            // setTimeout(() => {
+            //     setSelectedSymptoms([]);
+            // }, 500);
+            toast.success("Symptoms submitted successfully", {
+                onClose: () => {
+                    setSelectedSymptoms([]);
+                }
+            });
         } catch (error) {
             console.error("Error:", error);
             toast.error('An error occurred. Please try again later.');
@@ -76,6 +85,7 @@ const Symptoms = () => {
                         options={symptoms}
                         styles={customStyles}
                         onChange={handleSymptomChange}
+                        value={selectedSymptoms}
                     />
                 </div>
 

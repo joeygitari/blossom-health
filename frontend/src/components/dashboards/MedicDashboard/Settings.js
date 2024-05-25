@@ -8,12 +8,11 @@ import {
     CardFooter,
 } from "@material-tailwind/react";
 import DefaultLayout from "../layout/DefaultLayout";
+import { ToastContainer, toast, Slide } from "react-toastify";
 
 const Settings = () => {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [message, setMessage] = useState("");
-    const [error, setError] = useState("");
 
     const handleChangePassword = async () => {
         try {
@@ -31,14 +30,17 @@ const Settings = () => {
             const data = await response.json();
 
             if (response.ok) {
-                setMessage(data.message);
-                setOldPassword("");
-                setNewPassword("");
+                toast.success(data.message, {
+                    onClose: () => {
+                        setOldPassword("");
+                        setNewPassword("");
+                    }
+                });
             } else {
-                setError(data.error);
+                toast.error(data.error);
             }
         } catch (error) {
-            setError('Something went wrong');
+            toast.error('Something went wrong');
         }
     };
 
@@ -56,8 +58,6 @@ const Settings = () => {
                                     Change Password
                                 </Typography>
                             </div>
-                            {message && <p>{message}</p>}
-                            {error && <p>{error}</p>}
                         </div>
                     </CardHeader>
                     <CardBody className="font-poppins">
@@ -87,6 +87,19 @@ const Settings = () => {
                         <Button variant="gradient" className="bg-[#FF8585]" onClick={handleChangePassword}>Change Password</Button>
                     </CardFooter>
                 </Card>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={10000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                    transition={Slide}
+                />
             </div>
         </DefaultLayout>
     );
