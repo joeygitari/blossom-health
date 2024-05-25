@@ -18,6 +18,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Appointments = () => {
     const [openModal, setOpenModal] = useState(false);

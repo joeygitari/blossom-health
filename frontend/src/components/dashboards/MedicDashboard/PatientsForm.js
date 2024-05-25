@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import DefaultLayout from '../layout/DefaultLayout';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
+import "react-toastify/dist/ReactToastify.css";
 
 const PatientsForm = () => {
     const [step, setStep] = useState(1);

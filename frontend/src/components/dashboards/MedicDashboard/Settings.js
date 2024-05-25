@@ -9,6 +9,7 @@ import {
 } from "@material-tailwind/react";
 import DefaultLayout from "../layout/DefaultLayout";
 import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Settings = () => {
     const [oldPassword, setOldPassword] = useState("");

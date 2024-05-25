@@ -17,6 +17,8 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { ToastContainer, toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Appointments = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -104,11 +106,12 @@ const Appointments = () => {
                 const data = await response.json();
                 setAppointments([...appointments, { ...newAppointment, appointmentid: data.appointmentid }]);
                 setOpenModal(false);
+                toast.success("Appointment added successfully");
             } else {
-                console.error("Failed to add appointment");
+                toast.error("Failed to add appointment");
             }
         } catch (error) {
-            console.error("Error adding appointment:", error);
+            toast.error("Error adding appointment:");
         }
     };
 
@@ -397,6 +400,19 @@ const Appointments = () => {
                 </Button>
             </DialogFooter>
         </Dialog>
+        <ToastContainer
+            position="top-right"
+            autoClose={10000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+            transition={Slide}
+        />
         </DefaultLayout>
     )
 }
