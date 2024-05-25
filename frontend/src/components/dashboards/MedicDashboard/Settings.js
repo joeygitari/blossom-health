@@ -44,7 +44,7 @@ const Settings = () => {
 
     return (
         <DefaultLayout>
-            <div className="flex justify-center items-center h-screen">
+            <div className="flex justify-center items-center">
                 <Card className="w-full max-w-lg">
                     <CardHeader floated={false} shadow={false} className="rounded-none">
                         <div className="grid lg:grid-cols-5 gap-40">

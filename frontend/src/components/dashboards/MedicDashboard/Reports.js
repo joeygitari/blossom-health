@@ -10,7 +10,6 @@ import {
     Typography,
     Button,
     CardBody,
-    CardFooter,
     Dialog, 
     DialogHeader, 
     DialogBody, 
@@ -27,6 +26,7 @@ const Reports = () => {
     const [openModal, setOpenModal] = useState(false);
     const [selectedPatientId, setSelectedPatientId] = useState(null);
     const [recommendation, setRecommendation] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
     
     useEffect(() => {
         fetchPatients();
@@ -103,7 +103,16 @@ const Reports = () => {
             toast.error('Error adding recommendation');
         }
     };
-    
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredPatients = patients.filter(patient =>
+        patient[1].toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient[3].toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient[5].toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <DefaultLayout>
@@ -114,6 +123,8 @@ const Reports = () => {
                         <Input
                             label="Search"
                             icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                            onChange={handleSearch}
+                            value={searchTerm}
                         />
                         </div>
                     </div>
@@ -139,7 +150,7 @@ const Reports = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {patients.map(
+                    {filteredPatients.map(
                         (patient, index) => {
                         const isLast = index === patients.length - 1;
                         const classes = isLast
@@ -200,19 +211,6 @@ const Reports = () => {
                     </tbody>
                 </table>
                 </CardBody>
-                <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-                <Typography variant="small" color="blue-gray" className="font-poppins font-normal">
-                    Page 1 of 10
-                </Typography>
-                <div className="flex gap-2">
-                    <Button variant="outlined" size="sm">
-                    Previous
-                    </Button>
-                    <Button variant="outlined" size="sm">
-                    Next
-                    </Button>
-                </div>
-                </CardFooter>
             </Card>
             <Dialog open={openModal} handler={setOpenModal}>
                 <DialogHeader className="font-poppins">Add Recommendation</DialogHeader>
