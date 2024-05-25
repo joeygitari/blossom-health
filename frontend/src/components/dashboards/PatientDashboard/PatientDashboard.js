@@ -36,23 +36,12 @@ const PatientDashboard = () => {
                     </div>
                 </div>
             </div>
-
-            {/* <div className="grid lg:grid-cols-3 mt-[2rem] lg:mt-[3rem] gap-4 lg:gap-6 2xl:gap-7.5">
-                <div className="col-span-2">
-                    <PatientLineChart/>
-                </div>
-
-                <div className="col-span-2 lg:col-span-1 mt-[1rem] lg:mt-0">
-                    <DiseasesBarChart/>
-                </div>
-            </div> */}
-
-            <div className="grid lg:grid-cols-3 mt-[2rem] lg:mt-[3rem] gap-4">
-                <div className="col-span-2 lg:col-span-1">
+            <div className="grid lg:grid-cols-4 mt-[2rem] lg:mt-[3rem] gap-4">
+                <div className="col-span-2 lg:col-span-2">
                     <DoctorSkillsPieChart/>
                 </div>
 
-                <div className="col-span-2 mt-[1rem] lg:mt-0">
+                <div className="col-span-2 lg:col-span-2 mt-[1rem] lg:mt-0">
                     <AppointmentsTable/>
                 </div>
             </div>

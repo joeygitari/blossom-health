@@ -62,7 +62,7 @@ const MedicDashboard = () => {
                             </h4>
                         </div>
 
-                        {patients.map((patient, key) => (
+                        {patients.slice(0, 5).map((patient, key) => (
                             <div
                                 className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
                                 key={key}

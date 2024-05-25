@@ -1,60 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 
 const AppointmentsTable = () => {
-    const appointmentsData = [
-        {
-            name: 'Jordan Nt',
-            email: 'jordan-nt@gmail.com',
-            phone: 320456589,
-            status: 'Start'
+    const [appointments, setAppointments] = useState([]);
+    const [practitioners, setPractitioners] = useState([]);
 
-        },
-        {
-            name: 'Thomas Jaja',
-            email: 'thomas-jaja@gmail.com',
-            phone: 136121390,
-            status: 'Re-Schedule'
+    const fetchAppointments = async () => {
+        try {
+            const response = await fetch("/patient-appointments");
+            if (response.ok) {
+                const data = await response.json();
+                setAppointments(data);
+            } else {
+                console.error("Failed to fetch appointments");
+            }
+        } catch (error) {
+            console.error("Error fetching appointments:", error);
+        }
+    };
+    
+    const fetchPractitioners = async () => {
+        try {
+          const response = await fetch("/practitioners");
+          if (response.ok) {
+            const data = await response.json();
+            setPractitioners(data);
+            // console.log(patients);
+          } else {
+            console.error("Failed to fetch practitioners");
+          }
+        } catch (error) {
+          console.error("Error fetching practitioners:", error);
+        }
+    };
 
-        },
-        {
-            name: 'Angela Nurhayati',
-            email: 'angela-nurhayati@gmail.com',
-            phone: 150456589,
-            status: 'Cancelled'
-        },
-        {
-            name: 'Garrett Winters',
-            email: 'garret-winters@gmail.com',
-            phone: 240305060,
-            status: 'Pending'
-        },
-    ];
+    useEffect(() => {
+        fetchPractitioners();
+        fetchAppointments();
+    }, []);
 
     return (
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-black">
             <div className="py-6 px-4 md:px-6 xl:px-7.5">
                 <h4 className="text-xl font-poppins font-semibold text-black dark:text-white">
-                    Recent Appointments
+                    Appointments
                 </h4>
             </div>
 
             <div
                 className="font-poppins grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
                 <div className="col-span-2 flex items-center">
-                    <p className="font-medium">Patient Name</p>
+                    <p className="font-medium">Doctor</p>
                 </div>
                 <div className="col-span-2 hidden items-center sm:flex">
-                    <p className="font-medium">Email</p>
+                    <p className="font-medium">Date</p>
                 </div>
                 <div className="col-span-2 flex items-center">
-                    <p className="font-medium">Phone</p>
+                    <p className="font-medium">Time</p>
                 </div>
                 <div className="col-span-2 flex items-center">
                     <p className="font-medium">Status</p>
                 </div>
             </div>
 
-            {appointmentsData.map((patient, key) => (
+            {appointments.slice(0, 5).map((appointment, key) => (
                 <div
                     className="font-poppins grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
                     key={key}
@@ -62,37 +71,32 @@ const AppointmentsTable = () => {
                     <div className=" col-span-2 flex items-center">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                             <p className="text-sm text-black dark:text-white">
-                                {patient.name}
+                                {practitioners.find(practitioner => practitioner[0] === appointment.practitionerid)?.[1] || "Unknown"}
                             </p>
                         </div>
                     </div>
                     <div className="col-span-2 hidden items-center sm:flex">
                         <p className="text-sm text-black dark:text-white">
-                            {patient.email}
+                            {appointment.datescheduled}
                         </p>
                     </div>
                     <div className="col-span-2 flex items-center">
                         <p className="text-sm text-black dark:text-white">
-                            +{patient.phone}
+                        {appointment.timescheduled}
                         </p>
                     </div>
-                    <div className="col-span-2 flex items-center mb-3">
-                        <p
-                            className={`font-poppins inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium ${
-                                patient.status === 'Start'
-                                    ? 'bg-success text-success'
-                                    : patient.status === 'Re-Schedule'
-                                        ? 'bg-warning text-warning'
-                                        : patient.status === 'Cancelled'
-                                            ? 'bg-danger text-danger'
-                                            : 'bg-blue-500 text-blue-500'
-                            }`}
-                        >
-                            {patient.status}
+                    <div className="col-span-2 flex items-center">
+                        <p className="text-sm text-black dark:text-white">
+                        {appointment.location}
                         </p>
                     </div>
                 </div>
             ))}
+            <div className="border-t border-stroke md:px-6 xl:px-7.5 dark:border-strokedark">
+                <p className="mt-3 mb-3 text-[14px] text-center font-poppins font-semibold text-[#FF8585] dark:text-white">
+                    <Link to="/patient-dashboard/appointments">View all Appointments</Link>
+                </p>
+            </div>
         </div>
     )
 }

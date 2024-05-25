@@ -162,7 +162,7 @@ const DropdownUser = () => {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
-                // theme="colored"
+                theme="colored"
                 transition={Slide}
             />
         </div>
