@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import UserSeven from '../../../../assets/images/user-07.png';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { UserCircleIcon } from '@heroicons/react/24/outline';
 
 const DropdownUser = () => {
     const navigate = useNavigate();

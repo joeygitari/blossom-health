@@ -139,3 +139,28 @@ def get_patient_appointments():
         return jsonify(appointments), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@appointments_blueprint.route('/appointments/<int:appointment_id>/status', methods=['PATCH'])
+def update_appointment_status(appointment_id):
+    data = request.json
+    practitioner_id = session.get('user_id')
+    if not practitioner_id:
+        return jsonify({'error': 'Unauthorized'}), 401
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            """
+            UPDATE appointments SET status = %s WHERE appointmentid = %s AND practitionerid = %s;
+            """,
+            (data['status'], appointment_id, practitioner_id)
+        )
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({'message': 'Status updated successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

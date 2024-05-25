@@ -10,6 +10,7 @@ import {
     DialogHeader, 
     DialogBody, 
     DialogFooter,
+    Chip, Menu, MenuHandler, MenuList, MenuItem
 } from "@material-tailwind/react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -142,6 +143,60 @@ const Appointments = () => {
         borderColor: '#FF8585',
     }));
 
+    const handleStatusChange = async (appointmentId, newStatus) => {
+        try {
+            const response = await fetch(`/appointments/${appointmentId}/status`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ status: newStatus })
+            });
+
+            if (response.ok) {
+                // Update the status in the UI
+                const updatedAppointments = appointments.map(appointment => {
+                    if (appointment.appointmentid === appointmentId) {
+                        return { ...appointment, status: newStatus };
+                    }
+                    return appointment;
+                });
+                setAppointments(updatedAppointments);
+                // toast.success("Status updated successfully");
+            } else {
+                toast.error("Failed to update status");
+            }
+        } catch (error) {
+            toast.error("Error updating status");
+        }
+    };
+
+    // const getStatusColor = (status) => {
+    //     switch (status) {
+    //         case 'pending':
+    //             return 'bg-[#f29339] text-black text-center';
+    //         case 'attended':
+    //             return 'bg-[#4BB543] text-black text-center';
+    //         case 'cancelled':
+    //             return 'bg-[#d4160b] text-black text-center';
+    //         default:
+    //             return 'text-black';
+    //     }
+    // };
+    
+    const getStatusChipProps = (status) => {
+        switch (status) {
+            case 'pending':
+                return { color: 'orange', value: 'Pending' };
+            case 'attended':
+                return { color: 'green', value: 'Attended' };
+            case 'cancelled':
+                return { color: 'red', value: 'Cancelled' };
+            default:
+                return { color: 'gray', value: 'Unknown' };
+        }
+    };
+    
     return (
         <DefaultLayout> 
         <div className="grid lg:grid-cols-5 gap-4">
@@ -203,7 +258,7 @@ const Appointments = () => {
                                             color="blue-gray"
                                             className="flex items-center justify-between gap-2 font-poppins font-bold text-[#172048] leading-none opacity-70"
                                         >
-                                            Patient name
+                                            Patient
                                         </Typography>
                                     </th>
                                     <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
@@ -231,6 +286,15 @@ const Appointments = () => {
                                             className="flex items-center justify-between gap-2 font-poppins font-bold text-[#172048] leading-none opacity-70"
                                         >
                                             Location
+                                        </Typography>
+                                    </th>
+                                    <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="flex items-center justify-between gap-2 font-poppins font-bold text-[#172048] leading-none opacity-70"
+                                        >
+                                            Status
                                         </Typography>
                                     </th>
                                 </tr>
@@ -291,7 +355,30 @@ const Appointments = () => {
                                            {appointment.location}
                                         </Typography>
                                     </td>
-                                    
+                                    <td className="p-4 border-b border-blue-gray-50">
+                                        <div className="flex items-center">
+                                            <Menu>
+                                                <MenuHandler>
+                                                    <Chip
+                                                        {...getStatusChipProps(appointment.status)}
+                                                        className="cursor-pointer"
+                                                        variant="ghost"
+                                                    />
+                                                </MenuHandler>
+                                                <MenuList>
+                                                    <MenuItem onClick={() => handleStatusChange(appointment.appointmentid, 'pending')}>
+                                                        <Chip {...getStatusChipProps('pending')} className="cursor-pointer w-full" variant="ghost"/>
+                                                    </MenuItem>
+                                                    <MenuItem onClick={() => handleStatusChange(appointment.appointmentid, 'attended')}>
+                                                        <Chip {...getStatusChipProps('attended')} className="cursor-pointer w-full" variant="ghost"/>
+                                                    </MenuItem>
+                                                    <MenuItem onClick={() => handleStatusChange(appointment.appointmentid, 'cancelled')}>
+                                                        <Chip {...getStatusChipProps('cancelled')} className="cursor-pointer w-full" variant="ghost"/>
+                                                    </MenuItem>
+                                                </MenuList>
+                                            </Menu>
+                                        </div>
+                                    </td>
                                 </tr>
                             ))}
                             </tbody>

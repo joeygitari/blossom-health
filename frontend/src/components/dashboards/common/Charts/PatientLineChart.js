@@ -5,9 +5,8 @@ const options = {
     colors: ['#FF8585', '#80CAEE', '#FFC75F'],
     chart: {
         fontFamily: 'Poppins, sans-serif',
-        type: 'bar',
+        type: 'line',
         height: 335,
-        stacked: true,
         toolbar: {
             show: false,
         },
@@ -41,30 +40,27 @@ const options = {
         enabled: false,
     },
     xaxis: {
-        categories: [],
+        type: 'category',
+        title: {
+            text: 'Ages',
+        },
+    },
+    yaxis: {
+        title: {
+            text: 'Number of Patients',
+        },
     },
     legend: {
-        position: 'top',
-        horizontalAlign: 'left',
-        fontFamily: 'Poppins',
-        fontWeight: 500,
-        fontSize: '14px',
-        markers: {
-            radius: 99,
-        },
-        itemMargin: {
-            horizontal: 10,
-            vertical: 5,
-        }
+        show: false,
     },
     fill: {
         opacity: 1,
     },
 };
 
-const SymptomCountsChart = () => {
+const PatientLineChart = () => {
     const [chartData, setChartData] = useState({
-        series: [{ name: 'Patients', data: [] }],
+        series: [],
         categories: []
     });
 
@@ -76,25 +72,10 @@ const SymptomCountsChart = () => {
                     const data = await response.json();
                     return data;
                 } else {
-                    console.error("Failed to fetch patients");
-                    return [];
+                    throw new Error("Failed to fetch patients");
                 }
             } catch (error) {
                 console.error("Error fetching patients:", error);
-                return [];
-            }
-        };
-
-        const fetchSymptoms = async () => {
-            try {
-                const response = await fetch('/symptoms');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch symptoms');
-                }
-                const data = await response.json();
-                return data.map(symptom => symptom[1]);
-            } catch (error) {
-                console.error('Error fetching symptoms:', error);
                 return [];
             }
         };
@@ -106,8 +87,7 @@ const SymptomCountsChart = () => {
                     const data = await response.json();
                     return data.symptoms;
                 } else {
-                    console.error(`Failed to fetch symptoms for patient ${patientId}`);
-                    return [];
+                    throw new Error(`Failed to fetch symptoms for patient ${patientId}`);
                 }
             } catch (error) {
                 console.error(`Error fetching symptoms for patient ${patientId}:`, error);
@@ -115,35 +95,39 @@ const SymptomCountsChart = () => {
             }
         };
 
-        const processSymptomCounts = async () => {
-            const patients = await fetchPatients();
-            const symptoms = await fetchSymptoms();
+        const processPatientData = async () => {
+            try {
+                const patients = await fetchPatients();
+                const ages = patients.map(patient => patient[4]);
+                const symptomsMap = {};
 
-            const symptomCounts = {};
-            symptoms.forEach(symptom => {
-                symptomCounts[symptom] = 0;
-            });
+                for (const patient of patients) {
+                    const patientId = patient[0];
+                    const patientSymptoms = await fetchPatientSymptoms(patientId);
 
-            for (const patient of patients) {
-                const patientId = patient[0]; // Ensure correct field name here
-                const patientSymptoms = await fetchPatientSymptoms(patientId);
-                patientSymptoms.forEach(symptom => {
-                    if (symptomCounts.hasOwnProperty(symptom)) {
-                        symptomCounts[symptom]++;
-                    }
+                    patientSymptoms.forEach(symptom => {
+                        if (!symptomsMap[symptom]) {
+                            symptomsMap[symptom] = Array(ages.length).fill(0);
+                        }
+                        symptomsMap[symptom][ages.indexOf(patient[4])]++; // Increment count for the corresponding age
+                    });
+                }
+
+                const seriesData = Object.keys(symptomsMap).map(symptom => ({
+                    name: symptom,
+                    data: symptomsMap[symptom],
+                }));
+
+                setChartData({
+                    series: seriesData,
+                    categories: ages.map(age => age.toString()), // Convert ages to strings
                 });
+            } catch (error) {
+                console.error("Error processing patient data:", error);
             }
-
-            const categories = Object.keys(symptomCounts);
-            const seriesData = Object.values(symptomCounts);
-
-            setChartData({
-                series: [{ name: 'Patients', data: seriesData }],
-                categories: categories
-            });
         };
 
-        processSymptomCounts();
+        processPatientData();
     }, []);
 
     const updatedOptions = {
@@ -168,7 +152,7 @@ const SymptomCountsChart = () => {
                     <ReactApexChart
                         options={updatedOptions}
                         series={chartData.series}
-                        type="bar"
+                        type="line"
                         height={350}
                     />
                 </div>
@@ -177,4 +161,4 @@ const SymptomCountsChart = () => {
     );
 };
 
-export default SymptomCountsChart;
+export default PatientLineChart;
