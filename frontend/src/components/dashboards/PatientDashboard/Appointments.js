@@ -10,6 +10,7 @@ import {
     DialogHeader, 
     DialogBody, 
     DialogFooter,
+    Chip, Menu, MenuHandler
 } from "@material-tailwind/react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -144,6 +145,18 @@ const Appointments = () => {
         borderColor: '#FF8585',
     }));
 
+    const getStatusChipProps = (status) => {
+        switch (status) {
+            case 'pending':
+                return { color: 'orange', value: 'Pending' };
+            case 'attended':
+                return { color: 'green', value: 'Attended' };
+            case 'cancelled':
+                return { color: 'red', value: 'Cancelled' };
+            default:
+                return { color: 'gray', value: 'Unknown' };
+        }
+    };
     return (
         <DefaultLayout> 
         <div className="grid lg:grid-cols-5 gap-4">
@@ -235,6 +248,15 @@ const Appointments = () => {
                                             Location
                                         </Typography>
                                     </th>
+                                    <th className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+                                        <Typography
+                                            variant="small"
+                                            color="blue-gray"
+                                            className="flex items-center justify-between gap-2 font-poppins font-bold text-[#172048] leading-none opacity-70"
+                                        >
+                                            Status
+                                        </Typography>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -292,6 +314,19 @@ const Appointments = () => {
                                         >
                                            {appointment.location}
                                         </Typography>
+                                    </td>
+                                    <td className="p-4 border-b border-blue-gray-50">
+                                        <div className="flex items-center">
+                                            <Menu>
+                                                <MenuHandler>
+                                                    <Chip
+                                                        {...getStatusChipProps(appointment.status)}
+                                                        className="cursor-pointer"
+                                                        variant="ghost"
+                                                    />
+                                                </MenuHandler>
+                                            </Menu>
+                                        </div>
                                     </td>
                                     
                                 </tr>
