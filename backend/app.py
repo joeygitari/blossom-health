@@ -10,6 +10,7 @@ from recommendations.recommendations import recommendations
 from reports.patientreports import patient_report_blueprint
 from appointments.appointments import appointments_blueprint
 from practitioners.practitioner import practitioners
+# from auth.profile import update_profile
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -27,6 +28,7 @@ app.register_blueprint(recommendations)
 app.register_blueprint(patient_report_blueprint)
 app.register_blueprint(appointments_blueprint)
 app.register_blueprint(practitioners)
+# app.register_blueprint(update_profile)
 
 if __name__ == '__main__':
     app.run()
