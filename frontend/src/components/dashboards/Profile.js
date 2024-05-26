@@ -21,12 +21,68 @@ const Profile = () => {
 
     const [currentUser, setCurrentUser] = useState(null);
 
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        specialization: '',
+        age: '',
+        gender: '',
+        location: ''
+    });
+
+    // useEffect(() => {
+    //     const userData = localStorage.getItem('userData');
+    //     if (userData) {
+    //         setCurrentUser(JSON.parse(userData));
+    //     }
+    // }, []);
     useEffect(() => {
         const userData = localStorage.getItem('userData');
         if (userData) {
-            setCurrentUser(JSON.parse(userData));
+            const parsedUser = JSON.parse(userData);
+            setCurrentUser(parsedUser);
+            setFormData({
+                name: parsedUser.name || '',
+                email: parsedUser.email || '',
+                specialization: parsedUser.specialization || '',
+                age: parsedUser.age || '',
+                gender: parsedUser.gender || '',
+                location: parsedUser.location || ''
+            });
         }
     }, []);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    const handleUpdate = async () => {
+        try {
+            const response = await fetch('/update-profile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                // Update local storage and state
+                localStorage.setItem('userData', JSON.stringify(result.updatedUser));
+                setCurrentUser(result.updatedUser);
+                handleOpenModal(false);
+            } else {
+                console.error(result.error);
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
+    };
 
     // console.log("Current User", currentUser)
 
@@ -123,15 +179,17 @@ const Profile = () => {
                 <DialogHeader className="font-poppins text-[#172048] text-center">Edit Profile</DialogHeader>
                 <DialogBody className="font-poppins">
                     <div>
-                        <label htmlFor="fullNames" className="block mb-2 text-[14px] font-poppins font-medium text-[#718096]">
+                        <label htmlFor="name" className="block mb-2 text-[14px] font-poppins font-medium text-[#718096]">
                             Name
                         </label>
                         <input 
                             type="text" 
-                            id="fullNames" 
+                            id="name" 
+                            value={formData.name}
+                            onChange={handleChange}
                             autoComplete="off"
                             className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[13px] rounded-[12px] w-full p-3"
-                            name="fullNames" 
+                            name="name" 
                         />
                     </div>
                     <br />
@@ -142,6 +200,8 @@ const Profile = () => {
                         <input 
                             type="email" 
                             id="email" 
+                            value={formData.email}
+                            onChange={handleChange}
                             autoComplete="off"
                             className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[13px] rounded-[12px] w-full p-3"
                             name="email"
@@ -157,12 +217,13 @@ const Profile = () => {
                         <input
                             type="text"
                             id="specialization"
+                            value={formData.specialization}
+                            onChange={handleChange}
                             className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[13px] rounded-[12px] w-full p-3"
                             name="specialization"
                             autoComplete="off"
                         />
                     </div>
-                    <br />
                     </>
                     ):(
                     <>
@@ -174,6 +235,8 @@ const Profile = () => {
                             type="number"
                             id="age"
                             name="age"
+                            value={formData.age}
+                            onChange={handleChange}
                             autoComplete="off"
                             className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[13px] rounded-[12px] w-full p-3"
                         />
@@ -187,6 +250,8 @@ const Profile = () => {
                             type="text"
                             id="gender"
                             name="gender"
+                            value={formData.gender}
+                            onChange={handleChange}
                             autoComplete="off"
                             className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[13px] rounded-[12px] w-full p-3"
                         >
@@ -208,7 +273,9 @@ const Profile = () => {
                             type="text" 
                             id="text" 
                             autoComplete="off"
-                            className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
+                            value={formData.location}
+                            onChange={handleChange}
+                            className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[13px] rounded-[12px] w-full p-3"
                             name="location"
                         />
                     </div>
@@ -218,7 +285,7 @@ const Profile = () => {
                     <Button variant="text" color="red" onClick={() => setOpenModal(false)}>
                         Cancel
                     </Button>
-                    <Button variant="gradient" className="bg-[#FF8585]">
+                    <Button variant="gradient" className="bg-[#FF8585]" onClick={handleUpdate}>
                         Update
                     </Button>
                 </DialogFooter>
