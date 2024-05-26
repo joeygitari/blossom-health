@@ -3,11 +3,15 @@ import Footer from "./Footer";
 import Header from "./Header";
 import Icon from "../assets/images/Icon.png";
 import Line5 from "../assets/images/Line5.png";
+import ServicesImg1 from '../assets/images/our-services-2.png';
 
 const Services = () => {
     return (
         <>
             <Header/>
+            <div className="grid md:grid-cols-1 mt-[2rem]">
+                <img src={ServicesImg1} alt="Services" className="md:h-full w-full"/>
+            </div>
             <div className="container mx-auto bg-white md:p-0 p-6">
                 <div className="grid md:grid-cols-1 gap-4">
                     <div className="md:mt-[3.5rem]">
