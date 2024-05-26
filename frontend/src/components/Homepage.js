@@ -9,7 +9,7 @@ import Home2 from "../assets/images/Home2.png";
 // import Partner4 from "../assets/images/Partner4.png";
 // import Partner5 from "../assets/images/Partner5.png";
 import Line1 from "../assets/images/Line1.png";
-import Line2 from "../assets/images/Line2.png";
+// import Line2 from "../assets/images/Line2.png";
 import Line5 from "../assets/images/Line5.png";
 import Do1 from "../assets/images/Do1.png";
 import Do2 from "../assets/images/Do2.png";
@@ -28,7 +28,7 @@ const Homepage = () => {
                     <div className="md:mt-[5rem]">
                         <p className="font-poppins font-bold text-[#172048] text-[29px] md:text-[58px]">
                             Making women's <br/>
-                            <span className="text-[#F70000]">healthcare and wellness</span> <br/>
+                            <span className="text-[#F70000]">healthcare</span> <br/>
                             more accessible
                         </p>
 
@@ -110,7 +110,7 @@ const Homepage = () => {
                                         Engagement
                                     </h4>
                                     <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 mb-[2rem] leading-8 group-hover:text-white">
-                                        Connect directly, quickly and easily with our <br/> registered board doctors,
+                                        Connect directly, quickly and easily with our <br/> registered doctors,
                                         and there is no need to doubt the quality of the consultation and <br/>
                                         treatment offered.
                                     </p>
@@ -124,8 +124,7 @@ const Homepage = () => {
                                         Health Records Management
                                     </h4>
                                     <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 mb-[2rem] leading-8 group-hover:text-white">
-                                        Talk about the health complaints you are experiencing and don't hesitate to
-                                        ask about the proper treatment.
+                                        Give you reproductive health complaints you are experiencing and get the proper recommended treatment.
                                     </p>
                                 </div>
 
@@ -138,9 +137,7 @@ const Homepage = () => {
                                         Early Intervention
                                     </h4>
                                     <p className="font-poppins font-normal text-[14px] text-[#868686] px-5 mb-[2rem] leading-8 group-hover:text-white">
-                                        Get priority services in hospitals with Blossom Health. Which allows you to go
-                                        to
-                                        the hospital more practically and save time.
+                                        Receive a predictive diagnosis to identify potential reproductive health issues, allowing you to save time during your hospital visit.
                                     </p>
                                 </div>
                             </div>
@@ -178,14 +175,14 @@ const Homepage = () => {
                                              alt="Icon"/>
 
                                         <p className="font-poppins font-bold text-[20px] text-[#172048]">
-                                            Convenient virtual visits
+                                            Convenient appointments
                                         </p>
                                         <p className="font-poppins font-medium text-[12px] text-[#C4C4C4] leading-6">
-                                            Schedule a virtual visit&nbsp;
+                                            Schedule an appointment&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            with a qualified specialists&nbsp;
+                                            with a specialists&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
@@ -208,7 +205,7 @@ const Homepage = () => {
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            Our platform uses advanced ML algorithms to analyze health data&nbsp;
+                                            Our platform uses advanced algorithms to analyze health data&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
@@ -242,19 +239,19 @@ const Homepage = () => {
                                         </p>
                                     </div>
 
-                                    <div className="mt-[3rem] text-center md:text-left">
+                                    <div className="mt-[1.7rem] text-center md:text-left ml-2">
                                         <img className="mx-auto md:inline md:h-[64px] w-[64px] sm:h-full" src={Icon}
                                              alt="Icon"/>
 
                                         <p className="font-poppins font-bold text-[20px] text-[#172048]">
-                                            Supportive community 
+                                            Analytics
                                         </p>
                                         <p className="font-poppins font-medium text-[12px] text-[#C4C4C4] leading-6">
-                                            Join a community of women navigating similar health journeys,&nbsp;
+                                            View your analytics based on your symptoms and diagnosis data,&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
-                                            share experiences and offer a safe and supportive environment.&nbsp;
+                                            making it easier for you to understand your health status.&nbsp;
                                             <span className="hidden md:inline-block">
                                                 <br/>
                                             </span>
@@ -262,7 +259,7 @@ const Homepage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <img className="mx-auto w-full mt-[2rem]" alt="Line2" src={Line2}/>
+                            {/* <img className="mx-auto w-full mt-[2rem]" alt="Line2" src={Line2}/> */}
                         </div>
                     </div>
                 </div>
