@@ -4,7 +4,7 @@ import Header from "./Header";
 import Line5 from "../assets/images/Line5.png";
 import Icon from "../assets/images/Icon.png";
 import { Button, Alert } from "@material-tailwind/react";
-import 'animate.css';
+// import 'animate.css';
 import TrackVisibility from 'react-on-screen';
 import emailjs from 'emailjs-com';
 
