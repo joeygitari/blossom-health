@@ -42,7 +42,7 @@ const Prediction = () => {
             <>
             <div className="flex items-center mt-5 ml-5">
                 <div className="absolute top-22 right-8 mb-5 mr-5 flex items-center">
-                    <button className="font-bold font-poppins py-4 text-[14px] text-black flex items-center space-x-2" onClick={exportToPDF}>
+                    <button className="font-bold font-poppins py-4 text-[14px] text-black dark:text-white flex items-center space-x-2" onClick={exportToPDF}>
                         <DocumentIcon className="h-5 w-5" /> 
                         <span>Export to PDF</span>
                     </button>
@@ -217,6 +217,8 @@ const Prediction = () => {
                             Loading report...
                         </Typography>
                     )}
+                    <br />
+                    <br />
                     <Typography variant="h6" className="mb-1 text-black font-poppins font-normal">
                         <strong>Doctor's Recommendation</strong>
                     </Typography>
