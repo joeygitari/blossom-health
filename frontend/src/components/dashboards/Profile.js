@@ -71,11 +71,12 @@ const Profile = () => {
             });
 
             const result = await response.json();
+            // console.log("Result:", result.updatedUser);
             if (response.ok) {
                 // Update local storage and state
                 localStorage.setItem('userData', JSON.stringify(result.updatedUser));
                 setCurrentUser(result.updatedUser);
-                handleOpenModal(false);
+                setOpenModal(false);
             } else {
                 console.error(result.error);
             }
