@@ -1,174 +1,158 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 const options = {
-    legend: {
-        show: false,
-        position: 'top',
-        horizontalAlign: 'left',
-    },
-    colors: ['#80CAEE', '#FF8585'],
+    colors: ['#FF8585', '#80CAEE', '#FFC75F'],
     chart: {
         fontFamily: 'Poppins, sans-serif',
+        type: 'line',
         height: 335,
-        type: 'area',
-        dropShadow: {
-            enabled: true,
-            color: '#623CEA14',
-            top: 10,
-            blur: 4,
-            left: 0,
-            opacity: 0.1,
-        },
-
         toolbar: {
             show: false,
+        },
+        zoom: {
+            enabled: false,
         },
     },
     responsive: [
         {
-            breakpoint: 1024,
+            breakpoint: 1536,
             options: {
-                chart: {
-                    height: 300,
-                },
-            },
-        },
-        {
-            breakpoint: 1366,
-            options: {
-                chart: {
-                    height: 350,
+                plotOptions: {
+                    bar: {
+                        borderRadius: 0,
+                        columnWidth: '25%',
+                    },
                 },
             },
         },
     ],
-    stroke: {
-        width: [2, 2],
-        curve: 'straight',
-    },
-    grid: {
-        xaxis: {
-            lines: {
-                show: true,
-            },
-        },
-        yaxis: {
-            lines: {
-                show: true,
-            },
+    plotOptions: {
+        bar: {
+            horizontal: false,
+            borderRadius: 0,
+            columnWidth: '25%',
+            borderRadiusApplication: 'end',
+            borderRadiusWhenStacked: 'last',
         },
     },
     dataLabels: {
         enabled: false,
     },
-    markers: {
-        size: 4,
-        colors: '#fff',
-        strokeColors: ['#80CAEE', '#FF8585'],
-        strokeWidth: 3,
-        strokeOpacity: 0.9,
-        strokeDashArray: 0,
-        fillOpacity: 1,
-        discrete: [],
-        hover: {
-            size: undefined,
-            sizeOffset: 5,
-        },
-    },
     xaxis: {
         type: 'category',
-        categories: [
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-        ],
-        axisBorder: {
-            show: false,
-        },
-        axisTicks: {
-            show: false,
+        title: {
+            text: 'Ages',
         },
     },
     yaxis: {
         title: {
-            style: {
-                fontSize: '0px',
-            },
+            text: 'Number of Patients',
         },
-        min: 0,
-        max: 100,
+    },
+    legend: {
+        show: false,
+    },
+    fill: {
+        opacity: 1,
     },
 };
 
 const PatientLineChart = () => {
-    const [state] = useState({
-        series: [
-            {
-                name: 'New Patients',
-                data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 45],
-            },
-
-            {
-                name: 'Recovered Patients',
-                data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51],
-            },
-        ],
+    const [chartData, setChartData] = useState({
+        series: [],
+        categories: []
     });
 
+    useEffect(() => {
+        const fetchPatients = async () => {
+            try {
+                const response = await fetch("/patients");
+                if (response.ok) {
+                    const data = await response.json();
+                    return data;
+                } else {
+                    throw new Error("Failed to fetch patients");
+                }
+            } catch (error) {
+                console.error("Error fetching patients:", error);
+                return [];
+            }
+        };
+
+        const fetchPatientSymptoms = async (patientId) => {
+            try {
+                const response = await fetch(`/predict/${patientId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.symptoms;
+                } else {
+                    throw new Error(`Failed to fetch symptoms for patient ${patientId}`);
+                }
+            } catch (error) {
+                console.error(`Error fetching symptoms for patient ${patientId}:`, error);
+                return [];
+            }
+        };
+
+        const processPatientData = async () => {
+            try {
+                const patients = await fetchPatients();
+                const ages = patients.map(patient => patient[4]);
+                const symptomsMap = {};
+
+                for (const patient of patients) {
+                    const patientId = patient[0];
+                    const patientSymptoms = await fetchPatientSymptoms(patientId);
+
+                    patientSymptoms.forEach(symptom => {
+                        if (!symptomsMap[symptom]) {
+                            symptomsMap[symptom] = Array(ages.length).fill(0);
+                        }
+                        symptomsMap[symptom][ages.indexOf(patient[4])]++; // Increment count for the corresponding age
+                    });
+                }
+
+                const seriesData = Object.keys(symptomsMap).map(symptom => ({
+                    name: symptom,
+                    data: symptomsMap[symptom],
+                }));
+
+                setChartData({
+                    series: seriesData,
+                    categories: ages.map(age => age.toString()), // Convert ages to strings
+                });
+            } catch (error) {
+                console.error("Error processing patient data:", error);
+            }
+        };
+
+        processPatientData();
+    }, []);
+
+    const updatedOptions = {
+        ...options,
+        xaxis: {
+            ...options.xaxis,
+            categories: chartData.categories,
+        },
+    };
+
     return (
-        <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-black sm:px-7.5 xl:col-span-8">
-            <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
-                <div className="flex w-full flex-wrap gap-3 sm:gap-5">
-                    <div className="flex min-w-47.5">
-                        <span className="mt-1 mr-2 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-primary">
-                            <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
-                        </span>
-                        <div className="w-full">
-                            <p className="font-poppins font-semibold text-primary">Recovered Patients</p>
-                            <p className="font-poppins text-sm font-medium">12.04.2024 - 12.05.2024</p>
-                        </div>
-                    </div>
-                    <div className="flex min-w-47.5">
-                        <span className="mt-1 mr-2 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-secondary">
-                            <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-secondary"></span>
-                        </span>
-                        <div className="w-full">
-                            <p className="font-poppins font-semibold text-secondary">New Patients</p>
-                            <p className="font-poppins text-sm font-medium">12.04.2024 - 12.05.2024</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex w-full max-w-45 justify-end">
-                    <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
-                        <button className="font-poppins rounded bg-white py-1 px-3 text-xs font-medium text-black shadow-card hover:bg-white hover:shadow-card dark:bg-boxdark dark:text-white dark:hover:bg-boxdark">
-                            Day
-                        </button>
-                        <button className="font-poppins rounded py-1 px-3 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
-                            Week
-                        </button>
-                        <button className="font-poppins rounded py-1 px-3 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
-                            Month
-                        </button>
-                    </div>
+        <div className="rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-black xl:col-span-4">
+            <div className="mb-4 justify-between gap-4 sm:flex">
+                <div>
+                    <h4 className="text-xl font-poppins font-semibold text-black dark:text-white">
+                         Symptoms Report
+                    </h4>
                 </div>
             </div>
-
             <div>
-                <div id="patientLineChart" className="-ml-5">
+                <div id="chartTwo" className="-ml-5 -mb-9">
                     <ReactApexChart
-                        options={options}
-                        series={state.series}
-                        type="area"
+                        options={updatedOptions}
+                        series={chartData.series}
+                        type="line"
                         height={350}
                     />
                 </div>

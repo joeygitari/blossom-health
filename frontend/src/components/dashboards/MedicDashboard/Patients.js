@@ -11,14 +11,16 @@ import {
     Typography,
     Button,
     CardBody,
-    Chip,
-    CardFooter,
+    // Chip,
+    // CardFooter,
   } from "@material-tailwind/react";
 
 const Patients = () => {
     const [patients, setPatients] = useState([]);
-    const TABLE_HEAD = ["Patient", "Location", "Status"];
-    const [patientStatus, setPatientStatus] = useState({});
+    const TABLE_HEAD = ["Patient", "Gender", "Age", "Location"];
+    // const [patientStatus, setPatientStatus] = useState({});
+
+    const [searchTerm, setSearchTerm] = useState("");
     
     useEffect(() => {
         fetchPatients();
@@ -38,12 +40,22 @@ const Patients = () => {
         }
     };
 
-    const handleStatusChange = (patientId, status) => {
-        setPatientStatus(prevStatus => ({
-            ...prevStatus,
-            [patientId]: status,
-        }));
+    // const handleStatusChange = (patientId, status) => {
+    //     setPatientStatus(prevStatus => ({
+    //         ...prevStatus,
+    //         [patientId]: status,
+    //     }));
+    // };
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
     };
+
+    const filteredPatients = patients.filter(patient =>
+        patient[1].toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient[3].toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient[5].toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <DefaultLayout>
@@ -64,6 +76,8 @@ const Patients = () => {
                     <Input
                         label="Search"
                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                        onChange={handleSearch}
+                        value={searchTerm}
                     />
                     </div>
                 </div>
@@ -89,7 +103,7 @@ const Patients = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {patients.map(
+                    {filteredPatients.map(
                         (patient, index) => {
                         const isLast = index === patients.length - 1;
                         const classes = isLast
@@ -108,14 +122,29 @@ const Patients = () => {
                                     >
                                     {patient[1]}
                                     </Typography>
-                                    <Typography
+                                </div>
+                                </div>
+                            </td>
+                            <td className={classes}>
+                                <div className="flex flex-col">
+                                <Typography
                                     variant="small"
                                     color="blue-gray"
-                                    className="font-poppins font-normal opacity-70"
-                                    >
-                                    {patient[3]}, {patient[4]}
-                                    </Typography>
+                                    className="font-poppins font-normal"
+                                >
+                                    {patient[3]}
+                                </Typography>
                                 </div>
+                            </td>
+                            <td className={classes}>
+                                <div className="flex flex-col">
+                                <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-poppins font-normal"
+                                >
+                                    {patient[4]} years old
+                                </Typography>
                                 </div>
                             </td>
                             <td className={classes}>
@@ -129,16 +158,8 @@ const Patients = () => {
                                 </Typography>
                                 </div>
                             </td>
-                            <td className={classes}>
+                            {/* <td className={classes}> */}
                                 {/* <div className="w-max">
-                                <Chip
-                                    variant="ghost"
-                                    size="sm"
-                                    // value={healthy ? "healthy" : "sick"}
-                                    // color={healthy ? "green" : "blue-gray"}
-                                />
-                                </div> */}
-                                <div className="w-max">
                                 <Chip
                                     variant="ghost"
                                     color={
@@ -165,8 +186,8 @@ const Patients = () => {
                                     ? 'Sick'
                                     : 'Recuperating'}
                                 />
-                                </div>
-                            </td>
+                                </div> */}
+                            {/* </td> */}
                             </tr>
                         );
                         },
@@ -174,7 +195,7 @@ const Patients = () => {
                     </tbody>
                 </table>
                 </CardBody>
-                <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+                {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
                 <Typography variant="small" color="blue-gray" className="font-poppins font-normal">
                     Page 1 of 10
                 </Typography>
@@ -186,7 +207,7 @@ const Patients = () => {
                     Next
                     </Button>
                 </div>
-                </CardFooter>
+                </CardFooter> */}
             </Card>
         </DefaultLayout>
     )

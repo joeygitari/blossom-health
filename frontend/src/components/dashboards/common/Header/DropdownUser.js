@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import UserSeven from '../../../../assets/images/user-07.png';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -76,9 +75,10 @@ const DropdownUser = () => {
                     <span className="block text-xs font-poppins">{currentUser.specialization}</span>
                 </span>
 
-                <span className="h-12 w-12 rounded-full">
-                    <img src={UserSeven} alt="User" />
-                </span>
+                {/* <span className="h-12 w-12 rounded-full"> */}
+                    {/* <img src={UserSeven} alt="User" /> */}
+                    {/* <UserCircleIcon /> */}
+                {/* </span> */}
 
                 <svg
                     className="hidden fill-current sm:block"
@@ -160,7 +160,7 @@ const DropdownUser = () => {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
-                // theme="colored"
+                theme="colored"
                 transition={Slide}
             />
         </div>

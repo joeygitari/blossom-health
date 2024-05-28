@@ -57,7 +57,7 @@ const Prediction = () => {
         <DefaultLayout>
             <div className="flex items-center mt-5 ml-5">
                 <div className="absolute top-22 right-8 mb-5 mr-5 flex items-center">
-                    <button className="font-bold font-poppins py-4 text-[14px] text-black flex items-center space-x-2" onClick={exportToPDF}>
+                    <button className="font-bold font-poppins py-4 text-[14px] text-black dark:text-white flex items-center space-x-2" onClick={exportToPDF}>
                         <DocumentIcon className="h-5 w-5" /> 
                         <span>Export to PDF</span>
                     </button>
@@ -150,11 +150,60 @@ const Prediction = () => {
                             {report.maternal_health_prediction === 1 && (
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>Maternal Health Prediction:</strong> Positive
+                                    <span>({report.maternal_health_accuracy}%)</span>
+                                    <br />
+                                    <br />
+
+                                    <strong>Overview</strong>
+                                    <p>Maternal health risks and childbirth complications refer to health issues that arise during pregnancy, labor, delivery, and the postpartum period. These complications can affect both the mother and the baby, and their severity can range from mild to life-threatening. Common complications include preeclampsia, gestational diabetes, preterm labor, and infections.</p>
+                                    <br />
+
+                                    <strong>Common complications</strong>
+                                    <ul>
+                                        <li><strong>Preeclampsia:</strong> High blood pressure, swelling of hands and feet, protein in urine, severe headaches, vision changes. Affects about 5-8% of pregnant women.</li>
+                                        <li><strong>Gestational Diabetes:</strong> Often asymptomatic; sometimes increased thirst, frequent urination, fatigue. Affects 6-9% of pregnant women.</li>
+                                        <li><strong>Preterm Labor:</strong> Regular contractions, lower back pain, changes in vaginal discharge, pelvic pressure. Approximately 10% of births are preterm.</li>
+                                        <li><strong>Infections:</strong> Fever, chills, painful urination, abnormal discharge. Varies depending on the type of infection (e.g., urinary tract infections are common, affecting about 8% of pregnant women).</li>
+                                        <li><strong>Placental Abruption:</strong> Vaginal bleeding, abdominal pain, back pain, uterine tenderness. Affects about 1 in 100 pregnancies.</li>
+                                        <li><strong>Postpartum Hemorrhage:</strong> Heavy bleeding after delivery, drop in blood pressure, rapid heart rate. Occurs in about 1-5% of deliveries.</li>
+                                    </ul>
+                                    <br />
+
+                                    <strong>Diagnosis</strong>
+                                    <ul>
+                                        <li><strong>Regular Prenatal Checkups:</strong> Monitoring blood pressure, blood tests, urine tests, and ultrasounds to identify potential complications early.</li>
+                                        <li><strong>Specific Tests:</strong> Blood pressure readings and urine tests for preeclampsia. Glucose tolerance test for gestational diabetes. Cervical exams and ultrasound for signs of preterm labor. Blood tests, cultures, and physical examinations for infections.</li>
+                                    </ul>
+                                    <br />
+                                    
                                 </Typography>
                             )}
                             {report.pcos_prediction === 1 && (
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>PCOS Prediction:</strong> Positive
+                                    <span> ({report.pcos_accuracy}%)</span>
+                                    <br />
+                                    <br />
+
+                                    <strong>Symptoms</strong>
+                                    <p>Absent or irregular periods, infertility, increased facial and body hair, acne, weight gain (especially around the abdomen), trouble losing weight, depression, male pattern hair loss, gestational diabetes, high blood pressure (especially during pregnancy or delivery), skin tags, pelvic pain, sleep apnea</p>
+                                    <br />
+
+                                    <strong>How common?</strong>
+                                    <p>1 in every 10 - 20 women of childbearing age has PCOS.</p>
+                                    <br />
+
+                                    <strong>Overview</strong>
+                                    <p>Polycystic ovary syndrome (PCOS) is a common cause of female infertility. In most, but not all, women with the condition, the ovaries have many small cysts. Women with PCOS may not ovulate regularly or at all, and have trouble getting pregnant. Other symptoms may include irregular periods, increased body and facial hair, acne, and obesity. Doctors don't know exactly what causes PCOS, but it happens when hormones get out of balance. With PCOS, a woman's body makes more androgens, the male sex hormones. Other hormones, including estrogen, progesterone, and insulin, are also out of balance. Over time, especially if not managed, PCOS increases the risk of such problems as repeated miscarriages, diabetes, heart disease, and cancer.</p>
+                                    <br />
+
+                                    <strong>Risk Factors</strong>
+                                    <p>Family history of PCOS, irregular periods, or diabetes</p>
+                                    <br />
+
+                                    <strong>Diagnosis</strong>
+                                    <p>To diagnose PCOS, take a health history and give you physical, including a pelvic exam to check the ovaries. Order blood tests to check hormone balance and look for other signs of PCOS. A vaginal ultrasound can show enlarged ovaries or excess tiny cysts in your ovaries.</p>
+
                                 </Typography>
                             )}
                             {report.endometriosis_prediction === 0 && report.maternal_health_prediction === 0 && report.pcos_prediction === 0 && (

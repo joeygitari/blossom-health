@@ -10,7 +10,10 @@ import {
     Typography,
     Button,
     CardBody,
-    CardFooter,
+    Dialog, 
+    DialogHeader, 
+    DialogBody, 
+    DialogFooter 
 } from "@material-tailwind/react";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,6 +23,10 @@ const Reports = () => {
     const navigate = useNavigate();
     const [patients, setPatients] = useState([]);
     const TABLE_HEAD = ["Patient", "Location", "Prediction", "Recommendation"];
+    const [openModal, setOpenModal] = useState(false);
+    const [selectedPatientId, setSelectedPatientId] = useState(null);
+    const [recommendation, setRecommendation] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
     
     useEffect(() => {
         fetchPatients();
@@ -54,6 +61,59 @@ const Reports = () => {
             toast.error("Error fetching predictions:", error);
         }
     };
+
+    const handleOpenModal = (patientId) => {
+        setSelectedPatientId(patientId);
+        setOpenModal(true);
+    };
+
+    // const handleAddRecommendation = () => {
+    //     console.log(`Recommendation for patient ${selectedPatientId}: ${recommendation}`);
+    //     // Add your code to handle the recommendation submission
+    //     setOpenModal(false);
+    //     setRecommendation("");
+    // };
+    const handleAddRecommendation = async () => {
+        try {
+            const response = await fetch('/submit-recommendation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    patientid: selectedPatientId,
+                    recommendation: recommendation
+                })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                // console.log('Recommendation added successfully:', data);
+                toast.success(data.message);
+                if (typeof setOpenModal === 'function') {
+                    setOpenModal(false); // Close modal only if setOpenModal is defined
+                }
+                setRecommendation('');
+            } else {
+                console.error('Failed to add recommendation');
+                toast.error('Failed to add recommendation');
+            }
+        } catch (error) {
+            console.error('Error adding recommendation:', error);
+            toast.error('Error adding recommendation');
+        }
+    };
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredPatients = patients.filter(patient =>
+        patient[1].toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient[3].toLowerCase().includes(searchTerm.toLowerCase()) ||
+        patient[5].toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <DefaultLayout>
             <Card className="h-full w-full">
@@ -63,6 +123,8 @@ const Reports = () => {
                         <Input
                             label="Search"
                             icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                            onChange={handleSearch}
+                            value={searchTerm}
                         />
                         </div>
                     </div>
@@ -88,7 +150,7 @@ const Reports = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {patients.map(
+                    {filteredPatients.map(
                         (patient, index) => {
                         const isLast = index === patients.length - 1;
                         const classes = isLast
@@ -137,7 +199,7 @@ const Reports = () => {
                             </td>
                             <td className={classes}>
                                 <div className="w-max">
-                                    <Button className="font-poppins bg-[#FF8585] text-white" variant="outlined" style={{ textTransform: 'none', fontWeight: 'normal', fontSize: '13px'}}>
+                                    <Button className="font-poppins bg-[#FF8585] text-white" variant="outlined" style={{ textTransform: 'none', fontWeight: 'normal', fontSize: '13px'}} onClick={() => handleOpenModal(patient[0])}>
                                     Add recommendation
                                     </Button>
                                 </div>
@@ -149,20 +211,25 @@ const Reports = () => {
                     </tbody>
                 </table>
                 </CardBody>
-                <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-                <Typography variant="small" color="blue-gray" className="font-poppins font-normal">
-                    Page 1 of 10
-                </Typography>
-                <div className="flex gap-2">
-                    <Button variant="outlined" size="sm">
-                    Previous
-                    </Button>
-                    <Button variant="outlined" size="sm">
-                    Next
-                    </Button>
-                </div>
-                </CardFooter>
             </Card>
+            <Dialog open={openModal} handler={setOpenModal}>
+                <DialogHeader className="font-poppins">Add Recommendation</DialogHeader>
+                <DialogBody className="font-poppins">
+                    <Input
+                        label="Recommendation"
+                        value={recommendation}
+                        onChange={(e) => setRecommendation(e.target.value)}
+                    />
+                </DialogBody>
+                <DialogFooter className="font-poppins">
+                    <Button variant="text" color="red" onClick={() => setOpenModal(false)}>
+                        Cancel
+                    </Button>
+                    <Button variant="gradient" className="bg-[#FF8585]" onClick={handleAddRecommendation}>
+                        Add
+                    </Button>
+                </DialogFooter>
+            </Dialog>
             <ToastContainer
                 position="top-right"
                 autoClose={10000}

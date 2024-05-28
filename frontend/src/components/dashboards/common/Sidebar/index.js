@@ -66,7 +66,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         >
             {/* <!-- SIDEBAR HEADER --> */}
             <div className="flex flex-wrap items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-                <NavLink to="/" className="flex items-center ">
+                <NavLink to="#" className="flex items-center ">
                     <img className="h-16" alt="Logo" src={Logo}/>
                     <p className="font-bold font-poppins py-4 text-[20px] text-black ml-2 dark:text-white">BlossomHealth</p>
                 </NavLink>
@@ -242,7 +242,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             {/* <!-- Menu Item Patients --> */}
 
                             {/* <!-- Menu Item Medication --> */}
-                            {currentUser?.role === 'patient' && (
+                            {/* {currentUser?.role === 'patient' && (
                             <li>
                                 <NavLink
                                     to="/patient-dashboard/medications"
@@ -273,11 +273,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                     Medications
                                 </NavLink>
                             </li>
-                            )}
+                            )} */}
                             {/* <!-- Menu Item Medication --> */}
 
                             {/* <!-- Menu Item Labs --> */}
-                            {currentUser?.role === 'patient' && (
+                            {/* {currentUser?.role === 'patient' && (
                             <li>
                                 <NavLink
                                     to="/patient-dashboard/labs"
@@ -311,11 +311,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                     Labs
                                 </NavLink>
                             </li>
-                            )}
+                            )} */}
                             {/* <!-- Menu Item Labs --> */}
 
                             {/* <!-- Menu Item Imaging --> */}
-                            {currentUser?.role === 'patient' && (
+                            {/* {currentUser?.role === 'patient' && (
                             <li>
                                 <NavLink
                                     to="/patient-dashboard/images"
@@ -328,7 +328,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                     Images
                                 </NavLink>
                             </li>
-                            )}
+                            )} */}
                             
                             {/* <!-- Menu Item Imaging --> */}
     

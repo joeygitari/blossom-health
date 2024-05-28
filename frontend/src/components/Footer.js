@@ -1,12 +1,12 @@
 import React from "react";
-import Google from "../assets/images/google-icon.svg";
+// import Google from "../assets/images/google-icon.svg";
 
 const Footer = () => {
     return (
         <footer className="mt-[5rem] bg-white">
-            <p className="font-poppins font-semibold text-center text-[16px] text-[#172048]">Socials!</p>
+            {/* <p className="font-poppins font-semibold text-center text-[16px] text-[#172048]">Socials!</p> */}
             <div className="mx-auto max-w-5xl px-4 py-4 sm:px-6 lg:px-8">
-                <ul className="mt-0 flex justify-center gap-6 md:gap-8">
+                {/* <ul className="mt-0 flex justify-center gap-6 md:gap-8">
                     <div className="bg-[#E5F1F5] w-[60px] h-[60px] rounded-full">
                         <li>
                             <a
@@ -80,10 +80,10 @@ const Footer = () => {
                             </a>
                         </li>
                     </div>
-                </ul>
+                </ul> */}
 
                 <p className="font-poppins font-semibold text-center mt-[4rem] text-[16px] text-[#172048]">
-                    Copyright © 2024.
+                    BlossomHealth || Copyright © 2024.
                 </p>
             </div>
         </footer>

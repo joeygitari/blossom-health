@@ -78,7 +78,7 @@ const LoginForm = () => {
                 </div>
             </div>
 
-            <div className="flex items-center justify-between mb-5">
+            {/* <div className="flex items-center justify-between mb-5">
                 <div className="flex items-start">
                     <div className="flex items-center h-5">
                         <input id="remember" type="checkbox" value=""
@@ -96,10 +96,10 @@ const LoginForm = () => {
                    className="text-[16px] font-poppins font-medium text-[#A19B9B] underline hover:no-underline dark:text-primary-500">
                     Forgot password?
                 </a>
-            </div>
+            </div> */}
 
             <button type="submit"
-                    className="mt-[2rem] text-[#F7FAFC] bg-[#FF8585] h-14 font-poppins font-semibold rounded-[20px] text-[20px] w-full px-5 py-2.5 text-center">
+                    className="mt-[1.5rem] text-[#F7FAFC] bg-[#FF8585] h-14 font-poppins font-semibold rounded-[20px] text-[20px] w-full px-5 py-2.5 text-center">
                 Sign in
             </button>
             <ToastContainer

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import DefaultLayout from '../layout/DefaultLayout';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
+import "react-toastify/dist/ReactToastify.css";
 
 const PatientsForm = () => {
     const [step, setStep] = useState(1);
@@ -30,9 +31,27 @@ const PatientsForm = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
-        ...formData,
-        [name]: value,
+            ...formData,
+            [name]: value,
         });
+
+         // Calculate BMI immediately when weight or height changes
+         if (name === 'weight' || name === 'height') {
+            calculateBMI(value, name);
+        }
+    };
+
+    const calculateBMI = (value, name) => {
+        const { weight, height } = formData;
+        if (weight && height) {
+            const weightInKg = parseFloat(weight);
+            const heightInMeters = name === 'height' ? parseFloat(value) / 100 : parseFloat(height) / 100;
+            const bmi = (weightInKg / (heightInMeters * heightInMeters)).toFixed(2);
+            setFormData((prevData) => ({
+                ...prevData,
+                bmi: bmi,
+            }));
+        }
     };
 
     const handleNext = () => {
@@ -101,7 +120,7 @@ const PatientsForm = () => {
                                             </label>
                                             <textarea id="medicalHistory" autoComplete="off" value={formData.medicalHistory} onChange={handleChange}
                                                 className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                placeholder="eg Previous illnesses" name="medicalHistory" rows="4" required />
+                                                placeholder="Previous illnesses" name="medicalHistory" rows="4" required />
                                         </div>
 
                                         <div className="mb-5">
@@ -111,7 +130,7 @@ const PatientsForm = () => {
                                             </label>
                                             <textarea id="familyHistory" autoComplete="off" value={formData.familyHistory} onChange={handleChange}
                                                 className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                placeholder="eg. Genetic illnesses such as diabetes" name="familyHistory" rows="4"
+                                                placeholder="Genetic illnesses" name="familyHistory" rows="4"
                                                 required />
                                         </div>
 
@@ -122,7 +141,7 @@ const PatientsForm = () => {
                                             </label>
                                             <textarea id="menstrualHistory" autoComplete="off" value={formData.menstrualHistory} onChange={handleChange}
                                                 className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                placeholder="eg. Cycle length" name="menstrualHistory" rows="4"
+                                                placeholder="Cycle length" name="menstrualHistory" rows="4"
                                                 required />
                                         </div>
                                     </div>
