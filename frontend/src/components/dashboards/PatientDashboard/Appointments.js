@@ -108,7 +108,7 @@ const Appointments = () => {
                 const data = await response.json();
                 setAppointments([...appointments, { ...newAppointment, appointmentid: data.appointmentid }]);
                 setOpenModal(false);
-                toast.success("Appointment added successfully");
+                toast.success("Appointment requested successfully");
 
             } else {
                 toast.error("Failed to add appointment");
@@ -191,7 +191,7 @@ const Appointments = () => {
             <div className="col-span-3">
                 <Card>
                     <CardHeader floated={false} shadow={false} className="rounded-none">
-                        <div className="grid lg:grid-cols-5 gap-40">
+                        <div className="grid lg:grid-cols-5 gap-35">
                             <div className="col-span-3">
                                 <Typography
                                         color="blue-gray"
@@ -203,7 +203,7 @@ const Appointments = () => {
                             <div className="col-span-2">
                                 <Button className="flex items-center bg-[#FF8585] text-white rounded-full" onClick={handleOpenModal}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg> 
-                                    <span className="ml-2">Add</span>
+                                    <span className="ml-2">Request</span>
                                 </Button>
                             </div>
                         </div>
