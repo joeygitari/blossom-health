@@ -161,7 +161,7 @@ const Reports = () => {
                                                 color="blue-gray"
                                                 className="font-poppins font-normal"
                                             >
-                                                No one yet
+                                                Not available
                                             </Typography>
                                     )}
                                 </td>

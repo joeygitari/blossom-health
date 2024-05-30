@@ -38,7 +38,7 @@ const Prediction = () => {
 
     return (
         <DefaultLayout>
-            {report && report.recommendation ? (
+            {report && report.recommendation && report.recommendation !== "nothing to see here" ? (
             <>
             <div className="flex items-center mt-5 ml-5">
                 <div className="absolute top-22 right-8 mb-5 mr-5 flex items-center">

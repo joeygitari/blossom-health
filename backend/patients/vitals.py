@@ -40,6 +40,12 @@ def submit_profile():
         gravidity = data.get('gravidity')
         parity = data.get('parity')
         
+        # Parse blood pressure into systolic and diastolic values
+        if bloodpressure:
+            systolicbp, diastolicbp = map(int, bloodpressure.split('/'))
+        else:
+            systolicbp, diastolicbp = None, None
+
         # Database connection
         with psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=db_password) as conn:
             with conn.cursor() as cursor:
@@ -49,7 +55,7 @@ def submit_profile():
                     cursor.execute("SELECT patientid FROM patients WHERE LOWER(patientname) = LOWER(%s)", (patientNames.lower(),))
                     existing_patient = cursor.fetchone()
                     if existing_patient:
-                        patientid = existing_patient[0]  # Extracting patient ID from the result
+                        patientid = existing_patient[0]
                     else:
                         # Insert new patient and get the ID
                         cursor.execute("INSERT INTO patients (patientname) VALUES (%s) RETURNING patientid", (patientNames,))
@@ -58,8 +64,8 @@ def submit_profile():
                     return jsonify({'error': 'Patient name is missing or invalid'})
                 # Insert/update data in profile table
                 cursor.execute("""
-                    INSERT INTO patientprofile (profileid, patientid, practitionerid, medicalhistory, familyhistory, menstrualhistory, medication, allergies, weight, height, bmi, bloodgroup, bloodsugar, bloodpressure, heartrate, bodytemperature, respiratoryrate, gravidity, parity)
-                    VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    INSERT INTO patientprofile (profileid, patientid, practitionerid, medicalhistory, familyhistory, menstrualhistory, medication, allergies, weight, height, bmi, bloodgroup, bloodsugar, bloodpressure, heartrate, bodytemperature, respiratoryrate, gravidity, parity, systolicbp, diastolicbp)
+                    VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (profileid) DO UPDATE
                     SET medicalhistory = EXCLUDED.medicalhistory,
                         familyhistory = EXCLUDED.familyhistory,
@@ -76,8 +82,10 @@ def submit_profile():
                         bodytemperature = EXCLUDED.bodytemperature,
                         respiratoryrate = EXCLUDED.respiratoryrate,
                         gravidity = EXCLUDED.gravidity,
-                        parity = EXCLUDED.parity
-                    """, (patientid, user_id, medicalhistory, familyhistory, menstrualhistory, medications, allergies, weight, height, bmi, bloodgroup, bloodsugar, bloodpressure, heartrate, bodytemperature, respiratoryrate, gravidity, parity))
+                        parity = EXCLUDED.parity,
+                        systolicbp = EXCLUDED.systolicbp,
+                        diastolicbp = EXCLUDED.diastolicbp
+                    """, (patientid, user_id, medicalhistory, familyhistory, menstrualhistory, medications, allergies, weight, height, bmi, bloodgroup, bloodsugar, bloodpressure, heartrate, bodytemperature, respiratoryrate, gravidity, parity, systolicbp, diastolicbp))
 
         return jsonify({'message': 'Patient profile created successfully'})
     except psycopg2.Error as e:
