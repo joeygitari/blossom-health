@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# <h1>Step one- understand the problem</h1>
-# <h2>Polycystic ovary syndrome (PCOS)</h2> PCOS is a hormonal disorder common among women of reproductive age. Women with PCOS may have infrequent or prolonged menstrual periods or excess male hormone (androgen) levels. The ovaries may develop numerous small collections of fluid (follicles) and fail to regularly release eggs.
+# <h2>Polycystic ovary syndrome (PCOS)</h2> 
+# PCOS is a hormonal disorder common among women of reproductive age. Women with PCOS may have infrequent or prolonged menstrual periods or excess male hormone (androgen) levels. The ovaries may develop numerous small collections of fluid (follicles) and fail to regularly release eggs.
 # <img src = 'https://www.mayoclinic.org/-/media/kcms/gbs/patient-consumer/images/2013/08/26/10/42/ds00423_im04151_mcdc7_polycystic_ovarythu_jpg.jpg'>
 # 
 # 
@@ -31,12 +31,10 @@
 # 
 # 
 
-# **Now that we know all about the disease, we can finally define the problem statement** - <h1>Using the provided dataset, devise a way to predict PCOS(Polycystic Ovary Syndrome) for a given patient</h1>
-
-# <h2> Quick glance at the data </h2>
+# <h2> The data </h2>
 # 
 
-# In[22]:
+# In[111]:
 
 
 import openpyxl
@@ -44,10 +42,11 @@ import pandas as pd
 # data = pd.read('', sheet_name=1)# loads the data and creates a table(formally called a pandas DataFrame) 
 data = pd.read_csv("../datasets/pcos-datasets/PCOS_data.csv")
 
-data.head(10) #shows us the first ten rows of the DataFrame
+data.head(50) #shows us the first ten rows of the DataFrame
+# data.columns
 
 
-# In[23]:
+# In[112]:
 
 
 #let us load the infertility table too
@@ -55,46 +54,46 @@ data_inf = pd.read_csv("../datasets/pcos-datasets/PCOS_infertility.csv")
 data_inf.head(10)
 
 
-# <h1>Step two- Exploratory Data Analysis</h1>
+# <h1>Exploratory Data Analysis (EDA)</h1>
 
-# In[24]:
+# In[113]:
 
 
-#before we start, let's fix Paitient File no.
+# fix Patient File no.
 data['Patient File No.'] = data['Patient File No.'].apply(lambda x:  x+10000).astype('int64')
 
 
-# In[25]:
+# In[114]:
 
 
 data.head()
 
 
-# In[26]:
+# In[115]:
 
 
-#let's merge data and data_inf
+# merge data and data_inf
 data = pd.merge(data,data_inf[['Patient File No.','  I   beta-HCG(mIU/mL)','II    beta-HCG(mIU/mL)']], on='Patient File No.', how='left')
 
 
-# In[27]:
+# In[116]:
 
 
 data.head()
 
 
-# In[28]:
+# In[117]:
 
 
-#now let's start by dealing with empty values
-#IMPORTANT: 0 IS NOT an empty value. only NaN is considered as a null (or empty) value
+# deal with empty values
+# 0 IS NOT an empty value. only NaN is considered as a null (or empty) value
 pd.isnull(data).sum()
 
 
-# 539 missing values?! We really can't use the column now can we? So let's delete it. We can also deal with other values by filling them with zero
+# 539 missing values. Delete the column. Deal with other values by filling them with zero
 # 
 
-# In[29]:
+# In[118]:
 
 
 try:
@@ -107,12 +106,11 @@ data['Marraige Status (Yrs)'].fillna(0, inplace=True)
 data['Fast food (Y/N)'].fillna(0, inplace=True)
 
 
-# In[30]:
+# In[119]:
 
 
-#now that that's done, let us try to get a little more intimate with the data
-import matplotlib.pyplot as plt #for plotting simple graphs
-import seaborn as sns #another plotting library
+import matplotlib.pyplot as plt
+import seaborn as sns
 for i in [' Age (yrs)', 'Weight (Kg)',
        'Height(Cm) ', 'Hb(g/dl)', 'Cycle(R/I)', 'Cycle length(days)', 'No. of aborptions',
         'Hip(inch)', 'Waist(inch)', 
@@ -124,9 +122,9 @@ for i in [' Age (yrs)', 'Weight (Kg)',
   plt.show()
 
 
-# we can already observe an interesting relationship between all subsequent columns. If you observe closely, it looks like the middle values of the X-cordinate seem to have the highest values in the y-coordinate. But this still isn't very comprehensible enough, so let us use a different plot. 
+# There is a relationship between all subsequent columns. The middle values of the X-cordinate have the highest values in the y-coordinate. Use a different plot. 
 
-# In[ ]:
+# In[120]:
 
 
 # Convert non-numeric columns to numeric, handling errors
@@ -138,41 +136,40 @@ sns.set(rc={'figure.figsize':(70, 70)})  # Responsible for changing the size of 
 plt.show()
 
 
-# A heatmap shows us the relation between columns. A higher number means that the columns have a higher positive correlation with each other (this metric is called the 'pearson coefficient'). This means that an increase in value of one column will directly result in the increase of value in the other column, and vice versa.
+# A heatmap shows the relation between columns. A higher number means that the columns have a higher positive correlation with each other ('pearson coefficient'). This means that an increase in value of one column will directly result in the increase of value in the other column, and vice versa.
 # 
-# By the looks of it. PCOS has a higher positive correlation with Follicle No.(L and R), Skin darkening, hair growth,weight gain and cycle. It has the highest negative correlation with age and cycle length. (see the third row/column if you're confused)
+# PCOS has a higher positive correlation with Follicle No.(L and R), Skin darkening, hair growth,weight gain and cycle. It has the highest negative correlation with age and cycle length.
 # 
-# So let us pick seven columns with the highest coefficient and two with the lowest coefficient(with respect to PCOS). We'll be discarding the rest for convenience
+# Pick seven columns with the highest coefficient and two with the lowest coefficient(with respect to PCOS).
 
-# In[32]:
+# In[121]:
 
 
 # data = data[['PCOS (Y/N)','Follicle No. (R)','Follicle No. (L)','Weight gain(Y/N)','hair growth(Y/N)','Skin darkening (Y/N)','Cycle(R/I)','Fast food (Y/N)','Cycle length(days)',' Age (yrs)']]
-# Modify Here!
 data = data[['PCOS (Y/N)', 'BMI','Weight gain(Y/N)','Cycle length(days)',' Age (yrs)']]
 sns.heatmap(data.corr('pearson'), annot =True )
 sns.set(rc = {'figure.figsize':(60,60)})
 plt.show()
 
 
-# In[33]:
+# In[122]:
 
 
-#this one is important - we need to make sure our data is balanced enough 
+# Check if data is balanced
 data['PCOS (Y/N)'].value_counts()
 
 
-# this is a rather significant imbalance in our data. To get the best results, we need to make sure that there are almost 50% instances of both 0 and 1. In this case, we'll perform random Oversampling
+# There's imbalance. There should be almost 50% instances of both 0 and 1. In this case, perform random Oversampling
 
-# In[39]:
+# In[123]:
 
 
-#let us create our training dataset now
+# create training dataset
 X=data.drop(["PCOS (Y/N)"],axis = 1)
 y=data["PCOS (Y/N)"]
 
 
-# In[38]:
+# In[124]:
 
 
 # get_ipython().system('pip3 install imbalanced-learn')
@@ -182,15 +179,11 @@ X, y = oversample.fit_resample(X, y)
 y.value_counts()
 
 
-# much better! let's proceed with the final step
+# <h1> Build the solution</h1>
 
-# <h1>Step three- Build the solution</h1>
-# We're almost done now! All that's left is to create our machine learning model, and we can do that easily with scikit-learn.
-
-# In[ ]:
+# In[125]:
 
 
-#here we'll call scikit-learn and other related functions that'll be useful for us
 import sklearn
 from sklearn.preprocessing import PowerTransformer
 from sklearn.model_selection import train_test_split
@@ -213,41 +206,43 @@ from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import StackingClassifier
-import pickle
+from sklearn.ensemble import RandomForestClassifier
+import xgboost as xgb
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import accuracy_score
+from joblib import dump
+from xgboost import XGBClassifier
 
 
-# In[ ]:
+# In[126]:
 
 
-sscaler = MinMaxScaler() #helps us scale the dataset. This makes it easy for the model to train
+sscaler = MinMaxScaler() # scale the dataset.
 cols = X.columns
 x_scaled = sscaler.fit_transform(X)
 X_scaled = pd.DataFrame(x_scaled, columns = cols)
 X_scaled
 
 
-# In[ ]:
+# In[127]:
 
 
-X_scaled_values = X_scaled.to_numpy() #convert the DataFrame to a numpy array
+X_scaled_values = X_scaled.to_numpy() # convert the DataFrame to a numpy array
 X_scaled_values
 
 
-# In[ ]:
+# In[128]:
 
 
-X_train,X_test, y_train, y_test = train_test_split(X_scaled , y, test_size=0.2) #creating a training split. We divide the data in a train and a test set respectively
+X_train,X_test, y_train, y_test = train_test_split(X_scaled , y, test_size=0.2) #creating a training split. We divide the data in a train and a test set 
 
 
-# Now we finally create our classification machine learning algorithm
-# <h2>Classification</h2>
-# The Classification algorithm is a Supervised Learning technique that is used to identify the category of new observations on the basis of training data. In Classification, a program learns from the given dataset or observations and then classifies new observation into a number of classes or groups
-# 
-# ![classification](https://static.javatpoint.com/tutorial/machine-learning/images/classification-algorithm-in-machine-learning.png)
-# 
-# Let us use some of these algorithms to see which one suits best
+# <h2>Classification (random forest classifier)</h2>
+# Supervised Learning technique - identifies the category of new observations on the basis of training data.
 
-# In[36]:
+# In[129]:
 
 
 rfc = RandomForestClassifier(n_jobs=-1,n_estimators=150,max_features='sqrt',min_samples_leaf=10) #creates a Random forest model
@@ -257,16 +252,14 @@ accuracy = accuracy_score(y_test, pred_rfc)
 print(accuracy)
 
 
-# In[37]:
+# In[130]:
 
 
 classi_report = classification_report(y_test, pred_rfc)
 print(classi_report)
 
 
-# 92% is excellent accuracy! But there's still grounds for improvement. Let's try a different classification model 
-
-# In[ ]:
+# In[131]:
 
 
 import xgboost as xgb
@@ -281,17 +274,14 @@ preds = xgb_cl.predict(X_test)
 accuracy_score(y_test, preds)
 
 
-# Now we have two models that give us similar performance over the same dataset. But what if we used them.....together?
-# <h2>Introduction to Stacking Ensembling</h2>
+# <h2>Stacking Ensembling</h2>
 # Stacking or Stacked Generalization is an ensemble machine learning algorithm.
 # 
 # It uses a meta-learning algorithm to learn how to best combine the predictions from two or more base machine learning algorithms.
 # 
 # The benefit of stacking is that it can harness the capabilities of a range of well-performing models on a classification or regression task and make predictions that have better performance than any single model in the ensemble.
-# 
-# ![Ensemble image](https://miro.medium.com/max/600/1*ZzXwFueV-Beh9MapLgZ5QA.png)
 
-# In[ ]:
+# In[132]:
 
 
 #performing stack ensembling on xgboost and random forest
@@ -322,21 +312,16 @@ stack_model.fit(X_train, y_train)
 pred_stack = stack_model.predict(X_test)
 print("StackingClassifier Accuracy:", accuracy_score(y_test, pred_stack))
 
-# Save the model as a .pkl file
-model_file = 'pcos_model.pkl'
-with open(model_file, 'wb') as file:
-    pickle.dump(stack_model, file)
 
-# In[ ]:
+# In[133]:
 
 
 # print(score)
 
 
-# <h2> Final Performance - 93.5% precision</h2>
-# And there you have it! We've got an impressive cross validation precision, and we didn't have to do much! It just goes to show that getting into data science and machine learning is super easy!
+# <h2> Final Performance - 86.2% precision</h2>
 
-# from joblib import dump
-
-# model_file = 'pcos_model.joblib'
-# dump(stack_model, model_file)
+import pickle
+model_file = 'pcos_model.pkl'
+with open(model_file, 'wb') as file:
+    pickle.dump(stack_model, file)

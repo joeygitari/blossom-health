@@ -15,7 +15,7 @@ db_name = 'blossom_health'
 db_user = 'joanne'
 db_password = ''
 
-os.chdir('/Users/joanne/Desktop/school/fourth-year/computer-systems-project/project/blossom-health/backend/prediction')
+os.chdir('/Users/joanne/Desktop/school/fourth-year/computer-systems-project/project/blossom-health/backend/models')
 
 # Load pre-trained models
 endometriosis_model = joblib.load('endometriosis_model.joblib')

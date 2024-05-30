@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# <h1>Step one- understand the problem</h1>
 # <h2>Endometriosis</h2> Endometriosis is a condition where tissue similar to the lining of your uterus grows on other parts of your body. When this tissue grows in the wrong places, it can cause you to experience uncomfortable symptoms that can impact your daily life. Some people with endometriosis also have issues getting pregnant.
 # The endometrium is the inner lining of your uterus. This tissue is what you shed during a menstrual period.
 # When you have endometriosis, endometrial-like tissue grows on other organs or structures. This tissue can grow within your abdomen, pelvis or even chest. This tissue is hormonally sensitive and can become inflamed during your menstrual cycle.
@@ -13,17 +12,14 @@
 # - Endometriosis-associated adenocarcinoma (cancer)
 # 
 
-# **Now that we know all about the disease, we can finally define the problem statement** - <h1>Using the provided dataset, devise a way to predict Endometriosis for a given patient</h1>
-
-# <h2> First, the imports </h2>
+# <h3> Imports </h3>
 
 # In[1]:
 
 
-# Pandas library is a tool for data scientists to explore and manipulate data
-
 import pandas as pd
 import numpy as np
+
 # for Box-Cox Transformation
 from scipy import stats
 
@@ -33,52 +29,49 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-# <h2> Quick glance at the data </h2>
+# <h2> The data </h2>
 
 # In[2]:
 
 
-# put 'r' before the path string to address any special characters in the path, such as '\'
-# df = pd.read_csv (r'Path where the CSV file is stored\File name.csv')
-
 df = pd.read_csv (r'../datasets/endometriosis-datasets/endo_dataset.csv')
 # print (df.head())
 
-df.head(10) # shows first 10 rows
+df.head(10)
 
 
-# In[70]:
+# In[3]:
 
 
 #Shape of the dataset
 df.shape
 
 
-# In[71]:
+# In[4]:
 
 
 #Dataset variables
 df.columns
 
 
-# In[7]:
+# In[5]:
 
 
-# prints the summary of the data
+# summary of the data
 df.describe()
 
 
-# <h2>Exploratory data analysis</h2>
+# <h2>Exploratory data analysis (EDA)</h2>
 
-# In[8]:
+# In[6]:
 
 
-# No of missing data points per column
+# Number of missing data points per column
 missing_values_count = df.isnull().sum()
 missing_values_count
 
 
-# In[9]:
+# In[7]:
 
 
 total_cells = np.product(df.shape)
@@ -89,14 +82,14 @@ percent_missing = (total_missing/total_cells) * 100
 print(percent_missing)
 
 
-# In[13]:
+# In[8]:
 
 
-# No of categorical and numerical variables
+# Number of categorical and numerical variables
 df.dtypes.value_counts()
 
 
-# In[77]:
+# In[9]:
 
 
 # Create correlation matrix
@@ -109,13 +102,13 @@ upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
 high_corr = [column for column in upper.columns if any(upper[column] > 0.7)]
 
 
-# In[78]:
+# In[10]:
 
 
 high_corr
 
 
-# In[79]:
+# In[11]:
 
 
 # Select upper triangle of correlation matrix
@@ -127,7 +120,7 @@ low_corr = [column for column in lower.columns if any(lower[column] < 0.5)]
 low_corr
 
 
-# In[80]:
+# In[13]:
 
 
 # Convert correlation matrix to 1-D Series and sort
@@ -136,7 +129,7 @@ sorted_mat = corr_matrix.unstack().sort_values()
 print(sorted_mat)
 
 
-# In[81]:
+# In[14]:
 
 
 #Skewness
@@ -144,25 +137,25 @@ import seaborn as sns
 sns.distplot(df.skew(),color='blue',axlabel ='Skewness')
 
 
-# In[82]:
+# In[16]:
 
 
-#Kurtosis
+# Kurtosis (tailedness of a distribution)
 plt.figure(figsize = (12,8))
 sns.distplot(df.kurt(),color='r',axlabel ='Kurtosis',norm_hist= False, kde = True,rug = False)
 #plt.hist(train.kurt(),orientation = 'vertical',histtype = 'bar',label ='Kurtosis', color ='blue')
 plt.show()
 
 
-# In[83]:
+# In[17]:
 
 
 #Correlation of variables with Endometriosis
-corr_matrix = df.corr()
-print(corr_matrix['Endometriosis_YN'].sort_values(ascending = False),'\n')
+corrMatrix = df.corr()
+print(corrMatrix['Endometriosis_YN'].sort_values(ascending = False),'\n')
 
 
-# In[84]:
+# In[18]:
 
 
 #Correlation plot
@@ -170,10 +163,10 @@ f , ax = plt.subplots(figsize = (14,12))
 
 plt.title('Correlation of Features with Endometriosis',y=1,size=16)
 
-sns.heatmap(corr_matrix,square = True,  vmax=0.8)
+sns.heatmap(corrMatrix,square = True,  vmax=0.8)
 
 
-# In[85]:
+# In[19]:
 
 
 # Selecting features with correlation > 0.45 for the analysis
@@ -184,21 +177,21 @@ df1 = df[['Menstrual pain (Dysmenorrhea)', 'Painful cramps during period', 'Cram
          'Pain / Chronic pain', 'Endometriosis_YN']]
 
 
-# In[86]:
+# In[20]:
 
 
 print(df1)
 
 
-# In[87]:
+# In[22]:
 
 
 # Correlation plot for the selected features
-corr_matrix1 = df1.corr()
-print(corr_matrix1['Endometriosis_YN'].sort_values(ascending = False),'\n')
+corrMatrix1 = df1.corr()
+print(corrMatrix1['Endometriosis_YN'].sort_values(ascending = False),'\n')
 
 
-# In[88]:
+# In[23]:
 
 
 #Correlation plot
@@ -206,10 +199,10 @@ f , ax = plt.subplots(figsize = (14,12))
 
 plt.title('Correlation of Features with Endometriosis',y=1,size=16)
 
-sns.heatmap(corr_matrix1,square = True,  vmax=0.8)
+sns.heatmap(corrMatrix1,square = True,  vmax=0.8)
 
 
-# In[26]:
+# In[24]:
 
 
 #Correlation plot with corr > 0.45 and < -0.45
@@ -223,7 +216,7 @@ sns.heatmap(corr[(corr >= 0.45) | (corr <= -0.4)],
 
 # <h2>Building the solution</h2>
 
-# In[89]:
+# In[25]:
 
 
 #Normalization
@@ -237,7 +230,7 @@ scaled_df = pd.DataFrame(d, columns=names)
 scaled_df.head()                                                                                                        
 
 
-# In[94]:
+# In[26]:
 
 
 #Logistic Regression
@@ -252,7 +245,7 @@ X = df1[feature_cols] # Features
 y = df1[target_col] # Target variable
 
 
-# In[95]:
+# In[27]:
 
 
 # split X and y into training and testing sets
@@ -260,7 +253,7 @@ from sklearn.model_selection import train_test_split
 X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.25,random_state=0)
 
 
-# In[96]:
+# In[28]:
 
 
 # import the class
@@ -276,7 +269,7 @@ logreg.fit(X_train,y_train)
 y_pred=logreg.predict(X_test)
 
 
-# In[97]:
+# In[29]:
 
 
 # import the metrics class
@@ -285,7 +278,7 @@ cnf_matrix = metrics.confusion_matrix(y_test, y_pred)
 cnf_matrix
 
 
-# In[98]:
+# In[30]:
 
 
 # import required modules
@@ -295,7 +288,7 @@ import seaborn as sns
 # get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# In[99]:
+# In[31]:
 
 
 #Confusion matrix
@@ -313,7 +306,7 @@ plt.ylabel('Actual label')
 plt.xlabel('Predicted label')
 
 
-# In[100]:
+# In[32]:
 
 
 # Accuracy, Precision and Recall scores
@@ -322,7 +315,7 @@ print("Precision:",metrics.precision_score(y_test, y_pred))
 print("Recall:",metrics.recall_score(y_test, y_pred))
 
 
-# In[101]:
+# In[33]:
 
 
 # ROC CURVE
@@ -334,9 +327,9 @@ plt.legend(loc=4)
 plt.show()
 
 
-# <h3>Classification</h3>
+# <h3>Classification (random forest classifier)</h3>
 
-# In[110]:
+# In[34]:
 
 
 #Random forest
@@ -352,7 +345,7 @@ clf.fit(X_train,y_train)
 y_pred=clf.predict(X_test)
 
 
-# In[111]:
+# In[35]:
 
 
 #Import scikit-learn metrics module for accuracy calculation
@@ -376,15 +369,14 @@ print("Precision: {:.2f}%".format(precision_percentage))
 print("Recall: {:.2f}%".format(recall_percentage))
 
 
-# In[112]:
+# In[36]:
 
 
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 
-# Assuming you have defined feature_cols somewhere earlier in your code
-# Assuming you have defined X_train and y_train as your training data
-# Fit the classifier to your data
+# defined X_train and y_train as training data
+# Fit the classifier to the data
 clf = RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
             max_depth=None, max_features=None, max_leaf_nodes=None,
             min_impurity_decrease=0.0, min_samples_leaf=1, min_samples_split=2,
@@ -393,19 +385,21 @@ clf = RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini'
             warm_start=False)
 clf.fit(X_train, y_train)
 
-# Now you can access feature importances
+# access feature importances
 feature_imp = pd.Series(clf.feature_importances_, index=feature_cols).sort_values(ascending=False)
 
 
-# In[113]:
+# In[37]:
 
 
 # Feature importance plot for random forest
 import matplotlib.pyplot as plt
 import seaborn as sns
 # get_ipython().run_line_magic('matplotlib', 'inline')
+
 # Creating a bar plot
 sns.barplot(x=feature_imp, y=feature_imp.index)
+
 # Add labels to your graph
 plt.xlabel('Feature Importance Score')
 plt.ylabel('Features')
@@ -414,7 +408,7 @@ plt.legend()
 plt.show()
 
 
-# In[114]:
+# In[41]:
 
 
 #XGboost
@@ -430,10 +424,10 @@ xg_reg.fit(X_train,y_train)
 preds = xg_reg.predict(X_test)
 
 rmse = np.sqrt(mean_squared_error(y_test, preds))
-print("RMSE: %f" % (rmse))
+print("Root mean squared error (RMSE): %f" % (rmse))
 
 
-# In[115]:
+# In[42]:
 
 
 #K-fold cross validation using XGBoost
@@ -446,26 +440,26 @@ cv_results = xgb.cv(dtrain=data_dmatrix, params=params, nfold=3,
                     num_boost_round=50,early_stopping_rounds=10,metrics="rmse", as_pandas=True, seed=123)
 
 
-# In[116]:
+# In[43]:
 
 
 cv_results.head()
 
 
-# In[117]:
+# In[44]:
 
 
 print((cv_results["test-rmse-mean"]).tail(1))
 
 
-# In[118]:
+# In[45]:
 
 
 #Visualizing boosting tress and feature importance
 xg_reg = xgb.train(params=params, dtrain=data_dmatrix, num_boost_round=10)
 
 
-# In[119]:
+# In[46]:
 
 
 #Feature importance
@@ -474,7 +468,7 @@ plt.rcParams['figure.figsize'] = [40, 10]
 plt.show()
 
 
-# In[120]:
+# In[47]:
 
 
 # Decision tree
@@ -485,7 +479,7 @@ from sklearn.model_selection import train_test_split # Import train_test_split f
 from sklearn import metrics #Import scikit-learn metrics module for accuracy calculation
 
 
-# In[121]:
+# In[48]:
 
 
 # Create Decision Tree classifer object
@@ -498,7 +492,7 @@ clf = clf.fit(X_train,y_train)
 y_pred = clf.predict(X_test)
 
 
-# In[122]:
+# In[49]:
 
 
 # Model Accuracy, how often is the classifier correct?
@@ -509,7 +503,7 @@ accuracy_percentage = accuracy * 100
 print("Accuracy: {:.2f}%".format(accuracy_percentage))
 
 
-# In[123]:
+# In[50]:
 
 
 #SVM
@@ -527,7 +521,7 @@ clf.fit(X_train, y_train)
 y_pred = clf.predict(X_test)
 
 
-# In[124]:
+# In[51]:
 
 
 #Import scikit-learn metrics module for accuracy calculation
@@ -552,7 +546,7 @@ print("Precision: {:.2f}%".format(precision_percentage))
 print("Recall: {:.2f}%".format(recall_percentage))
 
 
-# <h2> Final Performance - 97.30% precision</h2>
+# <h2> Performance - 97.30% precision</h2>
 
 from joblib import dump
 
