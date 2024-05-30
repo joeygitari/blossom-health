@@ -11,6 +11,8 @@ const Prediction = () => {
     const [report, setReport] = useState(null);
     const [patient, setPatient] = useState(null);
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const fetchReport = async () => {
             try {
@@ -43,6 +45,13 @@ const Prediction = () => {
 
         fetchReport();
         fetchPatients();
+
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+
     }, [patientId]);
 
     const exportToPDF = () => {
@@ -63,6 +72,14 @@ const Prediction = () => {
                     </button>
                 </div>
             </div>
+            {loading ? (
+                <div className="flex flex-col items-center mr-5 mt-10">
+                    <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#FF8585] mb-2"></div>
+                    <Typography variant="body1" className="font-poppins font-semibold text-[#FF8585]">
+                        Predicting...
+                    </Typography>
+              </div>
+            ) : (
             <Card id="report-content">
                 <div className="flex items-center mt-5 ml-5">
                     <img className="h-16" alt="Logo" src={Logo}/>
@@ -219,6 +236,7 @@ const Prediction = () => {
                     )}
                 </CardBody>
             </Card>
+            )}
         </DefaultLayout>
     );
 }
