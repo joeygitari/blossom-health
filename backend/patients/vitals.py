@@ -39,6 +39,8 @@ def submit_profile():
         respiratoryrate = data.get('respiratoryRate')
         gravidity = data.get('gravidity')
         parity = data.get('parity')
+        other_symptoms = data.get('otherSymptoms')
+        selected_symptoms = data.get('selectedSymptoms')
         
         # Parse blood pressure into systolic and diastolic values
         if bloodpressure:
@@ -64,8 +66,8 @@ def submit_profile():
                     return jsonify({'error': 'Patient name is missing or invalid'})
                 # Insert/update data in profile table
                 cursor.execute("""
-                    INSERT INTO patientprofile (profileid, patientid, practitionerid, medicalhistory, familyhistory, menstrualhistory, medication, allergies, weight, height, bmi, bloodgroup, bloodsugar, bloodpressure, heartrate, bodytemperature, respiratoryrate, gravidity, parity, systolicbp, diastolicbp)
-                    VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    INSERT INTO patientprofile (profileid, patientid, practitionerid, medicalhistory, familyhistory, menstrualhistory, medication, allergies, weight, height, bmi, bloodgroup, bloodsugar, bloodpressure, heartrate, bodytemperature, respiratoryrate, gravidity, parity, systolicbp, diastolicbp, othersymptoms)
+                    VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (profileid) DO UPDATE
                     SET medicalhistory = EXCLUDED.medicalhistory,
                         familyhistory = EXCLUDED.familyhistory,
@@ -84,8 +86,31 @@ def submit_profile():
                         gravidity = EXCLUDED.gravidity,
                         parity = EXCLUDED.parity,
                         systolicbp = EXCLUDED.systolicbp,
-                        diastolicbp = EXCLUDED.diastolicbp
-                    """, (patientid, user_id, medicalhistory, familyhistory, menstrualhistory, medications, allergies, weight, height, bmi, bloodgroup, bloodsugar, bloodpressure, heartrate, bodytemperature, respiratoryrate, gravidity, parity, systolicbp, diastolicbp))
+                        diastolicbp = EXCLUDED.diastolicbp,
+                        othersymptoms = EXCLUDED.othersymptoms
+                    """, (patientid, user_id, medicalhistory, familyhistory, menstrualhistory, medications, allergies, weight, height, bmi, bloodgroup, bloodsugar, bloodpressure, heartrate, bodytemperature, respiratoryrate, gravidity, parity, systolicbp, diastolicbp, other_symptoms))
+                
+                # print("Selected symptoms:", selected_symptoms)
+
+                if selected_symptoms:
+                        
+                        try:
+                            # Insert new records for selected symptoms
+                            for symptom_id in selected_symptoms:
+                                # print("Inserting symptom:", symptom_id)
+                                cursor.execute("INSERT INTO patientsymptoms (patientid, symptomid, presence) VALUES (%s, %s, %s)", (patientid, symptom_id, 1))
+                            
+                            # Commit the changes to the database
+                            conn.commit()
+                            print("Symptoms inserted successfully")
+                        except psycopg2.Error as e:
+                            conn.rollback()  # Rollback changes if an error occurs
+                            print("Error inserting symptoms:", e)
+                        except Exception as e:
+                            conn.rollback()  # Rollback changes if an error occurs
+                            print("Unexpected error:", e)
+                else:
+                        print("No selected symptoms found")
 
         return jsonify({'message': 'Patient profile created successfully'})
     except psycopg2.Error as e:

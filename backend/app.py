@@ -11,11 +11,13 @@ from reports.patientreports import patient_report_blueprint
 from appointments.appointments import appointments_blueprint
 from practitioners.practitioner import practitioners
 from auth.profile import update_profile
+from flask_cors import CORS 
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = '2e9b368eb2468a42820e99bc2445bc49'
 Session(app)
+CORS(app) 
 
 # Register the blueprints
 app.register_blueprint(register_user)

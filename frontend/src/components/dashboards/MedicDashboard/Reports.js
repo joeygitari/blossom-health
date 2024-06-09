@@ -174,7 +174,7 @@ const Reports = () => {
                                     color="blue-gray"
                                     className="font-poppins font-normal opacity-70"
                                     >
-                                    {patient[3]}, {patient[4]}
+                                    {patient[3] || "unknown"}, {patient[4] || "unknown"}
                                     </Typography>
                                 </div>
                                 </div>
@@ -186,7 +186,7 @@ const Reports = () => {
                                     color="blue-gray"
                                     className="font-poppins font-normal"
                                 >
-                                    {patient[5]}
+                                    {patient[5] || "unknown"}
                                 </Typography>
                                 </div>
                             </td>

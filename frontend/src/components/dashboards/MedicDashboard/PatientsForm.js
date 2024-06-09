@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect } from 'react';
 import DefaultLayout from '../layout/DefaultLayout';
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
+import Select from 'react-select';
 
 const PatientsForm = () => {
+    const [symptoms, setSymptoms] = useState([]);
+    const [selectedSymptoms, setSelectedSymptoms] = useState([]);
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         patientNames: '',
@@ -24,7 +27,16 @@ const PatientsForm = () => {
         respiratoryRate: '',
         gravidity: '',
         parity: '',
+        selectedSymptoms: [] 
     });
+
+    const customStyles = {
+        control: base => ({
+            ...base,
+            // height: 50,
+            minHeight: 50
+        })
+    };
 
     const navigate = useNavigate();
 
@@ -62,7 +74,34 @@ const PatientsForm = () => {
         setStep(prevStep => prevStep - 1);
     };
 
+    const fetchSymptoms = async () => {
+        try {
+            const response = await fetch('/symptoms');
+            if (!response.ok) {
+                throw new Error('Failed to fetch symptoms');
+            }
+            const data = await response.json();
+            const symptomOptions = data.map(symptom => ({
+                value: symptom[0],
+                label: symptom[1]
+            }));
+            setSymptoms(symptomOptions);
+        } catch (error) {
+            console.error('Error fetching symptoms:', error);
+        }
+    };
 
+    useEffect(() => {
+        fetchSymptoms();
+    }, []);
+
+    const handleSymptomChange = (selectedOptions) => {
+        setFormData({
+            ...formData,
+            selectedSymptoms: selectedOptions ? selectedOptions.map(option => option.value) : []
+        });
+    };
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -304,14 +343,58 @@ const PatientsForm = () => {
                                                 </div>
                                                 <div></div>
                                                 <div>
-                                                    <button type="submit"
+                                                    <button onClick={handleNext}
                                                         className="mt-[2.5rem] text-[#F7FAFC] bg-[#FF8585] h-14 font-poppins font-semibold rounded-[20px] text-[20px] w-full px-5 py-2.5 text-center">
-                                                        Update
+                                                        Next
                                                     </button>
                                                 </div>
 
                                             </div>
                                         </>
+                                )}
+                                {step === 3 && (
+                                    <>
+                                        <div className="grid md:grid-cols-1">
+                                                <p className="font-poppins font-bold text-[36px] text-[#172048] mt-[1rem]">Add Patient
+                                                    Symptoms</p>
+                                        </div>
+                                        <div className="mt-[2rem] font-poppins dark:text-[#172048]">
+                                            <Select
+                                                isMulti
+                                                options={symptoms}
+                                                styles={customStyles}
+                                                onChange={handleSymptomChange}
+                                                value={formData.selectedSymptoms.map(symptom => symptoms.find(option => option.value === symptom))}
+                                            />
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div className="mb-5">
+                                            {/* <label htmlFor="medicalHistory"
+                                                className="block mb-2 text-[18px] font-poppins font-medium text-[#718096]">
+                                                Medical History <span className="text-red-500">*</span>
+                                            </label> */}
+                                            <textarea id="otherSymptoms" autoComplete="off" value={formData.otherSymptoms} onChange={handleChange}
+                                                className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
+                                                placeholder="Other Symptoms" name="otherSymptoms" rows="4" required />
+                                        </div>
+                                        <div className="grid md:grid-cols-3">
+                                            {/* <div></div> */}
+                                            <div>
+                                                <button onClick={handlePrev}
+                                                    className="mt-[2.5rem] text-[#F7FAFC] bg-[#FF8585] h-14 font-poppins font-semibold rounded-[20px] text-[20px] w-full px-5 py-2.5 text-center">
+                                                    Back
+                                                </button>
+                                            </div>
+                                            <div></div>
+                                            <div>
+                                                <button type="submit"
+                                                    className="mt-[2.5rem] text-[#F7FAFC] bg-[#FF8585] h-14 font-poppins font-semibold rounded-[20px] text-[20px] w-full px-5 py-2.5 text-center">
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </>
                                 )}
                         </form>
                     

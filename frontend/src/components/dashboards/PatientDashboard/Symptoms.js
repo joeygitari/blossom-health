@@ -39,7 +39,7 @@ const Symptoms = () => {
     const customStyles = {
         control: base => ({
             ...base,
-            height: 50,
+            // height: 50,
             minHeight: 50
         })
     };

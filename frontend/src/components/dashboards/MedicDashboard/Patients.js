@@ -132,7 +132,7 @@ const Patients = () => {
                                     color="blue-gray"
                                     className="font-poppins font-normal"
                                 >
-                                    {patient[3]}
+                                    {patient[3] || "unknown"}
                                 </Typography>
                                 </div>
                             </td>
@@ -143,7 +143,7 @@ const Patients = () => {
                                     color="blue-gray"
                                     className="font-poppins font-normal"
                                 >
-                                    {patient[4]} years old
+                                    {patient[4] || "unknown"} 
                                 </Typography>
                                 </div>
                             </td>
@@ -154,7 +154,7 @@ const Patients = () => {
                                     color="blue-gray"
                                     className="font-poppins font-normal"
                                 >
-                                    {patient[5]}
+                                    {patient[5] || "unknown"}
                                 </Typography>
                                 </div>
                             </td>
