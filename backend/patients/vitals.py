@@ -41,7 +41,10 @@ def submit_profile():
         parity = data.get('parity')
         other_symptoms = data.get('otherSymptoms')
         selected_symptoms = data.get('selectedSymptoms')
-        
+        gender = data.get('gender')
+        age = data.get('age')
+        location = data.get('location')
+
         # Parse blood pressure into systolic and diastolic values
         if bloodpressure:
             systolicbp, diastolicbp = map(int, bloodpressure.split('/'))
@@ -58,9 +61,10 @@ def submit_profile():
                     existing_patient = cursor.fetchone()
                     if existing_patient:
                         patientid = existing_patient[0]
+                        cursor.execute("UPDATE patients SET patientgender = %s, patientage = %s, patientlocation = %s WHERE patientid=%s", (gender, age, location, patientid))
                     else:
                         # Insert new patient and get the ID
-                        cursor.execute("INSERT INTO patients (patientname) VALUES (%s) RETURNING patientid", (patientNames,))
+                        cursor.execute("INSERT INTO patients (patientname, patientgender, patientage, patientlocation) VALUES (%s, %s, %s, %s) RETURNING patientid", (patientNames, gender, age, location,))
                         patientid = cursor.fetchone()[0]
                 else:
                     return jsonify({'error': 'Patient name is missing or invalid'})

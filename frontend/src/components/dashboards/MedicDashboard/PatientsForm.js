@@ -7,7 +7,7 @@ import Select from 'react-select';
 
 const PatientsForm = () => {
     const [symptoms, setSymptoms] = useState([]);
-    const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+    // const [selectedSymptoms, setSelectedSymptoms] = useState([]);
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         patientNames: '',
@@ -27,7 +27,10 @@ const PatientsForm = () => {
         respiratoryRate: '',
         gravidity: '',
         parity: '',
-        selectedSymptoms: [] 
+        selectedSymptoms: [],
+        gender: '',
+        age: '',
+        location: ''
     });
 
     const customStyles = {
@@ -137,10 +140,10 @@ const PatientsForm = () => {
                         {step === 1 && (
                             <>
                             <div className="grid md:grid-cols-1">
-                                <p className="font-poppins font-bold text-[36px] text-[#172048] mt-[1rem]">Add Patient
+                                <p className="font-poppins font-bold text-[36px] text-[#172048] mt-[0rem]">Add Patient
                                     Profile</p>
                             </div>
-                            <div className="grid md:grid-cols-2 gap-[6rem]">
+                            <div className="grid md:grid-cols-2 gap-[6rem] mt-[2rem]">
                                     <div>
                                         <div className="mb-5">
                                             <label htmlFor="patientNames"
@@ -152,6 +155,44 @@ const PatientsForm = () => {
                                                 placeholder="eg Jane Doe" name="patientNames" required />
                                         </div>
 
+                                        <div className="grid md:grid-cols-2 gap-[2rem]">
+                                            <div>
+                                                <div className="mb-5">
+                                                    <label htmlFor="gender" className="block mb-2 text-[18px] font-poppins font-medium text-[#718096]">
+                                                        Gender <span className="text-red-500">*</span>
+                                                    </label>
+                                                    <select
+                                                        type="text"
+                                                        id="gender"
+                                                        name="gender"
+                                                        autoComplete="off"
+                                                        value={formData.gender}
+                                                        onChange={handleChange}
+                                                        className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
+                                                        required
+                                                    >
+                                                        <option value="">Select</option>
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
+                                                        <option value="non-binary">Non binary</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="mb-5">
+                                                    <label htmlFor="age" className="block mb-2 text-[18px] font-poppins font-medium text-[#718096]">
+                                                        Age <span className="text-red-500">*</span>
+                                                    </label>
+                                                    <input type="number" id="age" autoComplete="off" value={formData.age} onChange={handleChange}
+                                                        className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
+                                                        name="age" required />
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+
+
                                         <div className="mb-5">
                                             <label htmlFor="medicalHistory"
                                                 className="block mb-2 text-[18px] font-poppins font-medium text-[#718096]">
@@ -159,7 +200,7 @@ const PatientsForm = () => {
                                             </label>
                                             <textarea id="medicalHistory" autoComplete="off" value={formData.medicalHistory} onChange={handleChange}
                                                 className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                placeholder="Previous illnesses" name="medicalHistory" rows="4" required />
+                                                placeholder="Previous illnesses" name="medicalHistory" rows="3" required />
                                         </div>
 
                                         <div className="mb-5">
@@ -169,24 +210,32 @@ const PatientsForm = () => {
                                             </label>
                                             <textarea id="familyHistory" autoComplete="off" value={formData.familyHistory} onChange={handleChange}
                                                 className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                placeholder="Genetic illnesses" name="familyHistory" rows="4"
+                                                placeholder="Genetic illnesses" name="familyHistory" rows="3"
                                                 required />
                                         </div>
-
                                         <div className="mb-5">
-                                            <label htmlFor="menstrualHistory"
-                                                className="block mb-2 text-[18px] font-poppins font-medium text-[#718096]">
-                                                Menstrual History <span className="text-red-500">*</span>
+                                            <label htmlFor="text" className="block mb-2 text-[18px] font-poppins font-medium text-[#718096]">
+                                                Location/Residence <span className="text-red-500">*</span>
                                             </label>
-                                            <textarea id="menstrualHistory" autoComplete="off" value={formData.menstrualHistory} onChange={handleChange}
+                                            <input type="text" id="text" autoComplete="off" value={formData.location} onChange={handleChange}
                                                 className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                placeholder="Cycle length" name="menstrualHistory" rows="4"
-                                                required />
+                                                placeholder="eg Nairobi" name="location" required/>
                                         </div>
                                     </div>
 
                                     <div>
                                         <div className="mb-5">
+                                            <label htmlFor="menstrualHistory"
+                                                className="block mb-2 text-[18px] font-poppins font-medium text-[#718096]">
+                                                Menstrual History <span className="text-red-500">*</span>
+                                            </label>
+                                            <input id="menstrualHistory" autoComplete="off" value={formData.menstrualHistory} onChange={handleChange}
+                                                className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
+                                                placeholder="Cycle length" name="menstrualHistory" rows="4"
+                                                required />
+                                        </div>
+                                        <div className="mb-5">
+                                            
                                             <label htmlFor="medications"
                                                 className="block mb-2 text-[18px] font-poppins font-medium text-[#718096]">
                                                 Medications <span className="text-red-500">*</span>
