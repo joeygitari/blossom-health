@@ -150,6 +150,9 @@ def predict(patient_id):
         bloodsugar = float(bloodsugar)
         bodytemp = float(bodytemp)
         heartrate = float(heartrate)
+        
+        # Convert body temperature from Celsius to Fahrenheit
+        bodytemp = (bodytemp * 9/5) + 32
 
         # Calculate derived features for maternal health risk prediction
         age_squared = age ** 2
@@ -175,13 +178,21 @@ def predict(patient_id):
 
         # Predict maternal health risk
         maternal_health_prediction = maternal_health_model.predict(maternal_health_features_array)[0]
-
+        
+        # Map the prediction to the appropriate risk level
+        if maternal_health_prediction == 1:
+            risk_level = 2  # High risk
+        elif maternal_health_prediction == 2:
+            risk_level = 0  # Low risk
+        else:
+            risk_level = 1  # Mid risk
+        
         return jsonify({
             'endometriosis_prediction': int(endometriosis_prediction),
             'endometriosis_accuracy': endometriosis_accuracy,
             'pcos_prediction': int(pcos_prediction),
             'pcos_accuracy': pcos_accuracy,
-            'maternal_health_prediction': int(maternal_health_prediction),
+            'maternal_health_prediction': risk_level,
             'maternal_health_accuracy': maternal_health_accuracy,
             'symptoms': symptoms
         })
