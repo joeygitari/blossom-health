@@ -23,6 +23,7 @@ import PatientsForm from './dashboards/MedicDashboard/PatientsForm';
 import Prediction from './dashboards/MedicDashboard/Prediction';
 import Prediction2 from './dashboards/PatientDashboard/Prediction';
 import Profile from './dashboards/Profile';
+import FourOFour from './404';
 
 const App = () => {
   return (
@@ -53,6 +54,7 @@ const App = () => {
           <Route exact path="/medic-dashboard/prediction/:patientId" element={<Prediction />} />
           <Route exact path="/patient-dashboard/prediction/:patientId" element={<Prediction2 />} />
           <Route exact path="/profile" element={<Profile />} />
+          <Route path="*" element={<FourOFour/>}/>
         </Routes>
       </Router>
   );

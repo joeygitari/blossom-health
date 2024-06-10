@@ -325,3 +325,47 @@ import pickle
 model_file = 'pcos_model.pkl'
 with open(model_file, 'wb') as file:
     pickle.dump(stack_model, file)
+
+# import pandas as pd
+import numpy as np
+
+# Filter the dataset for PCOS positive cases
+pcos_positive = data[data['PCOS (Y/N)'] == 1]
+
+# Display the statistics of the features for PCOS positive cases
+pcos_positive_features = pcos_positive.drop(columns=['PCOS (Y/N)'])
+print("Statistics of features for PCOS positive cases:")
+print(pcos_positive_features.describe())
+
+# Create a sample input using the 75th percentile values of PCOS positive cases
+sample_input_75th_percentile = pcos_positive_features.quantile(0.75).values.reshape(1, -1)
+
+# Create a sample input using the maximum values of PCOS positive cases
+sample_input_max = pcos_positive_features.max().values.reshape(1, -1)
+
+# Create a sample input with mixed high values
+sample_input_mixed = np.array([
+    pcos_positive_features['BMI'].quantile(0.75),   # 75th percentile
+    pcos_positive_features['Weight gain(Y/N)'].max(),  # max value
+    pcos_positive_features['Cycle length(days)'].quantile(0.75),  # 75th percentile
+    pcos_positive_features[' Age (yrs)'].max()     # max value
+]).reshape(1, -1)
+
+# Convert sample inputs to DataFrame to retain feature names
+sample_input_75th_df = pd.DataFrame(sample_input_75th_percentile, columns=pcos_positive_features.columns)
+sample_input_max_df = pd.DataFrame(sample_input_max, columns=pcos_positive_features.columns)
+sample_input_mixed_df = pd.DataFrame(sample_input_mixed, columns=pcos_positive_features.columns)
+
+# Ensure the input is scaled using the same scaler used during training
+sample_input_75th_scaled = sscaler.transform(sample_input_75th_df)
+sample_input_max_scaled = sscaler.transform(sample_input_max_df)
+sample_input_mixed_scaled = sscaler.transform(sample_input_mixed_df)
+
+# Predict using the trained model
+prediction_75th = stack_model.predict(sample_input_75th_scaled)
+prediction_max = stack_model.predict(sample_input_max_scaled)
+prediction_mixed = stack_model.predict(sample_input_mixed_scaled)
+
+print("Prediction for the sample input (75th percentile) (1 indicates PCOS positive):", prediction_75th)
+print("Prediction for the sample input (max values) (1 indicates PCOS positive):", prediction_max)
+print("Prediction for the sample input (mixed values) (1 indicates PCOS positive):", prediction_mixed)

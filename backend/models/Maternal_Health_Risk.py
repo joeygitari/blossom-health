@@ -659,64 +659,43 @@ print("Classification Report for CatBoost Model:")
 print(classification_report(y_test, catboost_pred))
 
 
-# Overall accuracy: 86%, meaning it correctly classifies 86% of the instances.
-# Class-wise performance:
-# 
-# Class 0: Highest precision and F1-score (0.92 and 0.91, respectively).
-# Class 1: Strong scores, closely following Class 0.
-# 
-# Class 2: Slightly lower precision and recall (0.80), but still acceptable performance.
-# 
-# Balanced performance: Macro and weighted averages align with overall accuracy, indicating consistent performance across classes.
-# 
-# Slightly better performance: It shows a marginal improvement over the LGBM model, particularly for Class 0.
-
-# ## Conclusion
-
-# 1. **Age and Risk Level:**
-#    - The high-risk group tends to be older, with a median age around 50, while the low-risk group has a median age of around 30.
-#    - There's a positive correlation between age and risk level, but it's not absolute; younger people can also be at high risk.
-# 
-# 2. **Blood Sugar Levels and Risk:**
-#    - High-risk individuals generally have higher blood sugar levels than those with low risk.
-#    - The median blood sugar level is higher for the high-risk group, and there's more variability in blood sugar levels within the high-risk group.
-# 
-# 3. **Heart Rate and Risk:**
-#    - There's a positive correlation between heart rate and risk level, with higher risk individuals having higher heart rates.
-#    - High-risk individuals exhibit the highest heart rates, as indicated by the data points in the top right corner of the plot.
-# 
-# 4. **Risk Level Distribution:**
-#    - The most frequent risk level is "low risk," followed by "mid risk" and then "high risk."
-#    - Majority of data points fall under the lower risk categories.
-# 
-# 5. **Body Temperature and Risk:**
-#    - People with high risk tend to have higher body temperatures than those with low risk.
-#    - There's some overlap in body temperatures between risk groups.
-# 
-# 6. **Memory and Risk:**
-#    - There appears to be a positive correlation between memory scores and risk level.
-#    - Memory scores range from 0 to 100, with higher scores associated with lower risk levels.
-# 
-# 7. **Blood Glucose Levels and Age:**
-#    - There's a positive correlation between age and blood glucose levels for all risk levels.
-#    - The difference in blood glucose levels between risk levels appears to increase with age.
-# 
-# 8. **Diastolic Blood Pressure and Risk:**
-#    - There's a positive correlation between diastolic blood pressure and risk level.
-#    - High-risk individuals tend to have the highest diastolic blood pressure readings.
-# 
-# 9. **Systolic Blood Pressure and Age:**
-#    - Younger people tend to have lower systolic blood pressure than older people, regardless of risk level.
-#    - High-risk individuals generally have higher systolic blood pressure at all ages.
-# 
-# 10. **Risk Level and Memory (Heatmap):**
-#     - There seems to be a positive correlation between memory and risk level, with higher memory scores associated with lower risk levels.
-# 
-# **Best Model for Deployment:**
-# 
-# Considering overall accuracy, balanced performance, and class-wise metrics, the Catboost model emerges as the most suitable for deployment. It achieves the highest overall accuracy, maintains strong precision and recall across classes, and exhibits slightly better performance than LGBM. Deploying the Catboost model would likely result in a robust and accurate classification system for the given task.
-
 from joblib import dump
 
 model_file = 'Maternal_Health_Risk.joblib'
 dump(catboost_model, model_file)
+
+
+# Extract feature importances from CatBoost model
+feature_importances = catboost_model.get_feature_importance()
+features = X.columns
+
+# Create a DataFrame for visualization
+feature_importance_df = pd.DataFrame({'Feature': features, 'Importance': feature_importances})
+feature_importance_df = feature_importance_df.sort_values(by='Importance', ascending=False)
+
+# Plot feature importances
+plt.figure(figsize=(10, 6))
+sns.barplot(x='Importance', y='Feature', data=feature_importance_df, palette='viridis')
+plt.title('Feature Importances from CatBoost Model')
+plt.show()
+# Make predictions on the entire dataset
+y_pred = catboost_model.predict(X)
+
+# Add the predictions to the DataFrame
+df['PredictedRiskLevel'] = le.inverse_transform(y_pred)
+
+# Filter the dataset for high risk and mid risk instances
+high_risk_instances = df[df['PredictedRiskLevel'] == 'high risk']
+mid_risk_instances = df[df['PredictedRiskLevel'] == 'mid risk']
+low_risk_instances = df[df['PredictedRiskLevel'] == 'low risk']
+
+# Display feature values for a few high risk instances
+print("High Risk Instances:")
+print(high_risk_instances)
+
+# Display feature values for a few mid risk instances
+print("\nMid Risk Instances:")
+print(mid_risk_instances)
+
+print("\nLow Risk Instances:")
+print(low_risk_instances)
