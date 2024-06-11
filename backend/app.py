@@ -11,6 +11,7 @@ from reports.patientreports import patient_report_blueprint
 from appointments.appointments import appointments_blueprint
 from practitioners.practitioner import practitioners
 from auth.profile import update_profile
+from patients.medications import medications_blueprint
 from flask_cors import CORS 
 
 app = Flask(__name__)
@@ -31,6 +32,7 @@ app.register_blueprint(patient_report_blueprint)
 app.register_blueprint(appointments_blueprint)
 app.register_blueprint(practitioners)
 app.register_blueprint(update_profile)
+app.register_blueprint(medications_blueprint)
 
 if __name__ == '__main__':
     app.run()
