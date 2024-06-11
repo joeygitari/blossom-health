@@ -10,10 +10,23 @@ import {
 import DefaultLayout from "../layout/DefaultLayout";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Settings = () => {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const toggleNewPasswordVisibility = () => {
+        setShowNewPassword(!showNewPassword);
+    }
+
     const handleChangePassword = async () => {
         try {
             const response = await fetch('/change-password', {
@@ -65,22 +78,48 @@ const Settings = () => {
                         <div className="font-poppins font-semibold">
                             <label className="block text-sm font-medium text-gray-700">Old password</label>
                             <input
-                                type="password"
+                                // type="password"
+                                type={showPassword ? "text" : "password"} 
+                                id="password"
+                                name="password"
                                 placeholder="Old Password"
                                 value={oldPassword}
                                 onChange={(e) => setOldPassword(e.target.value)}
                                 className="mt-1 p-2 border rounded w-full"
+                            />
+                            <FontAwesomeIcon
+                                icon={showPassword ? faEye : faEyeSlash}
+                                style={{
+                                    position: 'absolute',
+                                    right: '7%',
+                                    top: '32%',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={togglePasswordVisibility}
                             />
                         </div>
                         <br />
                         <div className="font-poppins font-semibold">
                             <label className="block text-sm font-medium text-gray-700">New password</label>
                             <input
-                                type="password"
+                                // type="password"
+                                type={showNewPassword ? "text" : "password"} 
+                                id="newPassword" 
+                                name="newPassword"
                                 placeholder="New Password"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
                                 className="mt-1 p-2 border rounded w-full"
+                            />
+                            <FontAwesomeIcon
+                                icon={showNewPassword ? faEye : faEyeSlash}
+                                style={{
+                                    position: 'absolute',
+                                    right: '7%',
+                                    top: '58%',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={toggleNewPasswordVisibility}
                             />
                         </div>
                     </CardBody>

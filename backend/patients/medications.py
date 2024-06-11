@@ -79,8 +79,8 @@ def get_medications():
         medications = cursor.fetchall()
 
         for medication in medications:
-            medication['startdate'] = medication['startdate'].strftime('%Y-%m-%d')
-            medication['enddate'] = medication['enddate'].strftime('%Y-%m-%d')
+            medication['startdate'] = medication['startdate'].strftime('%d %b %Y')
+            medication['enddate'] = medication['enddate'].strftime('%d %b %Y')
             
         cursor.close()
         conn.close()

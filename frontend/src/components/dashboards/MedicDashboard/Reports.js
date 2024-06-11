@@ -89,11 +89,16 @@ const Reports = () => {
             if (response.ok) {
                 const data = await response.json();
                 // console.log('Recommendation added successfully:', data);
-                toast.success(data.message);
+                toast.success(data.message, {
+                    onClose: () => {
+                        setRecommendation('');
+                    }
+                });
+                
                 if (typeof setOpenModal === 'function') {
                     setOpenModal(false); // Close modal only if setOpenModal is defined
                 }
-                setRecommendation('');
+                
             } else {
                 console.error('Failed to add recommendation');
                 toast.error('Failed to add recommendation');

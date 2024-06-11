@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Patients from "../../../assets/images/Patient.svg";
 import DefaultLayout from "../layout/DefaultLayout";
-import DoctorSkillsPieChart from "../common/Charts/DoctorSkillsPieChart";
+import MySymptomsPieChart from "../common/Charts/MySymptomsPieChart";
 import AppointmentsTable from "../common/Tables/AppointmentsTable";
 
 const PatientDashboard = () => {
@@ -38,7 +38,7 @@ const PatientDashboard = () => {
             </div>
             <div className="grid lg:grid-cols-4 mt-[2rem] lg:mt-[3rem] gap-4">
                 <div className="col-span-2 lg:col-span-2">
-                    <DoctorSkillsPieChart/>
+                    <MySymptomsPieChart/>
                 </div>
 
                 <div className="col-span-2 lg:col-span-2 mt-[1rem] lg:mt-0">

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Doctors from "../../../assets/images/Doctors-pana.svg";
 import DefaultLayout from "../layout/DefaultLayout";
 import {Link} from "react-router-dom";
-import PatientLineChart from "../common/Charts/PatientLineChart";
+import PatientLineChart from "../common/Charts/SymptomsLineChart";
 import DiseasesBarChart from '../common/Charts/DiseasesBarChart';
 const MedicDashboard = () => {
     const [patients, setPatients] = useState([]);
