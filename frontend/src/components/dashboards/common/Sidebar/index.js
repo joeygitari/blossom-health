@@ -242,7 +242,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             {/* <!-- Menu Item Patients --> */}
 
                             {/* <!-- Menu Item Medication --> */}
-                            {/* {currentUser?.role === 'patient' && (
+                            {currentUser?.role === 'patient' && (
                             <li>
                                 <NavLink
                                     to="/patient-dashboard/medications"
@@ -273,7 +273,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                     Medications
                                 </NavLink>
                             </li>
-                            )} */}
+                            )}
                             {/* <!-- Menu Item Medication --> */}
 
                             {/* <!-- Menu Item Labs --> */}

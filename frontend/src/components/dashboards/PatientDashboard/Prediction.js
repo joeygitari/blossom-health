@@ -243,7 +243,7 @@ const Prediction = () => {
                         </Typography>
                     )}
                     <br />
-                    <br />
+                    {/* <br /> */}
                     <Typography variant="h6" className="mb-1 text-black font-poppins font-normal">
                         <strong>Doctor's Recommendation</strong>
                     </Typography>
