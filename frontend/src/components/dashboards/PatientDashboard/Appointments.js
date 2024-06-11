@@ -106,9 +106,14 @@ const Appointments = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                setAppointments([...appointments, { ...newAppointment, appointmentid: data.appointmentid }]);
+                // setAppointments([...appointments, { ...newAppointment, appointmentid: data.appointmentid }]);
                 setOpenModal(false);
-                toast.success("Appointment requested successfully");
+                // toast.success("Appointment requested successfully");
+                toast.success("Appointment added successfully", {
+                    onClose: () => {
+                        setAppointments([...appointments, { ...newAppointment, appointmentid: data.appointmentid }]);
+                    }
+                });
 
             } else {
                 toast.error("Failed to add appointment");
