@@ -36,7 +36,8 @@ const Medications = () => {
             strength: document.getElementById('strength').value,
             startdate: selectedDate ? selectedDate.toISOString().split('T')[0] : null,
             enddate: selectedDate1 ? selectedDate1.toISOString().split('T')[0] : null,
-            prescribedby: document.getElementById('prescribedby').value
+            prescribedby: document.getElementById('prescribedby').value,
+            status: 'pending'
         };
 
         try {
@@ -50,9 +51,13 @@ const Medications = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                setMedications([...medications, { ...newMedication, medicationid: data.medicationid }]);
                 setOpenModal(false);
-                toast.success("Medication added successfully");
+                // toast.success("Medication added successfully");
+                toast.success("Medication added successfully", {
+                    onClose: () => {
+                        setMedications([...medications, { ...newMedication, medicationid: data.medicationid }]);
+                    }
+                });
             } else {
                 toast.error("Failed to add medication");
             }
