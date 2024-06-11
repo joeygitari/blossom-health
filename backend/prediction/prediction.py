@@ -3,8 +3,9 @@ import psycopg2
 import joblib
 import os
 import numpy as np
+import pandas as pd
 import pickle
-import xgboost as xgb
+import json
 
 # Define a Blueprint for prediction
 prediction = Blueprint('prediction', __name__)
@@ -41,6 +42,26 @@ def connect_db():
         print("Unable to connect to the database")
         print(e)
         return None
+
+def celsius_to_fahrenheit(celsius):
+    return (celsius * 9/5) + 32
+
+def calculate_bmi(weight_kg, height_cm):
+    height_m = height_cm / 100  # Convert height to meters
+    return weight_kg / (height_m ** 2)
+
+# Function to predict maternal health risk
+def predict_maternal_health_risk(new_data):
+    # Load the scaler, label encoder and model
+    scaler = joblib.load('scaler.joblib')
+    le = joblib.load('label_encoder.joblib')
+    model = joblib.load('Maternal_Health_Risk.joblib')
+    
+    # Transform the new data to match the training data
+    new_data_scaled = scaler.transform(new_data)
+    prediction = model.predict(new_data_scaled)
+    risk_level = le.inverse_transform(prediction)
+    return risk_level[0]
 
 # Route for making predictions
 @prediction.route('/predict/<int:patient_id>', methods=['GET'])
@@ -86,12 +107,19 @@ def predict(patient_id):
         prediction_input = np.array([symptoms_vector])
         endometriosis_prediction = endometriosis_model.predict(prediction_input)[0]
 
-        # Retrieve patient data for PCOS prediction
+        # Retrieve patient data for PCOS and maternal health risk prediction
         patient_query = """
             SELECT
+                p.patientage AS "Age",
+                pp.systolicbp AS "SystolicBP",
+                pp.diastolicbp AS "DiastolicBP",
+                pp.bloodsugar AS "BS",
+                pp.bodytemperature AS "BodyTemp_C",
+                pp.heartrate AS "HeartRate",
+                pp.weight AS "Weight",
+                pp.height AS "Height",
                 pp.menstrualhistory AS "Cycle length(days)", 
-                pp.bmi AS "BMI",
-                p.patientage AS "Age (yrs)"
+                pp.bmi AS "BMI"
             FROM patients p
             JOIN patientprofile pp ON p.patientid = pp.patientid
             WHERE p.patientid = %s
@@ -104,95 +132,59 @@ def predict(patient_id):
         if not patient_data:
             return jsonify({'error': 'Patient not found'})
 
-        # Convert fetched data to a format suitable for the PCOS model
-        cycle_length, bmi, age = patient_data
-        weight_gain = 1 if weight_gain_reported else 0
+        # Extract patient data and ensure they are converted to appropriate numerical types
+        age = float(patient_data[0])
+        systolicbp = float(patient_data[1])
+        diastolicbp = float(patient_data[2])
+        bs = float(patient_data[3])
+        body_temp_celsius = float(patient_data[4])
+        heart_rate = float(patient_data[5])
+        weight_kg = float(patient_data[6])
+        height_cm = float(patient_data[7])
+        cycle_length = float(patient_data[8])
+        bmi = float(patient_data[9])
+
+        # Convert body temperature to Fahrenheit
+        body_temp_fahrenheit = celsius_to_fahrenheit(body_temp_celsius)
         
+        # Calculate BMI
+        bmi_calculated = calculate_bmi(weight_kg, height_cm)
+
+        # Prepare the input for the maternal health risk model
+        maternal_health_features = pd.DataFrame({
+            'Age': [age],
+            'SystolicBP': [systolicbp],
+            'DiastolicBP': [diastolicbp],
+            'BS': [bs],
+            'BodyTemp': [body_temp_fahrenheit],
+            'HeartRate': [heart_rate],
+            'AgeSquared': [age**2],
+            'HeartRateOverBodyTemp': [heart_rate / body_temp_fahrenheit],
+            'BloodPressureRatio': [systolicbp / diastolicbp],
+            'AgeBMIProduct': [age * (bs / (body_temp_fahrenheit ** 2))],
+            'BloodPressureDeviation': [systolicbp - diastolicbp],
+            'BloodSugarSquared': [bs ** 2],
+            'RiskScore': [age * systolicbp / (diastolicbp + heart_rate)],
+            'BodyTempOverHeartRate': [body_temp_fahrenheit / heart_rate],
+            'BloodPressureDiff': [systolicbp - diastolicbp]
+        })
+
+        maternal_health_prediction = predict_maternal_health_risk(maternal_health_features)
+
         # Prepare the input for the PCOS model
+        weight_gain = 1 if weight_gain_reported else 0
         pcos_features = [bmi, weight_gain, cycle_length, age]
         pcos_features_array = np.array([pcos_features], dtype=np.float32)  # Ensure data type is float32
 
         # Predict PCOS
         pcos_prediction = pcos_model.predict(pcos_features_array)[0]
-
-        # return jsonify({
-        #     'endometriosis_prediction': int(endometriosis_prediction),
-        #     'pcos_prediction': int(pcos_prediction)
-        # })
-        # Retrieve patient data for maternal health risk prediction
-        maternal_health_query = """
-            SELECT
-                p.patientage AS "Age",
-                pp.systolicbp AS "SystolicBP",
-                pp.diastolicbp AS "DiastolicBP",
-                pp.bloodsugar AS "BS",
-                pp.bodytemperature AS "BodyTemp",
-                pp.heartrate AS "HeartRate"
-            FROM patients p
-            JOIN patientprofile pp ON p.patientid = pp.patientid
-            WHERE p.patientid = %s
-        """
-        
-        with conn.cursor() as cur:
-            cur.execute(maternal_health_query, (patient_id,))
-            maternal_health_data = cur.fetchone()
-
-        if not maternal_health_data:
-            return jsonify({'error': 'Patient not found'})
-
-        # Extract data for maternal health risk prediction
-        age, systolicbp, diastolicbp, bloodsugar, bodytemp, heartrate = maternal_health_data
-
-        # Convert retrieved values to float
-        age = float(age)
-        systolicbp = float(systolicbp)
-        diastolicbp = float(diastolicbp)
-        bloodsugar = float(bloodsugar)
-        bodytemp = float(bodytemp)
-        heartrate = float(heartrate)
-        
-        # Convert body temperature from Celsius to Fahrenheit
-        bodytemp = (bodytemp * 9/5) + 32
-
-        # Calculate derived features for maternal health risk prediction
-        age_squared = age ** 2
-        heart_rate_over_body_temp = heartrate / bodytemp
-        blood_pressure_ratio = systolicbp / diastolicbp
-        age_bmi_product = age * bmi
-        blood_pressure_deviation = systolicbp - diastolicbp
-        blood_sugar_squared = bloodsugar ** 2
-        body_temp_over_heart_rate = bodytemp / heartrate
-        blood_pressure_diff = abs(systolicbp - diastolicbp)
-
-
-        # Prepare input array for maternal health risk prediction
-        maternal_health_features = [
-            age, systolicbp, diastolicbp, bloodsugar, bodytemp, heartrate,
-            age_squared, heart_rate_over_body_temp, blood_pressure_ratio,
-            age_bmi_product, blood_pressure_deviation, blood_sugar_squared,
-            0,  # Placeholder for RiskScore
-            body_temp_over_heart_rate, blood_pressure_diff
-        ]
-
-        maternal_health_features_array = np.array([maternal_health_features], dtype=np.float32)
-
-        # Predict maternal health risk
-        maternal_health_prediction = maternal_health_model.predict(maternal_health_features_array)[0]
-        
-        # Map the prediction to the appropriate risk level
-        if maternal_health_prediction == 1:
-            risk_level = 2  # High risk
-        elif maternal_health_prediction == 2:
-            risk_level = 0  # Low risk
-        else:
-            risk_level = 1  # Mid risk
-        
+            
         return jsonify({
             'endometriosis_prediction': int(endometriosis_prediction),
             'endometriosis_accuracy': endometriosis_accuracy,
             'pcos_prediction': int(pcos_prediction),
             'pcos_accuracy': pcos_accuracy,
-            'maternal_health_prediction': risk_level,
+            'maternal_health_prediction': maternal_health_prediction,
             'maternal_health_accuracy': maternal_health_accuracy,
             'symptoms': symptoms
         })

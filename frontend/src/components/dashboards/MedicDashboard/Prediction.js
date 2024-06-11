@@ -142,7 +142,7 @@ const Prediction = () => {
                             {report.endometriosis_prediction === 1 && (
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>Endometriosis:</strong> Positive
-                                    <span> ({report.endometriosis_accuracy}%)</span>
+                                    {/* <span> ({report.endometriosis_accuracy}%)</span> */}
                                     {/* <p>Endometriosis is a disease in which tissue similar to the lining of the uterus grows outside the uterus. It can cause severe pain in the pelvis and make it harder to get pregnant. Endometriosis can start at a person's first menstrual period and last until menopause</p> */}
                                     <br />
                                     <br />
@@ -164,31 +164,38 @@ const Prediction = () => {
 
                                 </Typography>
                             )}
-                            {report.maternal_health_prediction === 1 && (
+                            {report.maternal_health_prediction === 'high risk' && (
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
-                                    <strong>Maternal Health Prediction:</strong> Positive
-                                    <span>({report.maternal_health_accuracy}%)</span>
+                                    <strong>Maternal Health Prediction:</strong> High risk
+                                    {/* <span>(high risk)</span> */}
+                                    {/* <span>({report.maternal_health_accuracy}%)</span> */}
                                     <br />
                                     <br />
 
-                                    <strong>Overview</strong>
+                                    <strong className="underline">Overview</strong>
                                     <p>Maternal health risks and childbirth complications refer to health issues that arise during pregnancy, labor, delivery, and the postpartum period. These complications can affect both the mother and the baby, and their severity can range from mild to life-threatening. Common complications include preeclampsia, gestational diabetes, preterm labor, and infections.</p>
                                     <br />
 
-                                    <strong>Common complications</strong>
+                                    <strong className="underline">Common complications</strong>
                                     <ul>
-                                        <li><strong>Preeclampsia:</strong> High blood pressure, swelling of hands and feet, protein in urine, severe headaches, vision changes. Affects about 5-8% of pregnant women.</li>
-                                        <li><strong>Gestational Diabetes:</strong> Often asymptomatic; sometimes increased thirst, frequent urination, fatigue. Affects 6-9% of pregnant women.</li>
-                                        <li><strong>Preterm Labor:</strong> Regular contractions, lower back pain, changes in vaginal discharge, pelvic pressure. Approximately 10% of births are preterm.</li>
-                                        <li><strong>Infections:</strong> Fever, chills, painful urination, abnormal discharge. Varies depending on the type of infection (e.g., urinary tract infections are common, affecting about 8% of pregnant women).</li>
-                                        <li><strong>Placental Abruption:</strong> Vaginal bleeding, abdominal pain, back pain, uterine tenderness. Affects about 1 in 100 pregnancies.</li>
-                                        <li><strong>Postpartum Hemorrhage:</strong> Heavy bleeding after delivery, drop in blood pressure, rapid heart rate. Occurs in about 1-5% of deliveries.</li>
+                                        <li><strong>Preeclampsia:</strong><br /> High blood pressure, swelling of hands and feet, protein in urine, severe headaches, vision changes. Affects about 5-8% of pregnant women.</li>
+                                        <br />
+                                        <li><strong>Gestational Diabetes:</strong><br /> Often asymptomatic; sometimes increased thirst, frequent urination, fatigue. Affects 6-9% of pregnant women.</li>
+                                        <br />
+                                        <li><strong>Preterm Labor:</strong><br /> Regular contractions, lower back pain, changes in vaginal discharge, pelvic pressure. Approximately 10% of births are preterm.</li>
+                                        <br />
+                                        <li><strong>Infections:</strong><br /> Fever, chills, painful urination, abnormal discharge. Varies depending on the type of infection (e.g., urinary tract infections are common, affecting about 8% of pregnant women).</li>
+                                        <br />
+                                        <li><strong>Placental Abruption:</strong><br /> Vaginal bleeding, abdominal pain, back pain, uterine tenderness. Affects about 1 in 100 pregnancies.</li>
+                                        <br />
+                                        <li><strong>Postpartum Hemorrhage:</strong><br /> Heavy bleeding after delivery, drop in blood pressure, rapid heart rate. Occurs in about 1-5% of deliveries.</li>
                                     </ul>
                                     <br />
 
-                                    <strong>Diagnosis</strong>
+                                    <strong className="underline">Diagnosis</strong>
                                     <ul>
                                         <li><strong>Regular Prenatal Checkups:</strong> Monitoring blood pressure, blood tests, urine tests, and ultrasounds to identify potential complications early.</li>
+                                        <br />
                                         <li><strong>Specific Tests:</strong> Blood pressure readings and urine tests for preeclampsia. Glucose tolerance test for gestational diabetes. Cervical exams and ultrasound for signs of preterm labor. Blood tests, cultures, and physical examinations for infections.</li>
                                     </ul>
                                     <br />
@@ -198,7 +205,7 @@ const Prediction = () => {
                             {report.pcos_prediction === 1 && (
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>PCOS Prediction:</strong> Positive
-                                    <span> ({report.pcos_accuracy}%)</span>
+                                    {/* <span> ({report.pcos_accuracy}%)</span> */}
                                     <br />
                                     <br />
 
@@ -223,7 +230,17 @@ const Prediction = () => {
 
                                 </Typography>
                             )}
-                            {report.endometriosis_prediction === 0 && report.maternal_health_prediction === 0 && report.pcos_prediction === 0 && (
+                            {report.maternal_health_prediction === 'mid risk' && (
+                                <>
+                                <br />
+                                <Typography variant="body1" className="mb-4 font-poppins font-normal">
+                                    {/* Note: You are also at mid risk of getting maternal health complications */}
+                                    <strong>Note</strong>
+                                    <p>The patient is also at mid risk of getting maternal health complications</p>
+                                </Typography>
+                                </>
+                            )}
+                            {report.endometriosis_prediction === 0 && report.maternal_health_prediction === 'low risk' && report.pcos_prediction === 0 && (
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     Great news! No positive predictions for endometriosis, PCOS, or maternal health risk!
                                 </Typography>

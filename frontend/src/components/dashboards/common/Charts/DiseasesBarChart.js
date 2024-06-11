@@ -105,42 +105,43 @@ const DiseasesBarChart = () => {
                 pcos: 0,
                 maternal_health: 0
             };
-
+    
             for (const patient of patients) {
                 const response = await fetch(`/predict/${patient[0]}`);
                 if (response.ok) {
                     const data = await response.json();
                     if (data.endometriosis_prediction) predictions.endometriosis++;
                     if (data.pcos_prediction) predictions.pcos++;
-                    if (data.maternal_health_prediction) predictions.maternal_health++;
+                    if (data.maternal_health_prediction === 'high risk') predictions.maternal_health++;
                 } else {
                     console.error(`Failed to fetch predictions for patient ${patient.id}`);
                 }
             }
-
+    
             setChartData({
                 series: [
                     {
                         name: 'Endometriosis',
-                        data: [predictions.endometriosis]
+                        data: [predictions.endometriosis, 0, 0] // One value for each category
                     },
                     {
                         name: 'PCOS',
-                        data: [predictions.pcos]
+                        data: [0, predictions.pcos, 0] // One value for each category
                     },
                     {
                         name: 'Maternal Health Risk',
-                        data: [predictions.maternal_health]
+                        data: [0, 0, predictions.maternal_health] // One value for each category
                     }
                 ],
-                categories: ['Diseases']
+                categories: ['Endometriosis', 'PCOS', 'Maternal Health Risk']
             });
-
+    
         } catch (error) {
             console.error("Error fetching predictions: " + error.message);
         }
     };
-
+    
+    
 
     return (
         <div className="rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-black xl:col-span-4">
