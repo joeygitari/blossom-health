@@ -39,7 +39,7 @@ def submit_symptoms():
         with psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=db_password) as conn:
             with conn.cursor() as cursor:
                 # Delete existing records for the user
-                cursor.execute("DELETE FROM patientsymptoms WHERE patientid = %s", (user_id,))
+                # cursor.execute("DELETE FROM patientsymptoms WHERE patientid = %s", (user_id,))
                 # Insert new records for selected symptoms
                 for symptom_id in selected_symptoms:
                     cursor.execute("INSERT INTO patientsymptoms (patientid, symptomid, presence) VALUES (%s, %s, %s)", (user_id, symptom_id, 1))

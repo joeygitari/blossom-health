@@ -139,7 +139,7 @@ const Symptoms = () => {
                 </div>
             </div>
             <ToastContainer
-                position="bottom-right"
+                position="top-center"
                 autoClose={10000}
                 hideProgressBar={false}
                 newestOnTop={false}
@@ -148,7 +148,7 @@ const Symptoms = () => {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
-                // theme="colored"
+                theme="colored"
                 transition={Slide}
             />
         </DefaultLayout>

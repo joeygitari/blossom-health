@@ -1,4 +1,4 @@
-flask
-flask-cors
-flask-session
+Flask
+flask_session
+flask_cors
 gunicorn
