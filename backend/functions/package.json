@@ -13,8 +13,10 @@
   },
   "main": "index.js",
   "dependencies": {
+    "express": "^4.19.2",
     "firebase-admin": "^12.1.0",
     "firebase-functions": "^5.0.1",
+    "flask": "^0.2.10",
     "http-proxy": "^1.18.1"
   },
   "devDependencies": {

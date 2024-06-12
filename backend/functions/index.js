@@ -1,42 +1,36 @@
 const functions = require('firebase-functions');
-const { exec } = require('child_process');
-const path = require('path');
-const httpProxy = require('http-proxy');
+const express = require('express');
+const cors = require('cors');
+const { HttpsProxyAgent } = require('https-proxy-agent');
+const fetch = require('node-fetch');
 
-const gunicorn = path.resolve(__dirname, '../myenv/bin/gunicorn');
-const flaskAppPath = path.resolve(__dirname, '../');
-const flaskAppModule = 'app:app';
+const app = express();
+app.use(cors()); // Use the CORS middleware
+app.use(express.json()); // To parse JSON bodies
 
-const proxy = httpProxy.createProxyServer({ target: 'http://127.0.0.1:8083' });
+const proxyUrl = 'https://blossom-health-backend-45kmqfkl3q-uc.a.run.appZ';
+const agent = new HttpsProxyAgent(proxyUrl);
 
-proxy.on('proxyRes', (proxyRes, req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-});
+// Middleware to proxy requests to Cloud Run
+app.use(async (req, res) => {
+  const url = `${proxyUrl}${req.url}`;
+  const options = {
+    method: req.method,
+    headers: {
+      ...req.headers,
+      host: new URL(proxyUrl).host // Set the host header to match the Cloud Run service
+    },
+    body: req.method === 'GET' || req.method === 'HEAD' ? null : JSON.stringify(req.body),
+    agent
+  };
 
-proxy.on('error', (err, req, res) => {
-  console.error('Proxy error:', err);
-  res.writeHead(500, {
-    'Content-Type': 'text/plain'
-  });
-  res.end('Something went wrong. Please try again later.');
-});
-
-// Start the Flask app using Gunicorn
-exec(`${gunicorn} -b 127.0.0.1:8083 ${flaskAppModule}`, { cwd: flaskAppPath }, (error, stdout, stderr) => {
-  if (error) {
-    console.error(`Error starting Flask app: ${error.message}`);
-    return;
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    res.status(response.status).json(data);
+  } catch (error) {
+    res.status(500).send(error.toString());
   }
-  console.log(`Flask app started: ${stdout}`);
-  console.error(`Flask app errors: ${stderr}`);
 });
 
-// Proxy requests to the Flask app
-exports.api = functions.https.onRequest((req, res) => {
-  console.log('Received request:', req.url);
-  console.log('Request headers:', req.headers);
-  console.log('Request body:', req.body);
-  proxy.web(req, res);
-});
+exports.api = functions.https.onRequest(app);
