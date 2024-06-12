@@ -95,6 +95,7 @@ const PatientLineChart = () => {
                 const response = await fetch("/patients");
                 if (response.ok) {
                     const data = await response.json();
+                    // console.log("Fetched patients:", data); // Debug log
                     return data;
                 } else {
                     throw new Error("Failed to fetch patients");
@@ -110,6 +111,7 @@ const PatientLineChart = () => {
                 const response = await fetch(`/predict/${patientId}`);
                 if (response.ok) {
                     const data = await response.json();
+                    // console.log(`Fetched symptoms for patient ${patientId}:`, data.symptoms); // Debug log
                     return data.symptoms;
                 } else {
                     throw new Error(`Failed to fetch symptoms for patient ${patientId}`);
@@ -130,18 +132,24 @@ const PatientLineChart = () => {
                     const patientId = patient[0];
                     const patientSymptoms = await fetchPatientSymptoms(patientId);
 
-                    patientSymptoms.forEach(symptom => {
-                        if (!symptomsMap[symptom]) {
-                            symptomsMap[symptom] = Array(ages.length).fill(0);
-                        }
-                        symptomsMap[symptom][ages.indexOf(patient[4])]++; // Increment count for the corresponding age
-                    });
+                    if (patientSymptoms && patientSymptoms.length > 0) {
+                        patientSymptoms.forEach(symptom => {
+                            if (!symptomsMap[symptom]) {
+                                symptomsMap[symptom] = Array(ages.length).fill(0);
+                            }
+                            symptomsMap[symptom][ages.indexOf(patient[4])]++; // Increment count for the corresponding age
+                        });
+                    }
                 }
+
+                // console.log("Symptoms map:", symptomsMap); // Debug log
 
                 const seriesData = Object.keys(symptomsMap).map(symptom => ({
                     name: symptom,
                     data: symptomsMap[symptom],
                 }));
+
+                // console.log("Series data:", seriesData); // Debug log
 
                 setChartData({
                     series: seriesData,
