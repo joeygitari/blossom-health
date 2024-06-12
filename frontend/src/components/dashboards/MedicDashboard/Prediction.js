@@ -113,7 +113,7 @@ const Prediction = () => {
                             <br />
                             <br />
 
-                            {report && report.symptoms ? (
+                            {report && report.symptoms && report.symptoms.length > 0 ? (
                                 <>
                                     <Typography variant="h6" className="mb-2 font-poppins font-semibold italic">
                                         <strong>Patient Symptoms:</strong>
@@ -123,23 +123,27 @@ const Prediction = () => {
                                     </Typography>
                                 </>
                             ) : (
-                                <Typography variant="body1" className="text-center">
-                                    Loading patient symptoms...
+                                // <Typography variant="body1" className="text-center">
+                                //     No symptoms available
+                                // </Typography>
+                                <Typography variant="body1" className="mb-4 font-poppins font-normal">
+                                    No symptoms available
                                 </Typography>
                             )}
                         </div>
                     ) : (
-                        <Typography variant="body1" className="text-center">
+                        <Typography variant="body1" className="mb-4 font-poppins text-center">
                             Loading patient details...
                         </Typography>
                     )}
 
                     {report ? (
                         <div className="text-black">
-                            <Typography variant="h6" className="mb-2 font-poppins font-semibold italic">
-                                <strong>Interpretation:</strong>
-                            </Typography>
                             {report.endometriosis_prediction === 1 && (
+                                <>
+                                <Typography variant="h6" className="mb-2 font-poppins font-semibold italic">
+                                    <strong>Interpretation:</strong>
+                                 </Typography>
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>Endometriosis:</strong> Positive
                                     {/* <span> ({report.endometriosis_accuracy}%)</span> */}
@@ -163,8 +167,13 @@ const Prediction = () => {
                                     <p>To diagnose endometriosis, analyse medical history and do a physical, including a pelvic exam. As needed, do an ultrasound, CT scan, MRI, cell biopsies, and laparoscopy.</p>
 
                                 </Typography>
+                                </>
                             )}
                             {report.maternal_health_prediction === 'high risk' && (
+                                <>
+                                <Typography variant="h6" className="mb-2 font-poppins font-semibold italic">
+                                    <strong>Interpretation:</strong>
+                                </Typography>
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>Maternal Health Prediction:</strong> High risk
                                     {/* <span>(high risk)</span> */}
@@ -201,8 +210,13 @@ const Prediction = () => {
                                     <br />
                                     
                                 </Typography>
+                                </>
                             )}
                             {report.pcos_prediction === 1 && (
+                                <>
+                                <Typography variant="h6" className="mb-2 font-poppins font-semibold italic">
+                                    <strong>Interpretation:</strong>
+                                </Typography>
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>PCOS Prediction:</strong> Positive
                                     {/* <span> ({report.pcos_accuracy}%)</span> */}
@@ -229,6 +243,7 @@ const Prediction = () => {
                                     <p>To diagnose PCOS, take a health history and give you physical, including a pelvic exam to check the ovaries. Order blood tests to check hormone balance and look for other signs of PCOS. A vaginal ultrasound can show enlarged ovaries or excess tiny cysts in your ovaries.</p>
 
                                 </Typography>
+                                </>
                             )}
                             {report.maternal_health_prediction === 'mid risk' && (
                                 <>
@@ -248,7 +263,7 @@ const Prediction = () => {
                         </div>
                     ) : (
                         <Typography variant="body1" className="text-center">
-                            Loading report...
+                            No report available
                         </Typography>
                     )}
                 </CardBody>

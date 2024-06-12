@@ -316,7 +316,7 @@ const PatientsForm = () => {
                                                         </label>
                                                         <input type="text" id="bloodSugar" autoComplete="off" value={formData.bloodSugar} onChange={handleChange}
                                                             className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                            name="bloodSugar" required />
+                                                            placeholder="in mg/dL" name="bloodSugar" required />
                                                     </div>
 
                                                     <div className="mb-5">
@@ -326,7 +326,7 @@ const PatientsForm = () => {
                                                         </label>
                                                         <input type="text" id="bloodPressure" autoComplete="off" value={formData.bloodPressure} onChange={handleChange}
                                                             className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                            name="bloodPressure" required />
+                                                            placeholder="systolic/diastolic" name="bloodPressure" required />
                                                     </div>
 
                                                     <div className="mb-5">
@@ -336,7 +336,7 @@ const PatientsForm = () => {
                                                         </label>
                                                         <input type="text" id="heartRate" autoComplete="off" value={formData.heartRate} onChange={handleChange}
                                                             className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                            name="heartRate" required />
+                                                            placeholder="in bpm" name="heartRate" required />
                                                     </div>
                                                 </div>
 
@@ -348,7 +348,7 @@ const PatientsForm = () => {
                                                         </label>
                                                         <input type="text" id="bodyTemperature" autoComplete="off" value={formData.bodyTemperature} onChange={handleChange}
                                                             className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                            name="bodyTemperature" required />
+                                                            placeholder="in °C" name="bodyTemperature" required />
                                                     </div>
 
                                                     <div className="mb-5">
@@ -358,7 +358,7 @@ const PatientsForm = () => {
                                                         </label>
                                                         <input type="text" id="respiratoryRate" autoComplete="off" value={formData.respiratoryRate} onChange={handleChange}
                                                             className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                            name="respiratoryRate" required />
+                                                            placeholder="in breaths/minute" name="respiratoryRate" required />
                                                     </div>
 
                                                     <div className="mb-5">

@@ -43,7 +43,7 @@ const MedicDashboard = () => {
                     {currentUser && (
                         <div>
                             <h3 className="font-poppins font-bold text-white text-[30px] p-4 dark:text-black md:whitespace-nowrap lg:whitespace-normal">
-                                Welcome back, Dr. {currentUser.name}!
+                                Welcome, Dr. {currentUser.name}!
                             </h3>
                         </div>
                     )}

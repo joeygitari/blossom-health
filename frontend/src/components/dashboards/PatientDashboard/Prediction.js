@@ -96,13 +96,13 @@ const Prediction = () => {
                                 </Typography>
                             </>
                         ) : (
-                            <Typography variant="body1" className="text-center">
+                            <Typography variant="body1" className="mb-4 font-poppins text-center">
                                     Loading patient details...
                             </Typography>
                         )}
                             <br />
 
-                            {report && report.symptoms ? (
+                            {report && report.symptoms && report.symptoms.length > 0 ? (
                                 <>
                                     <Typography variant="h6" className="mb-2 font-poppins font-semibold">
                                         <strong>Patient Symptoms:</strong>
@@ -112,18 +112,19 @@ const Prediction = () => {
                                     </Typography>
                                 </>
                             ) : (
-                                <Typography variant="body1" className="text-center">
-                                    Loading patient symptoms...
+                                <Typography variant="body1" className="mb-4 font-poppins font-normal">
+                                    No symptoms available
                                 </Typography>
                             )}
                         </div>
 
                     {report ? (
                         <div className="text-black">
-                            <Typography variant="h6" className="mb-2 font-poppins font-semibold underline">
-                                <strong>Interpretation:</strong>
-                            </Typography>
                             {report.endometriosis_prediction === 1 && (
+                                <>
+                                <Typography variant="h6" className="mb-2 font-poppins font-semibold italic">
+                                    <strong>Interpretation:</strong>
+                                 </Typography>
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>Endometriosis:</strong> Positive
                                     {/* <span> ({report.endometriosis_accuracy}%)</span> */}
@@ -151,8 +152,13 @@ const Prediction = () => {
                                     <p>Request a physical exam from your gynaecologist, especially an ultrasound to determine the presence of endometriosis.</p>
                                     
                                 </Typography>
+                                </>
                             )}
                             {report.maternal_health_prediction === 'high risk' && (
+                                <>
+                                <Typography variant="h6" className="mb-2 font-poppins font-semibold italic">
+                                    <strong>Interpretation:</strong>
+                                 </Typography>
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>Maternal Health Prediction:</strong> High risk
                                     {/* <span>(high risk)</span> */}
@@ -189,8 +195,13 @@ const Prediction = () => {
                                     <br />
                                     
                                 </Typography>
+                                </>
                             )}
                             {report.pcos_prediction === 1 && (
+                                <>
+                                <Typography variant="h6" className="mb-2 font-poppins font-semibold italic">
+                                    <strong>Interpretation:</strong>
+                                 </Typography>
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     <strong>PCOS Prediction:</strong> Positive
                                     {/* <span> ({report.pcos_accuracy}%)</span> */}
@@ -220,6 +231,7 @@ const Prediction = () => {
                                     <strong>BlossomHealth Recommendation</strong>
                                     See your gynaecologist if you're worried about your periods, if you're having trouble getting pregnant, or if you have signs of excess androgen. These might include new hair growth on your face and body, acne and male-pattern baldness.
                                 </Typography>
+                                </>
                             )}
                             {report.maternal_health_prediction === 'mid risk' && (
                                 <>

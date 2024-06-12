@@ -1,4 +1,7 @@
-from flask import Flask, request, jsonify, Blueprint, session
+from flask import Flask, request, jsonify, Blueprint, session, current_app
+from flask_mail import Message
+import random
+import string
 from flask_session import Session
 import psycopg2
 import hashlib
@@ -12,10 +15,23 @@ db_name = 'blossom_health'
 db_user = 'joanne'
 db_password = ''
 
+def generate_otp(length=6):
+    return ''.join(random.choices(string.digits, k=length))
+
+def send_otp(email, otp):
+    try:
+        msg = Message('Your OTP for email verification', recipients=[email])
+        msg.body = f'Verify your email by entering this OTP: {otp}'
+        mail = current_app.extensions.get('mail')
+        mail.send(msg)
+        return True
+    except Exception as e:
+        print(f"Error sending email: {e}")
+        return False
+
 @register_user.route('/register', methods=['POST'])
 def register_user_handler():
     try:
-        # Get user data from the frontend RegisterForm
         fullNames = request.form.get('fullNames')
         email = request.form.get('email')
         specialization = request.form.get('specialization')
@@ -25,46 +41,32 @@ def register_user_handler():
         password = request.form.get('password')
         userType = request.form.get('userType')
 
-        # Ensure password is not empty
         if not password:
             return jsonify({'error': 'Password is empty'})
 
-        print("Password before hashing:", password)
-
-        # Hash the password using SHA-256
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        print("Hashed password:", hashed_password)
 
-        # Connect to the PostgreSQL database
-        with psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=db_password) as conn:
-            with conn.cursor() as cursor:
-                # Insert user data into the database
-                # Check if email already exists
-                cursor.execute("SELECT COUNT(*) FROM medicalpractitioner WHERE practitioneremail = %s", (email,))
-                count = cursor.fetchone()[0]
-                if count > 0:
-                    return jsonify({'error': 'Email already exists'})
+        otp = generate_otp()
+        session['otp'] = otp
+        session['registration_data'] = {
+            'fullNames': fullNames,
+            'email': email,
+            'specialization': specialization,
+            'gender': gender,
+            'age': age,
+            'location': location,
+            'hashed_password': hashed_password,
+            'userType': userType
+        }
 
-                cursor.execute("SELECT COUNT(*) FROM patients WHERE patientemail = %s", (email,))
-                count = cursor.fetchone()[0]
-                if count > 0:
-                    return jsonify({'error': 'Email already exists'})
-            
-                # cursor.execute("INSERT INTO users (username, password, email) VALUES (%s, %s, %s)", (username, password, email))
-                if userType == 'medicalPractitioner':
-                    # Update the admin table
-                    cursor.execute("INSERT INTO medicalpractitioner (practitionername, practitioneremail, practitionerspecialization, practitionerlocation, password) VALUES (%s, %s, %s, %s, %s)", (fullNames, email, specialization, location, hashed_password))
-                elif userType == 'patient':
-                    # Update the student table
-                    cursor.execute("INSERT INTO patients (patientname, patientemail, patientgender, patientage, patientlocation, password) VALUES (%s, %s, %s, %s, %s, %s)", (fullNames, email, gender, age, location, hashed_password))
-                else:
-                    # Invalid userType
-                    return jsonify({'error': 'Invalid user type'})
-                conn.commit()
-        
-        return jsonify({'message': 'User registered successfully'})
-    except psycopg2.Error as e:
-        return jsonify({'error': 'Database error: ' + str(e)})
+        print(f"Generated OTP: {otp}")
+        print(f"Session OTP: {session.get('otp')}")
+
+        if send_otp(email, otp):
+            return jsonify({'message': 'OTP sent to your email'})
+        else:
+            return jsonify({'error': 'Failed to send OTP'})
+
     except Exception as e:
         return jsonify({'error': str(e)})
 
@@ -108,4 +110,35 @@ def change_password():
     except psycopg2.Error as e:
         return jsonify({'error': 'Database error: ' + str(e)})
     except Exception as e:
+        return jsonify({'error': str(e)})
+
+@register_user.route('/verify-otp', methods=['POST'])
+def verify_otp():
+    try:
+        data = request.get_json()  # Get the JSON data from the request
+        otp = data.get('otp')  # Extract the OTP value
+        print(f"Entered OTP: {otp}")
+        print(f"Session OTP: {session.get('otp')}")
+
+        if 'otp' in session and session['otp'] == otp:
+            registration_data = session.pop('registration_data')
+            with psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=db_password) as conn:
+                with conn.cursor() as cursor:
+                    if registration_data['userType'] == 'medicalPractitioner':
+                        cursor.execute("INSERT INTO medicalpractitioner (practitionername, practitioneremail, practitionerspecialization, practitionerlocation, password) VALUES (%s, %s, %s, %s, %s)", 
+                                       (registration_data['fullNames'], registration_data['email'], registration_data['specialization'], registration_data['location'], registration_data['hashed_password']))
+                    elif registration_data['userType'] == 'patient':
+                        cursor.execute("INSERT INTO patients (patientname, patientemail, patientgender, patientage, patientlocation, password) VALUES (%s, %s, %s, %s, %s, %s)", 
+                                       (registration_data['fullNames'], registration_data['email'], registration_data['gender'], registration_data['age'], registration_data['location'], registration_data['hashed_password']))
+                    else:
+                        return jsonify({'error': 'Invalid user type'})
+                    conn.commit()
+            session.pop('otp')
+            return jsonify({'message': 'User registered successfully'})
+        else:
+            print("OTP mismatch")
+            return jsonify({'error': 'Invalid OTP'})
+
+    except Exception as e:
+        print(f"Error in verify_otp: {e}")
         return jsonify({'error': str(e)})
