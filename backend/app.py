@@ -12,6 +12,7 @@ from appointments.appointments import appointments_blueprint
 from practitioners.practitioner import practitioners
 from auth.profile import update_profile
 from patients.medications import medications_blueprint
+from auth.reset_password import reset_password
 from flask_cors import CORS
 from flask_mail import Mail
 
@@ -44,6 +45,7 @@ app.register_blueprint(appointments_blueprint)
 app.register_blueprint(practitioners)
 app.register_blueprint(update_profile)
 app.register_blueprint(medications_blueprint)
+app.register_blueprint(reset_password)
 
 if __name__ == '__main__':
     app.run()

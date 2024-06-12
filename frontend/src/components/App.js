@@ -24,6 +24,8 @@ import Prediction from './dashboards/MedicDashboard/Prediction';
 import Prediction2 from './dashboards/PatientDashboard/Prediction';
 import Profile from './dashboards/Profile';
 import FourOFour from './404';
+import ResetPassword from './ResetPassword';
+import ForgotPassword from './ForgotPassword';
 
 const App = () => {
   return (
@@ -55,6 +57,8 @@ const App = () => {
           <Route exact path="/patient-dashboard/prediction/:patientId" element={<Prediction2 />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route path="*" element={<FourOFour/>}/>
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset/:token" element={<ResetPassword />} />
         </Routes>
       </Router>
   );

@@ -13,7 +13,7 @@ const LoginForm = () => {
         setShowPassword(!showPassword);
     };
 
-     const handleSubmit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
 
@@ -78,25 +78,12 @@ const LoginForm = () => {
                 </div>
             </div>
 
-            {/* <div className="flex items-center justify-between mb-5">
-                <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                        <input id="remember" type="checkbox" value=""
-                               className="w-4 h-4 border border-[#CFD9E0] rounded bg-white"
-                               required/>
-                    </div>
-
-                    <div className="">
-                        <label htmlFor="remember" className="ms-2 text-[16px] font-poppins font-normal text-[#718096]">
-                            Remember me
-                        </label>
-                    </div>
-                </div>
+            <div className="flex items-center justify-between mb-5">
                 <a href="/forgot-password"
                    className="text-[16px] font-poppins font-medium text-[#A19B9B] underline hover:no-underline dark:text-primary-500">
                     Forgot password?
                 </a>
-            </div> */}
+            </div>
 
             <button type="submit"
                     className="mt-[1.5rem] text-[#F7FAFC] bg-[#FF8585] h-14 font-poppins font-semibold rounded-[20px] text-[20px] w-full px-5 py-2.5 text-center">
