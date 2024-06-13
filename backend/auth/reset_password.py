@@ -25,7 +25,7 @@ def forgot_password():
         
         # Send email with reset link
         msg = Message('Password Reset Request', recipients=[email])
-        msg.body = f"Please click the link to reset your password: {reset_url}"
+        msg.body = f"Please click the link to reset your password for BlossomHealth: {reset_url}"
         mail = current_app.extensions.get('mail')
         mail.send(msg)
 
