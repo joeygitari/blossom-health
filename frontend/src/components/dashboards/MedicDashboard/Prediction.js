@@ -203,13 +203,13 @@ const Prediction = () => {
                                     </ul>
                                     <br />
 
-                                    <strong className="underline">Diagnosis</strong>
+                                    <strong className="underline">Recommendations</strong>
                                     <ul>
                                         <li><strong>Regular Prenatal Checkups:</strong> Monitoring blood pressure, blood tests, urine tests, and ultrasounds to identify potential complications early.</li>
                                         <br />
                                         <li><strong>Specific Tests:</strong> Blood pressure readings and urine tests for preeclampsia. Glucose tolerance test for gestational diabetes. Cervical exams and ultrasound for signs of preterm labor. Blood tests, cultures, and physical examinations for infections.</li>
                                     </ul>
-                                    <br />
+                                    {/* <br /> */}
                                     
                                 </Typography>
                                 </>
@@ -263,6 +263,17 @@ const Prediction = () => {
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     Great news! No positive predictions for endometriosis, PCOS, or maternal health risk!
                                 </Typography>
+                            )}
+                            {report.recommendation!=='No recommendations available' && (
+                                <>
+                                <Typography variant="h6" className="mb-1 text-black font-poppins font-normal underline">
+                                    <strong>Your Recommendation</strong>
+                                </Typography>
+                                <Typography variant="body1" className="mb-1 text-black font-poppins font-normal">
+                                    {report.recommendation} <br /> 
+                                    <strong>Given on</strong>: {report.datecreated}
+                                </Typography>
+                                </>
                             )}
                         </div>
                     ) : (

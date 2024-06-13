@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 import psycopg2
 import joblib
 import os
@@ -73,6 +73,10 @@ def predict(patient_id):
         if not conn:
             return jsonify({'error': 'Unable to connect to the database'})
 
+        practitionerid = session.get('user_id')
+        if not practitionerid:
+            return jsonify({'error': 'User not logged in'})
+        
         # Retrieve symptoms for the patient from the database
         symptoms_query = """
             SELECT s.symptomname 
@@ -180,7 +184,49 @@ def predict(patient_id):
 
         # Predict PCOS
         pcos_prediction = pcos_model.predict(pcos_features_array)[0]
-            
+        
+        # Retrieve recommendation for the specific patient by the current practitioner
+        recommendation_query = """
+            SELECT recommendation, patientid, datecreated
+            FROM recommendations
+            WHERE practitionerid = %s AND patientid = %s
+            ORDER BY datecreated DESC
+            LIMIT 1
+        """
+        with conn.cursor() as cur:
+            cur.execute(recommendation_query, (practitionerid, patient_id))
+            recommendation_data = cur.fetchone()
+        
+        if recommendation_data:
+            recommendation, patientid, datecreated = recommendation_data
+
+            # Format datecreated to remove time and GMT
+            if datecreated:
+                datecreated = datecreated.strftime('%d %b %Y')
+
+            # Retrieve practitioner details
+            patients_query = """
+                SELECT *
+                FROM patients
+                WHERE patientid = %s
+            """
+            with conn.cursor() as cur:
+                cur.execute(patients_query, (patientid,))
+                patients_data = cur.fetchone()
+
+            if patients_data:
+                patient = {
+                    'name': patients_data[1],
+                }
+            else:
+                patient = None
+        else:
+            recommendation = "No recommendations available"
+            patient = None
+            datecreated = None
+
+
+        
         return jsonify({
             'endometriosis_prediction': int(endometriosis_prediction),
             'endometriosis_accuracy': endometriosis_accuracy,
@@ -188,7 +234,10 @@ def predict(patient_id):
             'pcos_accuracy': pcos_accuracy,
             'maternal_health_prediction': maternal_health_prediction,
             'maternal_health_accuracy': maternal_health_accuracy,
-            'symptoms': symptoms
+            'symptoms': symptoms, 
+            'recommendation': recommendation,
+            'patient': patient,
+            'datecreated': datecreated,
         })
 
 

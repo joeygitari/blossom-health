@@ -186,7 +186,7 @@ const Prediction = () => {
                                     </ul>
                                     <br />
 
-                                    <strong className="underline">Diagnosis</strong>
+                                    <strong className="underline">Recommendations</strong>
                                     <ul>
                                         <li><strong>Regular Prenatal Checkups:</strong> Monitoring blood pressure, blood tests, urine tests, and ultrasounds to identify potential complications early.</li>
                                         <br />
