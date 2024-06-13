@@ -142,6 +142,8 @@ def patientreport():
             FROM patients p
             JOIN patientprofile pp ON p.patientid = pp.patientid
             WHERE p.patientid = %s
+            ORDER BY pp.profileid DESC
+            LIMIT 1
         """
         
         with conn.cursor() as cur:

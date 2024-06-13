@@ -177,7 +177,7 @@ const Prediction = () => {
                                     <strong>Interpretation:</strong>
                                 </Typography>
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
-                                    <strong>Maternal Health Prediction:</strong> High risk
+                                    <strong>Maternal Health Complications Prediction:</strong> High risk
                                     {/* <span>(high risk)</span> */}
                                     {/* <span>({report.maternal_health_accuracy}%)</span> */}
                                     <br />
