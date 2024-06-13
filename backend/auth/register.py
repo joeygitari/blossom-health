@@ -20,7 +20,7 @@ def generate_otp(length=6):
 
 def send_otp(email, otp):
     try:
-        msg = Message('Your OTP for email verification', recipients=[email])
+        msg = Message('Email verification OTP for BlossomHealth', recipients=[email])
         msg.body = f'Verify your email by entering this OTP: {otp}'
         mail = current_app.extensions.get('mail')
         mail.send(msg)
