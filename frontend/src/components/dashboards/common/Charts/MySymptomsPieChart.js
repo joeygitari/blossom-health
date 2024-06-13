@@ -77,16 +77,23 @@ const MySymptomsPieChart = () => {
                         'Back pain', 'Painful bowel movements', 'Nausea', 'Menstrual clots', 
                         'Infertility', 'Painful cramps during period', 'Pain / Chronic pain', 
                         'Diarrhea', 'Long menstruation', 'Constipation / Chronic constipation', 
-                        'Vomiting / constant vomiting', 'Fatigue / Chronic fatigue'
+                        'Vomiting / constant vomiting', 'Fatigue / Chronic fatigue', "Weight gain"
                     ];
                     const filteredLabels = symptomsLabels.filter(label => symptomsData.includes(label));
                     const seriesData = filteredLabels.map(label => 1);
-
-                    setSeries(seriesData);
-                    setChartOptions({
-                        ...baseOptions,
-                        labels: filteredLabels
-                    });
+                    if (seriesData.length === 0) {
+                        setSeries([1]);
+                        setChartOptions({
+                            ...baseOptions,
+                            labels: ['No symptoms yet']
+                        });
+                    } else {
+                        setSeries(seriesData);
+                        setChartOptions({
+                            ...baseOptions,
+                            labels: filteredLabels
+                        });
+                    }
                     setSymptoms(symptomsData);
                 } catch (error) {
                     console.error('Error fetching symptoms:', error);

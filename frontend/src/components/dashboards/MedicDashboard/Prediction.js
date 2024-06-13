@@ -165,7 +165,9 @@ const Prediction = () => {
 
                                     <strong>Diagnosis</strong>
                                     <p>To diagnose endometriosis, analyse medical history and do a physical, including a pelvic exam. As needed, do an ultrasound, CT scan, MRI, cell biopsies, and laparoscopy.</p>
-
+                                    <br />
+                                    <strong>BlossomHealth Recommendation</strong>
+                                    <p>Perform a physical exam, especially an ultrasound to determine the presence of endometriosis.</p>
                                 </Typography>
                                 </>
                             )}
@@ -241,13 +243,15 @@ const Prediction = () => {
 
                                     <strong>Diagnosis</strong>
                                     <p>To diagnose PCOS, take a health history and give you physical, including a pelvic exam to check the ovaries. Order blood tests to check hormone balance and look for other signs of PCOS. A vaginal ultrasound can show enlarged ovaries or excess tiny cysts in your ovaries.</p>
+                                    <br />
 
+                                    <strong>BlossomHealth Recommendation</strong>
+                                    <p>Observe menstruation irregularities, observe trouble getting pregnant, or signs of excess androgen. These might include new hair growth on face and body, acne and male-pattern baldness.</p>
                                 </Typography>
                                 </>
                             )}
                             {report.maternal_health_prediction === 'mid risk' && (
                                 <>
-                                <br />
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     {/* Note: You are also at mid risk of getting maternal health complications */}
                                     <strong>Note</strong>

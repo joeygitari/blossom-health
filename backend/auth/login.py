@@ -51,7 +51,7 @@ def login_user_handler():
                         user = {'user_id': patientid, 'role': 'patient', 'name': patientname, 'email': patientemail, 'gender': patientgender, 'age': patientage, 'location': patientlocation}
                         return jsonify({'message': 'Login successful', 'user': user})
                     else:
-                        return jsonify({'error': 'Incorrect password'})
+                        return jsonify({'error': 'Incorrect password, try again or reset password'})
                 
                 # Check the medicalpractitioner table
                 cursor.execute("SELECT practitionerid, password, practitionername, practitioneremail, practitionerspecialization, practitionerlocation FROM medicalpractitioner WHERE practitioneremail = %s", (email,))

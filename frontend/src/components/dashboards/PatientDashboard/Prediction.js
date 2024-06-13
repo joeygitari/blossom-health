@@ -60,7 +60,7 @@ const Prediction = () => {
                 <div className="flex flex-col items-center mr-5 mt-10">
                     <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#FF8585] mb-2"></div>
                     <Typography variant="body1" className="font-poppins font-semibold text-[#FF8585]">
-                        Predicting...
+                        Loading report...
                     </Typography>
               </div>
             ) : (
@@ -229,13 +229,12 @@ const Prediction = () => {
                                     <br />
 
                                     <strong>BlossomHealth Recommendation</strong>
-                                    See your gynaecologist if you're worried about your periods, if you're having trouble getting pregnant, or if you have signs of excess androgen. These might include new hair growth on your face and body, acne and male-pattern baldness.
+                                    <p>See your gynaecologist if you're worried about your periods, if you're having trouble getting pregnant, or if you have signs of excess androgen. These might include new hair growth on your face and body, acne and male-pattern baldness.</p>
                                 </Typography>
                                 </>
                             )}
                             {report.maternal_health_prediction === 'mid risk' && (
                                 <>
-                                <br />
                                 <Typography variant="body1" className="mb-4 font-poppins font-normal">
                                     {/* Note: You are also at mid risk of getting maternal health complications */}
                                     <strong>Note</strong>
@@ -254,7 +253,7 @@ const Prediction = () => {
                             Loading report...
                         </Typography>
                     )}
-                    <br />
+                    {/* <br /> */}
                     {/* <br /> */}
                     <Typography variant="h6" className="mb-1 text-black font-poppins font-normal">
                         <strong>Doctor's Recommendation</strong>
@@ -265,7 +264,7 @@ const Prediction = () => {
                     <br />
                     {report && report.practitioner ? (
                             <>
-                                <Typography variant="h6" className="mb-4 text-black font-poppins font-normal">
+                                <Typography variant="h6" className="mb-1 text-black font-poppins font-normal">
                                     <strong>Overseen by:</strong>
                                 </Typography>
                                 <Typography variant="body1" className="mb-1 text-black font-poppins font-normal">

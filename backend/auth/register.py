@@ -45,7 +45,17 @@ def register_user_handler():
             return jsonify({'error': 'Password is empty'})
 
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
-
+        # Check if email already exists in the database
+        with psycopg2.connect(host=db_host, dbname=db_name, user=db_user, password=db_password) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM patients WHERE patientemail = %s", (email,))
+                patient = cursor.fetchone()
+                cursor.execute("SELECT * FROM medicalpractitioner WHERE practitioneremail = %s", (email,))
+                practitioner = cursor.fetchone()
+                
+                if patient or practitioner:
+                    return jsonify({'error': 'Email already registered. Please log in or reset password.'})
+        
         otp = generate_otp()
         session['otp'] = otp
         session['registration_data'] = {

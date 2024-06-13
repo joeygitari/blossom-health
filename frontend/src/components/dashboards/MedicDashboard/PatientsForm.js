@@ -11,6 +11,7 @@ const PatientsForm = () => {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         patientNames: '',
+        email: '',
         medicalHistory: '',
         familyHistory: '',
         menstrualHistory: '',
@@ -152,7 +153,16 @@ const PatientsForm = () => {
                                             </label>
                                             <input type="text" id="patientNames" autoComplete="off" value={formData.patientNames} onChange={handleChange}
                                                 className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
-                                                placeholder="eg Jane Doe" name="patientNames" required />
+                                                name="patientNames" required />
+                                        </div>
+                                        <div className="mb-5">
+                                            <label htmlFor="email"
+                                                className="block mb-2 text-[18px] font-poppins font-medium text-[#718096]">
+                                                Patient Email <span className="text-red-500">*</span>
+                                            </label>
+                                            <input type="text" id="email" autoComplete="off" value={formData.email} onChange={handleChange}
+                                                className="bg-[#F7FAFC] border border-[#CBD5E0] font-poppins font-normal text-[#4A5568] text-[16px] rounded-[12px] w-full p-3"
+                                                name="email" required />
                                         </div>
 
                                         <div className="grid md:grid-cols-2 gap-[2rem]">

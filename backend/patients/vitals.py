@@ -23,6 +23,7 @@ def submit_profile():
 
         # Get data from form
         patientNames = data.get('patientNames')
+        email = data.get('email')
         medicalhistory = data.get('medicalHistory')
         familyhistory = data.get('familyHistory')
         menstrualhistory = data.get('menstrualHistory')
@@ -61,10 +62,10 @@ def submit_profile():
                     existing_patient = cursor.fetchone()
                     if existing_patient:
                         patientid = existing_patient[0]
-                        cursor.execute("UPDATE patients SET patientgender = %s, patientage = %s, patientlocation = %s WHERE patientid=%s", (gender, age, location, patientid))
+                        cursor.execute("UPDATE patients SET practitionerid = %s, patientgender = %s, patientage = %s, patientlocation = %s WHERE patientid=%s", (user_id, gender, age, location, patientid))
                     else:
                         # Insert new patient and get the ID
-                        cursor.execute("INSERT INTO patients (patientname, patientgender, patientage, patientlocation) VALUES (%s, %s, %s, %s) RETURNING patientid", (patientNames, gender, age, location,))
+                        cursor.execute("INSERT INTO patients (patientname, patientemail, patientgender, patientage, patientlocation, practitionerid) VALUES (%s, %s, %s, %s, %s, %s) RETURNING patientid", (patientNames, email, gender, age, location, user_id,))
                         patientid = cursor.fetchone()[0]
                 else:
                     return jsonify({'error': 'Patient name is missing or invalid'})

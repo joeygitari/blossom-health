@@ -28,7 +28,7 @@ const Patients = () => {
     
     const fetchPatients = async () => {
         try {
-          const response = await fetch("/patients");
+          const response = await fetch("/practitioners_patients");
           if (response.ok) {
             const data = await response.json();
             setPatients(data);

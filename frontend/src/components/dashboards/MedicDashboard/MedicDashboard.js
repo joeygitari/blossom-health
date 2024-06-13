@@ -13,7 +13,7 @@ const MedicDashboard = () => {
 
     const fetchPatients = async () => {
         try {
-          const response = await fetch("/patients");
+          const response = await fetch("/practitioners_patients");
           if (response.ok) {
             const data = await response.json();
             setPatients(data);
@@ -42,8 +42,8 @@ const MedicDashboard = () => {
                     <div className="grid lg:grid-cols-2 gap-4">
                     {currentUser && (
                         <div>
-                            <h3 className="font-poppins font-bold text-white text-[30px] p-4 dark:text-black md:whitespace-nowrap lg:whitespace-normal">
-                                Welcome, Dr. {currentUser.name}!
+                            <h3 className="font-poppins font-bold text-white text-[28px] p-4 dark:text-black md:whitespace-nowrap lg:whitespace-normal">
+                                Welcome Dr. {currentUser.name}!
                             </h3>
                         </div>
                     )}
